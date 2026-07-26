@@ -1,0 +1,28 @@
+name: Reproducibility report
+description: Report an independent reproduction attempt
+title: "[Reproduction]: "
+body:
+  - type: input
+    id: revision
+    attributes:
+      label: Release, tag or commit
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment and dependency versions
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Commands executed
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Result, metrics and differences
+    validations:
+      required: true

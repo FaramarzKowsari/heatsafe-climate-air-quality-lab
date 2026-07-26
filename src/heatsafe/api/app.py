@@ -11,7 +11,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from heatsafe import __version__
-from heatsafe.ai import deterministic_explanation
+from heatsafe.ai import capabilities, deterministic_explanation
 from heatsafe.core.air_quality import summarize_air_quality
 from heatsafe.core.climate import analyze_climate_trend
 from heatsafe.core.comparator import compare_indoor_outdoor
@@ -33,6 +33,7 @@ from heatsafe.core.urban_heat import analyze_urban_heat
 from heatsafe.core.ventilation import build_hourly_plan, decide_ventilation
 from heatsafe.core.wildfire import FireDetection, analyze_wildfire_context
 from heatsafe.research.benchmark import run_benchmark
+from heatsafe.research.compound_risk import analyze_compound_risk
 
 
 class TrendRequest(BaseModel):
@@ -90,12 +91,20 @@ class BenchmarkRequest(BaseModel):
     event_threshold: float = 35.0
 
 
+class CompoundRiskRequest(BaseModel):
+    components: dict[str, float] = Field(min_length=2)
+    weights: dict[str, float] | None = None
+    interaction_strength: float = Field(default=0.15, ge=0, le=1)
+    sensitivity_perturbation: float = Field(default=0.25, gt=0, lt=1)
+
+
 app = FastAPI(
     title="HeatSafe Climate & Air Quality Intelligence Lab API",
     version=__version__,
     description=(
-        "Deterministic household heat and ventilation tools plus reproducible climate and air-quality research utilities. "
-        "Not an official warning, medical, emergency-response, or building-certification system."
+        "Deterministic environmental decision support, climate and air-quality analytics, "
+        "compound-hazard research, reproducible forecasting and optional AI explanation modes. "
+        "Not an official warning, medical, emergency-response or building-certification system."
     ),
     license_info={"name": "Apache-2.0"},
 )
@@ -104,6 +113,11 @@ app = FastAPI(
 @app.get("/api/v1/health")
 def health() -> dict[str, str]:
     return {"status": "ok", "version": __version__, "mode": "standard-no-llm"}
+
+
+@app.get("/api/v1/ai/capabilities")
+def ai_capabilities() -> dict[str, dict[str, object]]:
+    return capabilities()
 
 
 @app.get("/api/v1/regions")
@@ -213,6 +227,20 @@ def wildfire_context(payload: WildfireRequest) -> dict[str, Any]:
         radius_km=payload.radius_km,
     )
     return asdict(result)
+
+
+@app.post("/api/v1/research/compound-risk")
+def compound_risk(payload: CompoundRiskRequest) -> dict[str, object]:
+    try:
+        result = analyze_compound_risk(
+            payload.components,
+            weights=payload.weights,
+            interaction_strength=payload.interaction_strength,
+            sensitivity_perturbation=payload.sensitivity_perturbation,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    return result.model_dump()
 
 
 @app.post("/api/v1/benchmark/run")

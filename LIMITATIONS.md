@@ -1,12 +1,16 @@
 # Limitations
 
-- The v0.1.0 research preview is not an operational warning system.
-- Live public APIs can change, throttle, fail, or modify terms.
-- Open-Meteo is a convenient demonstration provider; deployment terms must be reviewed for the intended use.
-- OpenAQ v3 requires a user-supplied API key.
-- NOAA, EPA AQS, Copernicus, FIRMS, EEA, and ECCC are documented adapter specifications rather than all being exercised in the offline test suite.
-- Satellite land-surface temperature is not air temperature.
+- The current research preview is not an operational warning system.
+- Public APIs can change, throttle, fail or modify terms.
+- Credentialed connectors require users to review current provider conditions.
+- Several official-source integrations remain specifications or early adapters rather than production-hardened pipelines.
+- Satellite land-surface temperature is not near-surface air temperature.
 - Wildfire proximity and wind plausibility do not establish causal smoke attribution.
 - Household observations are uncontrolled and cannot prove intervention effects.
 - The compact benchmark does not substitute for a preregistered multi-region domain-shift study.
-- Book sales, search ranking, energy savings, comfort, or health outcomes are not guaranteed.
+- Compound-risk scores are exploratory and are not validated health or regulatory indices.
+- Conformal coverage can degrade under severe distribution shift.
+- Local and cloud language models may produce incorrect language even when the underlying deterministic result is correct.
+- Numeric-grounding checks reduce but do not eliminate hallucination risk.
+- External-data accuracy, latency, grid resolution and station representativeness vary.
+- Energy, comfort, exposure and health outcomes are not guaranteed.

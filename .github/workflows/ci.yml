@@ -17,11 +17,17 @@ jobs:
       - run: python -m pip install --upgrade pip
       - run: pip install -e ".[dev]"
       - run: python scripts/generate_demo_data.py
+      - run: python scripts/check_scientific_identity.py
       - run: ruff check src tests scripts
-      - run: mypy src/heatsafe/core/models.py src/heatsafe/core/ventilation.py src/heatsafe/core/home_profile.py src/heatsafe/core/cooling.py src/heatsafe/core/indoor_air.py
-      - run: pytest --cov=heatsafe --cov-report=term-missing
+      - run: mypy src/heatsafe/core/models.py src/heatsafe/core/ventilation.py src/heatsafe/core/home_profile.py src/heatsafe/core/cooling.py src/heatsafe/core/indoor_air.py src/heatsafe/ai.py src/heatsafe/research/compound_risk.py src/heatsafe/research/provenance.py
+      - run: pytest --cov=heatsafe --cov-report=term-missing --cov-report=xml
       - run: python scripts/check_links.py
       - run: python scripts/check_secrets.py
+      - uses: actions/upload-artifact@v4
+        if: matrix.python-version == '3.12'
+        with:
+          name: coverage-xml
+          path: coverage.xml
   frontend:
     runs-on: ubuntu-latest
     steps:
