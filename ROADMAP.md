@@ -72,3 +72,14 @@
 - documented public datasets;
 - validated regional benchmarks;
 - complete citation and archival workflow.
+
+### Pack 02 implementation status
+
+- typed source registry and access modes;
+- resilient retrieval with retry, rate limiting and cache;
+- quality assessment and deduplication;
+- immutable snapshot manifests and checksum verification;
+- NOAA CDO, EPA AQS and NASA FIRMS connector foundations;
+- EEA local-Parquet normalization;
+- ERA5-Land request specification;
+- registry-only Türkiye sources pending verified machine interfaces.

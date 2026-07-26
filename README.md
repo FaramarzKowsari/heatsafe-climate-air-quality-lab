@@ -181,3 +181,14 @@ Zenodo: https://zenodo.org/search?q=creators.orcid%3A%220000-0003-1692-0453%22&l
 Software: Apache-2.0. Original documentation and diagrams: CC BY 4.0. Synthetic demonstration data: CC0-1.0. External data remains subject to provider-specific terms.
 
 See [Contributing](CONTRIBUTING.md), [Governance](GOVERNANCE.md), [Security](SECURITY.md), [Privacy](PRIVACY.md), [Responsible Use](RESPONSIBLE_USE.md) and [Roadmap](ROADMAP.md).
+
+## Production-grade data foundation
+
+HeatSafe includes typed environmental source descriptors, resilient retrieval,
+rate limiting, disk caching, data-quality reports, verifiable dataset snapshots
+and official-source foundations for NOAA CDO, US EPA AQS, NASA FIRMS and local
+EEA Parquet. ERA5-Land has an explicit request specification, while Türkiye
+sources remain registry-only until machine access and redistribution conditions
+are verified.
+
+See [DATA_FOUNDATION.md](DATA_FOUNDATION.md).

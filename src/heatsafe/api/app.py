@@ -270,3 +270,8 @@ if STATIC_ROOT.exists():
 @app.get("/", include_in_schema=False)
 def index() -> FileResponse:
     return FileResponse(WEB_ROOT / "index.html")
+
+# HeatSafe Data Foundation Router
+from heatsafe.api.data_foundation import router as data_foundation_router
+
+app.include_router(data_foundation_router)

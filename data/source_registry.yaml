@@ -1,0 +1,34 @@
+schema_version: "1.0"
+sources:
+  - source_id: noaa-cdo-ghcnd
+    authority: NOAA NCEI
+    access: token
+    status: implemented-foundation
+    credential_environment_variables: [NOAA_CDO_TOKEN]
+  - source_id: epa-aqs
+    authority: US EPA
+    access: credential
+    status: implemented-foundation
+    credential_environment_variables: [EPA_AQS_EMAIL, EPA_AQS_KEY]
+  - source_id: eea-air-quality-parquet
+    authority: European Environment Agency
+    access: local-file
+    status: local-parquet-normalizer
+  - source_id: nasa-firms-area
+    authority: NASA FIRMS
+    access: token
+    status: implemented-foundation
+    credential_environment_variables: [NASA_FIRMS_MAP_KEY]
+  - source_id: era5-land
+    authority: Copernicus Climate Change Service
+    access: credential
+    status: request-specification-only
+    credential_environment_variables: [CDSAPI_URL, CDSAPI_KEY]
+  - source_id: turkiye-mgm
+    authority: Meteoroloji Genel Müdürlüğü
+    access: discovery-required
+    status: registry-only
+  - source_id: turkiye-air-quality
+    authority: Türkiye environmental authorities
+    access: discovery-required
+    status: registry-only
