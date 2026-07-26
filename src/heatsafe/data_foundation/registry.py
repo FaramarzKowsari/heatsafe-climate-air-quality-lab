@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import builtins
+
 from heatsafe.data_foundation.contracts import (
     AccessMode,
     LicenseStatus,
@@ -148,7 +150,7 @@ class SourceRegistry:
         if len(self._sources) != len(sources):
             raise ValueError("Duplicate source_id values are not allowed")
 
-    def list(self) -> list[SourceDescriptor]:
+    def list(self) -> builtins.list[SourceDescriptor]:
         return sorted(self._sources.values(), key=lambda source: source.source_id)
 
     def get(self, source_id: str) -> SourceDescriptor:
@@ -162,7 +164,7 @@ class SourceRegistry:
         *,
         category: SourceCategory | None = None,
         access_mode: AccessMode | None = None,
-    ) -> list[SourceDescriptor]:
+    ) -> builtins.list[SourceDescriptor]:
         return [
             source
             for source in self.list()
