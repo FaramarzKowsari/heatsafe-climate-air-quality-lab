@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import UTC, datetime
+from datetime import UTC
 from pathlib import Path
 from typing import Mapping
 

@@ -11,6 +11,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from heatsafe import __version__
+from heatsafe.api.data_foundation import router as data_foundation_router
 from heatsafe.ai import capabilities, deterministic_explanation
 from heatsafe.core.air_quality import summarize_air_quality
 from heatsafe.core.climate import analyze_climate_trend
@@ -271,7 +272,5 @@ if STATIC_ROOT.exists():
 def index() -> FileResponse:
     return FileResponse(WEB_ROOT / "index.html")
 
-# HeatSafe Data Foundation Router
-from heatsafe.api.data_foundation import router as data_foundation_router
-
+# Register the HeatSafe Data Foundation router.
 app.include_router(data_foundation_router)
