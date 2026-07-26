@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Literal
 
 from .models import (
     HourClassification,
@@ -71,6 +72,7 @@ def decide_ventilation(data: VentilationInput) -> VentilationResult:
 
     pm25 = data.pm25_ug_m3
     smoke = data.smoke_context
+    confidence: Literal["Low", "Moderate", "High"]
 
     if smoke == "likely":
         reasons.append("A likely smoke context makes uncontrolled outdoor-air entry unfavorable.")
