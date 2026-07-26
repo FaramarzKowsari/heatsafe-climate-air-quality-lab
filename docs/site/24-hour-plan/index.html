@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>24-Hour HeatSafe Plan | Free Home Heat Action Planner</title>
+<meta name="description" content="Build a practical 24-hour home heat plan for morning, afternoon, evening and night using your indoor conditions, forecast assumptions, air quality and available cooling options.">
+<link rel="canonical" href="https://faramarzkowsari.github.io/heatsafe-climate-air-quality-lab/24-hour-plan/">
+<meta property="og:title" content="24-Hour HeatSafe Plan | HeatSafe Home Lab">
+<meta property="og:description" content="Create a printable home heat plan with explainable actions for ventilation, shade, cooling, clean air and sleep.">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="../assets/styles.css">
+<link rel="stylesheet" href="../assets/tool-apps.css">
+<script defer src="app.js"></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="../"><span class="brand-mark" aria-hidden="true">HS</span><span>HeatSafe Home Lab</span></a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="../#tools">Free Tools</a>
+      <a href="../heatsafe-home-book/">Book Companion</a>
+      <a href="../about-author/">About the Author</a>
+      <a href="../methodology/">Methods</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="page-hero">
+  <div class="wrap">
+    <div class="breadcrumb"><a href="../">HeatSafe Home Lab</a> / 24-Hour HeatSafe Plan</div>
+    <span class="eyebrow">Deterministic browser planner · No AI required</span>
+    <h1>Build My 24-Hour HeatSafe Plan</h1>
+    <p class="lede">Turn a few household conditions into an explainable sequence for early morning, daytime heat, evening transition and overnight recovery. The plan uses your assumptions and does not replace official local guidance.</p>
+    <div class="tool-nav"><a href="../seven-day-heat-log/">Seven-Day Heat Log</a><a href="../home-ventilation-planner/">Ventilation Planner</a><a href="../home-heat-profile/">Home Heat Profile</a></div>
+  </div>
+</section>
+
+<section class="tool-shell">
+  <div class="wrap tool-layout">
+    <form class="tool-form" id="plan-form">
+      <div class="form-section">
+        <span class="kicker">CURRENT HOME</span>
+        <h2>Starting conditions</h2>
+        <div class="field-grid three">
+          <div class="field"><label for="planDate">Plan date <span class="required-mark">*</span></label><input id="planDate" name="planDate" type="date" required></div>
+          <div class="field"><label for="homeLabel">Home or city label</label><input id="homeLabel" name="homeLabel" maxlength="70" placeholder="My apartment / Istanbul"></div>
+          <div class="field"><label for="currentIndoor">Current indoor temperature <span class="required-mark">*</span></label><div class="input-row"><input id="currentIndoor" name="currentIndoor" type="number" min="-20" max="70" step="0.1" value="28" required><span class="unit">°C</span></div></div>
+          <div class="field"><label for="humidity">Indoor humidity</label><div class="input-row"><input id="humidity" name="humidity" type="number" min="0" max="100" step="1" value="50"><span class="unit">%</span></div></div>
+          <div class="field"><label for="heatStorage">Does the home stay hot after sunset?</label><select id="heatStorage" name="heatStorage"><option value="low">Usually cools reasonably</option><option value="medium">Cools slowly</option><option value="high">Stays hot for many hours</option></select></div>
+          <div class="field"><label for="vulnerable">Higher-risk occupant present?</label><select id="vulnerable" name="vulnerable"><option value="no">No special concern entered</option><option value="yes">Yes or unsure</option></select></div>
+        </div>
+        <div class="tool-actions"><button class="ghost" type="button" id="use-latest-log">Use latest Heat Log entry</button></div>
+      </div>
+
+      <div class="form-section">
+        <span class="kicker">OUTDOOR ASSUMPTIONS</span>
+        <h2>Expected day and night</h2>
+        <div class="field-grid three">
+          <div class="field"><label for="dayHigh">Expected outdoor high <span class="required-mark">*</span></label><div class="input-row"><input id="dayHigh" name="dayHigh" type="number" min="-30" max="70" step="0.1" value="36" required><span class="unit">°C</span></div></div>
+          <div class="field"><label for="nightLow">Expected overnight low <span class="required-mark">*</span></label><div class="input-row"><input id="nightLow" name="nightLow" type="number" min="-40" max="60" step="0.1" value="24" required><span class="unit">°C</span></div></div>
+          <div class="field"><label for="airQuality">Outdoor air for ventilation</label><select id="airQuality" name="airQuality"><option value="acceptable">Acceptable according to my local source</option><option value="uncertain">Uncertain or not checked</option><option value="poor">Poor, smoky or particle concern</option></select></div>
+          <div class="field"><label for="pm25">PM2.5, if known</label><div class="input-row"><input id="pm25" name="pm25" type="number" min="0" max="2000" step="0.1"><span class="unit">µg/m³</span></div></div>
+          <div class="field"><label for="sunExposure">Main daytime solar exposure</label><select id="sunExposure" name="sunExposure"><option value="low">Low or well shaded</option><option value="medium">Moderate</option><option value="high">Strong direct sun</option></select></div>
+          <div class="field"><label for="nightNoiseSafety">Can windows be opened safely at night?</label><select id="nightNoiseSafety" name="nightNoiseSafety"><option value="yes">Usually</option><option value="limited">Only partly or for short periods</option><option value="no">No</option></select></div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <span class="kicker">AVAILABLE CONTROLS</span>
+        <h2>What can this home use?</h2>
+        <div class="field-grid three">
+          <div class="field"><label for="externalShade">External shade</label><select id="externalShade" name="externalShade"><option value="yes">Available</option><option value="partial">Partial</option><option value="no">Not available</option></select></div>
+          <div class="field"><label for="crossVentilation">Cross-ventilation</label><select id="crossVentilation" name="crossVentilation"><option value="yes">Good</option><option value="limited">Limited</option><option value="no">Not available</option></select></div>
+          <div class="field"><label for="fan">Portable or ceiling fan</label><select id="fan" name="fan"><option value="yes">Available</option><option value="no">Not available</option></select></div>
+          <div class="field"><label for="cooling">Mechanical cooling</label><select id="cooling" name="cooling"><option value="ac">Air conditioner / heat pump</option><option value="evaporative">Evaporative cooler</option><option value="portable">Portable cooler</option><option value="none">None</option></select></div>
+          <div class="field"><label for="purifier">Air purifier</label><select id="purifier" name="purifier"><option value="yes">Available</option><option value="no">Not available</option></select></div>
+          <div class="field"><label for="coolRoom">Cooler priority room</label><select id="coolRoom" name="coolRoom"><option value="yes">A cooler room or zone is available</option><option value="no">No clear cooler zone</option></select></div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <span class="kicker">ROUTINE</span>
+        <h2>Daily timing</h2>
+        <div class="field-grid three">
+          <div class="field"><label for="wakeTime">Wake time</label><input id="wakeTime" name="wakeTime" type="time" value="07:00"></div>
+          <div class="field"><label for="sleepTime">Sleep time</label><input id="sleepTime" name="sleepTime" type="time" value="23:00"></div>
+          <div class="field"><label for="notes">Priority or constraint</label><input id="notes" name="notes" maxlength="120" placeholder="Work from home; bedroom faces west"></div>
+        </div>
+      </div>
+
+      <div class="tool-actions">
+        <button class="primary" type="submit">Build my 24-hour plan</button>
+        <button class="secondary" type="button" id="reset-plan">Reset</button>
+        <button class="ghost" type="button" id="copy-plan" hidden>Copy summary</button>
+        <button class="ghost" type="button" id="print-plan" hidden>Print plan</button>
+      </div>
+      <p class="save-status" id="plan-save-status">Plan assumptions are stored only in this browser.</p>
+    </form>
+
+    <aside class="tool-sidebar">
+      <span class="kicker">WHAT THE PLANNER BALANCES</span>
+      <h2>Heat removal, heat prevention and clean air.</h2>
+      <ul class="sidebar-list">
+        <li>Use cooler hours before the home stores heat</li>
+        <li>Block sun before windows and rooms become hot</li>
+        <li>Avoid ventilation when outdoor air is entered as poor</li>
+        <li>Protect sleep and create one priority room</li>
+        <li>Escalate to official guidance when conditions become dangerous</li>
+      </ul>
+      <div class="privacy-box"><strong>Privacy:</strong> all inputs and checklist progress remain in your browser.</div>
+      <div class="assumption-box"><strong>Manual plan:</strong> this version uses the conditions you enter. It does not silently fetch or invent a forecast.</div>
+      <div class="safety-box"><strong>Important:</strong> this planner is educational. Follow official local heat, smoke and emergency guidance. Seek urgent help for signs of heat illness.</div>
+      
+<div class="author-mini">
+  <img src="https://github.com/FaramarzKowsari.png?size=180" alt="Faramarz Kowsari">
+  <div>
+    <strong>Created by Faramarz Kowsari</strong>
+    <p>Author, Software Engineer and AI researcher based in Istanbul.</p>
+    <a href="../about-author/">About the author and official profiles →</a>
+  </div>
+</div>
+
+    </aside>
+  </div>
+
+  <div class="wrap">
+    <section class="tool-result" id="plan-result" aria-live="polite" hidden></section>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="../"><span class="brand-mark" aria-hidden="true">HS</span><span>HeatSafe Home Lab</span></a>
+      <p class="small">Free educational decision-support tools for home heat, ventilation, air quality and cooling choices.</p>
+      <p class="small">Created by <a href="../about-author/"><strong>Faramarz Kowsari</strong></a>.</p>
+    </div>
+    <div>
+      <strong>For Readers</strong>
+      <a href="../heatsafe-home-book/">Book Companion</a>
+      <a href="../about-author/">About the Author</a>
+      <a href="../methodology/">Methods and Limits</a>
+    </div>
+    <div>
+      <strong>Official Profiles</strong>
+      <a href="https://orcid.org/0000-0003-1692-0453">ORCID</a>
+      <a href="https://github.com/FaramarzKowsari">GitHub</a>
+      <a href="https://play.google.com/store/search?q=Faramarz_Kowsari&c=books">Google Books</a>
+    </div>
+  </div>
+  <div class="wrap small" style="margin-top:28px">© 2026 Faramarz Kowsari. Educational and research use only. Not an official warning service, medical device, building certification tool or emergency-response system.</div>
+</footer>
+
+</body>
+</html>

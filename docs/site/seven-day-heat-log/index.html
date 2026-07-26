@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Seven-Day Home Heat Log | Free HeatSafe Home Tool</title>
+<meta name="description" content="Record indoor temperature, humidity, outdoor conditions, windows, shade, fans and cooling actions for seven days. View patterns and export CSV or JSON.">
+<link rel="canonical" href="https://faramarzkowsari.github.io/heatsafe-climate-air-quality-lab/seven-day-heat-log/">
+<meta property="og:title" content="Seven-Day Home Heat Log | HeatSafe Home Lab">
+<meta property="og:description" content="A private browser log for home heat, humidity, ventilation, shade and cooling actions.">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="../assets/styles.css">
+<link rel="stylesheet" href="../assets/tool-apps.css">
+<script defer src="app.js"></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="../"><span class="brand-mark" aria-hidden="true">HS</span><span>HeatSafe Home Lab</span></a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="../#tools">Free Tools</a>
+      <a href="../heatsafe-home-book/">Book Companion</a>
+      <a href="../about-author/">About the Author</a>
+      <a href="../methodology/">Methods</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="page-hero">
+  <div class="wrap">
+    <div class="breadcrumb"><a href="../">HeatSafe Home Lab</a> / Seven-Day Home Heat Log</div>
+    <span class="eyebrow">Private local log · No account required</span>
+    <h1>Seven-Day Home Heat Log</h1>
+    <p class="lede">Record what the home was doing, what the weather felt like and which actions were taken. The log turns scattered impressions into a visible pattern without sending your household data to a server.</p>
+    <div class="tool-nav"><a href="../24-hour-plan/">24-Hour Plan</a><a href="../indoor-outdoor-comparator/">Indoor–Outdoor Comparator</a><a href="../home-heat-profile/">Home Heat Profile</a></div>
+  </div>
+</section>
+
+<section class="tool-shell">
+  <div class="wrap tool-layout">
+    <form class="tool-form" id="log-form">
+      <div class="form-section">
+        <span class="kicker">NEW OBSERVATION</span>
+        <h2>When and where?</h2>
+        <div class="field-grid three">
+          <div class="field"><label for="date">Date <span class="required-mark">*</span></label><input id="date" name="date" type="date" required></div>
+          <div class="field"><label for="time">Time <span class="required-mark">*</span></label><input id="time" name="time" type="time" required></div>
+          <div class="field"><label for="room">Room or zone</label><input id="room" name="room" maxlength="60" placeholder="Living room"></div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <span class="kicker">CONDITIONS</span>
+        <h2>Temperatures, humidity and particles</h2>
+        <div class="field-grid three">
+          <div class="field"><label for="indoorTemp">Indoor temperature <span class="required-mark">*</span></label><div class="input-row"><input id="indoorTemp" name="indoorTemp" type="number" min="-30" max="70" step="0.1" required><span class="unit">°C</span></div></div>
+          <div class="field"><label for="outdoorTemp">Outdoor temperature</label><div class="input-row"><input id="outdoorTemp" name="outdoorTemp" type="number" min="-60" max="70" step="0.1"><span class="unit">°C</span></div></div>
+          <div class="field"><label for="humidity">Indoor humidity</label><div class="input-row"><input id="humidity" name="humidity" type="number" min="0" max="100" step="1"><span class="unit">%</span></div></div>
+          <div class="field"><label for="pm25">Outdoor PM2.5, if known</label><div class="input-row"><input id="pm25" name="pm25" type="number" min="0" max="2000" step="0.1"><span class="unit">µg/m³</span></div></div>
+          <div class="field"><label for="comfort">How did the room feel?</label><select id="comfort" name="comfort"><option value="">Not recorded</option><option value="comfortable">Comfortable</option><option value="warm">Warm</option><option value="hot">Hot</option><option value="oppressive">Oppressive or sticky</option></select></div>
+          <div class="field"><label for="occupancy">People in the room</label><input id="occupancy" name="occupancy" type="number" min="0" max="30" step="1" value="1"></div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <span class="kicker">HOME ACTIONS</span>
+        <h2>What was open, closed or running?</h2>
+        <div class="field-grid three">
+          <div class="field"><label for="windows">Windows</label><select id="windows" name="windows"><option value="closed">Closed</option><option value="partly-open">Partly open</option><option value="open">Open</option></select></div>
+          <div class="field"><label for="shade">Shade or curtains</label><select id="shade" name="shade"><option value="open">Open / not shading</option><option value="partial">Partly shading</option><option value="closed">Closed / shading</option><option value="external">External shade active</option></select></div>
+          <div class="field"><label for="fan">Fan</label><select id="fan" name="fan"><option value="off">Off</option><option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option></select></div>
+          <div class="field"><label for="cooling">Air conditioner or cooler</label><select id="cooling" name="cooling"><option value="off">Off</option><option value="fan-only">Fan-only mode</option><option value="low">Low cooling</option><option value="active">Active cooling</option></select></div>
+          <div class="field"><label for="purifier">Air purifier</label><select id="purifier" name="purifier"><option value="off">Off</option><option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option></select></div>
+          <div class="field"><label for="activity">Recent heat-producing activity</label><select id="activity" name="activity"><option value="none">None</option><option value="cooking">Cooking</option><option value="laundry">Laundry</option><option value="exercise">Exercise</option><option value="electronics">Heavy electronics / lighting</option><option value="other">Other</option></select></div>
+          <div class="field full"><label for="notes">Notes</label><textarea id="notes" name="notes" maxlength="500" placeholder="Sun reached the west window; windows opened at 20:15; room cooled slowly."></textarea></div>
+        </div>
+      </div>
+
+      <div class="tool-actions">
+        <button class="primary" type="submit">Add observation</button>
+        <button class="secondary" type="button" id="reset-form">Reset form</button>
+        <button class="ghost" type="button" id="print-log">Print log</button>
+      </div>
+      <p class="save-status" id="log-save-status">Observations are stored only in this browser.</p>
+    </form>
+
+    <aside class="tool-sidebar">
+      <span class="kicker">A USEFUL RHYTHM</span>
+      <h2>Record at consistent moments.</h2>
+      <ul class="sidebar-list">
+        <li>Morning before strong sun</li>
+        <li>Mid-afternoon near peak indoor heat</li>
+        <li>Evening before ventilation</li>
+        <li>About 30–60 minutes after a major action</li>
+        <li>Before sleep and after waking</li>
+      </ul>
+      <div class="privacy-box"><strong>Privacy:</strong> all entries remain in your browser unless you export them.</div>
+      <div class="info-box"><strong>Tip:</strong> the 24-Hour Planner can use your most recent log entry to prefill current indoor temperature, humidity and PM2.5.</div>
+      <div class="safety-box"><strong>Important:</strong> use official local warnings and seek qualified help for dangerous heat, smoke, electrical or building conditions.</div>
+      
+<div class="author-mini">
+  <img src="https://github.com/FaramarzKowsari.png?size=180" alt="Faramarz Kowsari">
+  <div>
+    <strong>Created by Faramarz Kowsari</strong>
+    <p>Author, Software Engineer and AI researcher based in Istanbul.</p>
+    <a href="../about-author/">About the author and official profiles →</a>
+  </div>
+</div>
+
+    </aside>
+  </div>
+
+  <div class="wrap" style="margin-top:26px">
+    <section class="data-panel">
+      <div class="result-pathway-head">
+        <div><span class="kicker">YOUR LOCAL DATA</span><h2 style="margin-bottom:6px">Seven-day dashboard</h2><p class="small">The dashboard uses the most recent seven calendar days represented in your stored observations.</p></div>
+        <div class="pill-row"><span class="pill" id="entry-count-pill">0 entries</span><span class="pill" id="date-range-pill">No date range</span></div>
+      </div>
+
+      <div id="dashboard-empty" class="empty-state">Add your first observation to create the dashboard.</div>
+
+      <div id="dashboard-content" hidden>
+        <div class="metric-grid" id="metrics"></div>
+        <div class="chart-card">
+          <h3>Temperature timeline</h3>
+          <div id="temperature-chart" role="img" aria-label="Indoor and outdoor temperature timeline"></div>
+          <div class="chart-legend"><span class="legend-key">Indoor temperature</span><span class="legend-key outdoor">Outdoor temperature</span></div>
+        </div>
+        <div class="insight-list" id="insights"></div>
+      </div>
+
+      <div class="tool-actions no-print">
+        <button class="ghost" type="button" id="export-csv">Export CSV</button>
+        <button class="ghost" type="button" id="export-json">Export JSON</button>
+        <label class="file-label">Import JSON<input type="file" id="import-json" accept="application/json,.json"></label>
+        <button class="danger" type="button" id="clear-all">Clear all observations</button>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Date & time</th><th>Room</th><th>Indoor</th><th>Outdoor</th><th>Humidity</th><th>Windows</th><th>Shade</th><th>Fan</th><th>Cooling</th><th>Notes</th><th></th></tr></thead>
+          <tbody id="log-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="../"><span class="brand-mark" aria-hidden="true">HS</span><span>HeatSafe Home Lab</span></a>
+      <p class="small">Free educational decision-support tools for home heat, ventilation, air quality and cooling choices.</p>
+      <p class="small">Created by <a href="../about-author/"><strong>Faramarz Kowsari</strong></a>.</p>
+    </div>
+    <div>
+      <strong>For Readers</strong>
+      <a href="../heatsafe-home-book/">Book Companion</a>
+      <a href="../about-author/">About the Author</a>
+      <a href="../methodology/">Methods and Limits</a>
+    </div>
+    <div>
+      <strong>Official Profiles</strong>
+      <a href="https://orcid.org/0000-0003-1692-0453">ORCID</a>
+      <a href="https://github.com/FaramarzKowsari">GitHub</a>
+      <a href="https://play.google.com/store/search?q=Faramarz_Kowsari&c=books">Google Books</a>
+    </div>
+  </div>
+  <div class="wrap small" style="margin-top:28px">© 2026 Faramarz Kowsari. Educational and research use only. Not an official warning service, medical device, building certification tool or emergency-response system.</div>
+</footer>
+
+</body>
+</html>
