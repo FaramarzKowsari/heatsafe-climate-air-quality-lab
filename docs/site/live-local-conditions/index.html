@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Live Local Heat and Air Quality | HeatSafe Home Lab</title>
+<meta name="description" content="Search a city or use device location to view model-derived weather, PM2.5 and AQI, then send up to 72 hourly values to the HeatSafe Ventilation Planner.">
+<link rel="canonical" href="https://faramarzkowsari.github.io/heatsafe-climate-air-quality-lab/live-local-conditions/">
+<meta property="og:title" content="Live Local Heat and Air Quality | HeatSafe Home Lab">
+<meta property="og:description" content="Free local weather and air-quality forecast dashboard with direct transfer to the explainable ventilation planner.">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="../assets/styles.css"><link rel="stylesheet" href="../assets/tool-apps.css">
+<script defer src="app.js"></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="../"><span class="brand-mark" aria-hidden="true">HS</span><span>HeatSafe Home Lab</span></a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="../#tools">Free Tools</a>
+      <a href="../heatsafe-home-book/">Book Companion</a>
+      <a href="../about-author/">About the Author</a>
+      <a href="../methodology/">Methods</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="page-hero">
+<div class="wrap">
+  <div class="breadcrumb"><a href="../">HeatSafe Home Lab</a> / Live Local Conditions</div>
+  <span class="eyebrow">Optional online data · No API key required</span>
+  <h1>Live Local Heat and Air Quality</h1>
+  <p class="lede">Search for a city or allow browser location access. HeatSafe combines model-derived hourly weather and air-quality forecasts, displays their timestamps and sources, and can transfer the selected hours into the manual Ventilation Planner.</p>
+  <div class="tool-nav"><a href="../home-ventilation-planner/">Ventilation Planner</a><a href="../indoor-outdoor-comparator/">Indoor–Outdoor Comparator</a><a href="../24-hour-plan/">24-Hour Plan</a></div>
+</div>
+</section>
+
+<section class="tool-shell">
+<div class="wrap">
+  <div class="safety-box" style="margin-top:0;margin-bottom:22px">
+    <strong>API deployment notice:</strong> this package is configured with Open-Meteo public endpoints for evaluation and non-commercial prototyping. Before a book-promotional or other commercial production launch, route requests through a properly licensed server-side proxy or a self-hosted data service. The manual HeatSafe tools do not depend on this external API.
+  </div>
+</div>
+<div class="wrap tool-layout">
+<section class="tool-form location-search-panel">
+  <div class="form-section">
+    <span class="kicker">CHOOSE A LOCATION</span><h2>Search or use this device</h2>
+    <div class="field-grid">
+      <div class="field full"><label for="city-search">City, town or postal code</label><input id="city-search" maxlength="100" autocomplete="off" placeholder="Istanbul, Toronto, Madrid, Berlin..."></div>
+    </div>
+    <div class="tool-actions">
+      <button class="primary" type="button" id="search-location">Search locations</button>
+      <button class="secondary" type="button" id="use-location">Use my device location</button>
+    </div>
+    <div class="status-line" id="search-status" aria-live="polite"></div>
+    <div class="location-results" id="location-results"></div>
+  </div>
+
+  <div class="form-section">
+    <span class="kicker">FORECAST RANGE</span><h2>Load hourly data</h2>
+    <div class="field-grid">
+      <div class="field"><label for="hours">Hours to load</label><select id="hours"><option value="24">24 hours</option><option value="48" selected>48 hours</option><option value="72">72 hours</option></select></div>
+      <div class="field"><label for="indoor-temp">Current indoor temperature</label><div class="input-row"><input id="indoor-temp" type="number" min="-20" max="70" step="0.1" value="29"><span class="unit">°C</span></div><span class="hint">Used only when sending data to the Ventilation Planner.</span></div>
+      <div class="field"><label for="smoke-override">Local smoke context</label><select id="smoke-override"><option value="none">No smoke warning entered</option><option value="possible">Possible or uncertain smoke</option><option value="likely">Likely smoke / official local concern</option></select></div>
+      <div class="field"><label for="cross-vent">Cross-ventilation at home</label><select id="cross-vent"><option value="yes">Available</option><option value="no">Limited / single-sided</option></select></div>
+    </div>
+    <div class="tool-actions">
+      <button class="primary" type="button" id="load-data" disabled>Load live forecast</button>
+      <button class="ghost" type="button" id="open-manual">Use manual planner instead</button>
+    </div>
+    <div class="status-line" id="load-status" aria-live="polite"></div>
+  </div>
+</section>
+
+<aside class="tool-sidebar">
+  <span class="kicker">WHAT “LIVE” MEANS HERE</span><h2>Current model data, not an official sensor network.</h2>
+  <ul class="sidebar-list">
+    <li>Weather values are model-derived current conditions and forecasts.</li>
+    <li>Air quality is based on CAMS atmospheric-composition forecasts.</li>
+    <li>PM2.5 at a model grid cell may differ from a nearby street or indoor sensor.</li>
+    <li>Smoke context is not automatically diagnosed; use the manual override when trusted local sources report smoke.</li>
+    <li>The manual planner remains available when the network or external API is unavailable.</li>
+  </ul>
+  <div class="privacy-box"><strong>Privacy:</strong> city search sends the search text to the location service. Device location is requested only after you press the button and grant browser permission.</div>
+  <div class="safety-box"><strong>Important:</strong> do not use this page as an emergency warning service. Follow official local heat, smoke and air-quality guidance.</div>
+  
+<div class="author-mini">
+  <img src="https://github.com/FaramarzKowsari.png?size=180" alt="Faramarz Kowsari">
+  <div>
+    <strong>Created by Faramarz Kowsari</strong>
+    <p>Author, Software Engineer and AI researcher based in Istanbul.</p>
+    <a href="../about-author/">About the author and official profiles →</a>
+  </div>
+</div>
+
+</aside>
+</div>
+
+<div class="wrap" style="margin-top:26px">
+<section class="data-panel" id="live-dashboard">
+  <div id="dashboard-empty" class="empty-state">Choose a location and load the forecast.</div>
+  <div id="dashboard-content" hidden>
+    <div class="live-banner">
+      <div><span class="kicker">SELECTED LOCATION</span><h2 id="location-title"></h2><p id="location-meta" class="small"></p></div>
+      <div class="tool-actions no-print" style="margin-top:0"><button class="primary" type="button" id="send-planner">Send hours to Ventilation Planner</button></div>
+    </div>
+
+    <div class="current-grid" id="current-grid"></div>
+    <div class="chart-card"><h3>Hourly temperature and PM2.5</h3><div id="live-chart"></div><div class="chart-legend"><span class="legend-key">Temperature</span><span class="legend-key pm">PM2.5</span></div></div>
+    <div class="insight-list" id="live-insights"></div>
+
+    <div class="tool-actions no-print">
+      <button class="ghost" type="button" id="export-json">Export merged JSON</button>
+      <button class="ghost" type="button" id="export-csv">Export merged CSV</button>
+      <button class="ghost" type="button" id="print-dashboard">Print dashboard</button>
+    </div>
+
+    <div class="table-wrap"><table class="data-table">
+      <thead><tr><th>Local time</th><th>Temperature</th><th>Humidity</th><th>Wind</th><th>Solar radiation</th><th>PM2.5</th><th>US AQI</th><th>European AQI</th><th>Dust</th></tr></thead>
+      <tbody id="live-table"></tbody>
+    </table></div>
+
+    <div class="source-box source-links">
+      <strong>Data attribution and limits:</strong>
+      Weather and air-quality values are model-derived. Weather and geocoding are provided through Open-Meteo; location results are based on GeoNames. Air-quality data is provided through Open-Meteo using CAMS ENSEMBLE and CAMS global/European forecasts.
+      <div style="margin-top:8px">
+        <a href="https://open-meteo.com/en/docs" target="_blank" rel="noopener">Open-Meteo Weather Documentation</a>
+        <a href="https://open-meteo.com/en/docs/air-quality-api" target="_blank" rel="noopener">Air Quality Documentation</a>
+        <a href="https://open-meteo.com/en/docs/geocoding-api" target="_blank" rel="noopener">Geocoding Documentation</a>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="../"><span class="brand-mark" aria-hidden="true">HS</span><span>HeatSafe Home Lab</span></a>
+      <p class="small">Free educational decision-support tools for home heat, ventilation, air quality and cooling choices.</p>
+      <p class="small">Created by <a href="../about-author/"><strong>Faramarz Kowsari</strong></a>.</p>
+    </div>
+    <div>
+      <strong>For Readers</strong>
+      <a href="../heatsafe-home-book/">Book Companion</a>
+      <a href="../about-author/">About the Author</a>
+      <a href="../methodology/">Methods and Limits</a>
+    </div>
+    <div>
+      <strong>Official Profiles</strong>
+      <a href="https://orcid.org/0000-0003-1692-0453">ORCID</a>
+      <a href="https://github.com/FaramarzKowsari">GitHub</a>
+      <a href="https://play.google.com/store/search?q=Faramarz_Kowsari&c=books">Google Books</a>
+    </div>
+  </div>
+  <div class="wrap small" style="margin-top:28px">© 2026 Faramarz Kowsari. Educational and research use only. Not an official warning service, medical device, building certification tool or emergency-response system.</div>
+</footer>
+
+</body>
+</html>

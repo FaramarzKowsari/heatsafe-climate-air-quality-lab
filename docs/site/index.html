@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>HeatSafe Home Lab | Free Home Heat, Ventilation and Cooling Tools</title>
-<meta name="description" content="Free browser tools to understand home heat, plan ventilation, estimate cooling costs, compare indoor and outdoor conditions, and build a practical heat plan. No coding or account required.">
+<title>HeatSafe Home Lab | Free Home Heat, Air Quality and Cooling Tools</title>
+<meta name="description" content="Free browser tools and optional live weather and air-quality data to understand home heat, plan ventilation, estimate cooling costs, compare conditions and build a practical heat plan.">
 <link rel="canonical" href="https://faramarzkowsari.github.io/heatsafe-climate-air-quality-lab/">
 <meta property="og:title" content="HeatSafe Home Lab">
 <meta property="og:description" content="Free interactive tools for home heat, ventilation, air quality and cooling decisions.">
@@ -23,145 +23,22 @@
 </script>
 </head>
 <body>
-
-<header class="site-header">
-  <div class="wrap nav">
-    <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">HS</span><span>HeatSafe Home Lab</span></a>
-    <nav class="nav-links" aria-label="Primary navigation">
-      <a href="#tools">Free Tools</a>
-      <a href="heatsafe-home-book/">Book Companion</a>
-      <a href="#author">About the Author</a>
-      <a href="#research">Research</a>
-    </nav>
-  </div>
-</header>
-
+<header class="site-header"><div class="wrap nav"><a class="brand" href="./"><span class="brand-mark" aria-hidden="true">HS</span><span>HeatSafe Home Lab</span></a><nav class="nav-links" aria-label="Primary navigation"><a href="#tools">Free Tools</a><a href="heatsafe-home-book/">Book Companion</a><a href="#author">About the Author</a><a href="#research">Research</a></nav></div></header>
 <main>
-<section class="hero">
-  <div class="wrap hero-grid">
-    <div>
-      <span class="eyebrow">Free interactive companion to <em>HeatSafe Home</em></span>
-      <h1>Make your home cooler, cleaner and easier to understand.</h1>
-      <p class="lede">Use simple browser tools to identify likely heat pathways, check whether ventilation may help, estimate cooling costs, compare indoor and outdoor conditions, and build a practical daily plan.</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="#tools">Open the Free Tools</a>
-        <a class="btn btn-secondary" href="heatsafe-home-book/">Explore the Book Companion</a>
-      </div>
-      <div class="trust-strip">
-        <div class="trust">✓ No coding required</div>
-        <div class="trust">✓ No account required</div>
-        <div class="trust">✓ Core tools run in your browser</div>
-      </div>
-    </div>
-    <div class="hero-art">
-      <svg viewBox="0 0 620 460" role="img" aria-label="Home cutaway showing sunlight, ventilation and clean-air pathways">
-        <defs><linearGradient id="sky" x1="0" x2="1"><stop offset="0" stop-color="#fff3d6"/><stop offset="1" stop-color="#dff6fb"/></linearGradient></defs>
-        <rect width="620" height="460" rx="24" fill="url(#sky)"/>
-        <circle cx="96" cy="80" r="42" fill="#ffb14a"/>
-        <g stroke="#ef7f4c" stroke-width="8" stroke-linecap="round" opacity=".75"><path d="M126 112L218 192"/><path d="M143 84L260 151"/><path d="M100 132L170 226"/></g>
-        <path d="M150 224L310 100L485 224V390H150Z" fill="#fff" stroke="#17323b" stroke-width="6"/>
-        <path d="M135 228L310 86L500 228" fill="none" stroke="#17323b" stroke-width="16" stroke-linecap="round"/>
-        <rect x="190" y="260" width="96" height="90" rx="8" fill="#ffd8bd" stroke="#17323b" stroke-width="5"/>
-        <rect x="355" y="240" width="92" height="150" rx="8" fill="#dff6fb" stroke="#17323b" stroke-width="5"/>
-        <path d="M401 240V390" stroke="#17323b" stroke-width="4"/>
-        <g fill="none" stroke="#20a8c5" stroke-width="12" stroke-linecap="round"><path d="M65 300C130 270 185 315 250 285"/><path d="M245 285C320 250 365 290 430 266"/><path d="M430 266C490 244 540 258 575 230"/></g>
-        <g fill="#60aa8e"><circle cx="235" cy="286" r="7"/><circle cx="275" cy="270" r="5"/><circle cx="320" cy="277" r="6"/><circle cx="456" cy="255" r="5"/></g>
-      </svg>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="tools">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="kicker">START HERE</span>
-      <h2>What would you like to check today?</h2>
-      <p>Choose a tool. Each one explains its assumptions, shows the inputs it used, and keeps the language practical.</p>
-    </div>
-    <div class="grid">
-      <article class="tool-card"><span class="badge">Available now</span><div class="tool-icon">🏠</div><h3>Check My Home Heat Profile</h3><p>Identify likely heat pathways such as afternoon sun, roof exposure, weak airflow and internal heat sources.</p><a href="home-heat-profile/">Open Home Heat Profile →</a></article>
-      <article class="tool-card"><span class="badge">Available now</span><div class="tool-icon">🪟</div><h3>Check a Ventilation Decision</h3><p>Compare indoor heat, outdoor temperature, humidity, PM2.5, smoke context and airflow conditions.</p><a href="home-ventilation-planner/">Open Ventilation Planner →</a></article>
-      <article class="tool-card"><span class="badge">Available now</span><div class="tool-icon">⚡</div><h3>Estimate My Cooling Cost</h3><p>Estimate a transparent low, central and high energy-cost range using your own device and electricity price.</p><a href="cooling-cost-estimator/">Open Cost Estimator →</a></article>
-      <article class="tool-card"><span class="badge">Available now</span><div class="tool-icon">🌡️</div><h3>Compare Indoor and Outdoor Conditions</h3><p>See whether outdoor air is likely to remove heat or add heat, and record the context around your decision.</p><a href="indoor-outdoor-comparator/">Open Comparator →</a></article>
-      <article class="tool-card"><span class="badge">Available now</span><div class="tool-icon">🗓️</div><h3>Start a Seven-Day Heat Log</h3><p>Store observations locally in your browser, review patterns and export your records as CSV.</p><a href="seven-day-heat-log/">Open Heat Log →</a></article>
-      <article class="tool-card"><span class="badge">Available now</span><div class="tool-icon">🧭</div><h3>Build My 24-Hour Heat Plan</h3><p>Turn your home conditions into a practical morning, afternoon, evening and night action sequence.</p><a href="24-hour-plan/">Build a Daily Plan →</a></article>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap two-col">
-    <div class="panel"><span class="kicker">PRIVACY FIRST</span><h2>Your home data can stay on your device.</h2><p>The core tools use calculations in your browser. No account is required.</p></div>
-    <div class="panel"><span class="kicker">EXPLAINABLE RESULTS</span><h2>See the reasons, not just a score.</h2><p>HeatSafe describes likely pathways, assumptions, missing information and practical limitations rather than presenting a certified building or health rating.</p></div>
-  </div>
-</section>
-
-<section class="author-section" id="author">
-  <div class="wrap">
-    <div class="author-card">
-      <div class="author-photo-wrap">
-        <img class="author-photo" src="https://github.com/FaramarzKowsari.png?size=480" alt="Faramarz Kowsari, author, Software Engineer and AI researcher">
-        <div class="author-badge">Faramarz Kowsari<br><span class="small">Author · Software Engineer · AI Researcher</span></div>
-      </div>
-      <div class="author-copy">
-        <span class="kicker">ABOUT THE AUTHOR</span>
-        <h2>Faramarz Kowsari</h2>
-        
-<p>Faramarz Kowsari is an author, Software Engineer and AI researcher based in Istanbul. Focusing on the intersection of technology, education, and personal growth, he has published over 80 digital titles on international platforms. His areas of expertise span Artificial Intelligence, prompt engineering, modern trading strategies (Smart Money Concepts &amp; algorithmic trading), as well as classical literature and mindfulness. In addition to writing, he develops web-based educational tools and creates specialized instructional video content.</p>
-
-        <h3>Official Profiles &amp; Repositories</h3>
-        
-<div class="profile-list" aria-label="Official profiles and repositories">
-  <a rel="me noopener" target="_blank" href="https://orcid.org/0000-0003-1692-0453">ORCID</a>
-  <a rel="noopener" target="_blank" href="https://scholar.google.com/citations?user=G7tP5WMAAAAJ&hl=en">Google Scholar</a>
-  <a rel="me noopener" target="_blank" href="https://github.com/FaramarzKowsari">GitHub</a>
-  <a rel="me noopener" target="_blank" href="https://www.linkedin.com/in/faramarzkowsari">LinkedIn</a>
-  <a rel="noopener" target="_blank" href="https://play.google.com/store/search?q=Faramarz_Kowsari&c=books">Google Books</a>
-  <a rel="me noopener" target="_blank" href="https://faramarzkowsari.github.io/">Official Website</a>
-  <a rel="noopener" target="_blank" href="https://zenodo.org/search?q=creators.orcid%3A%220000-0003-1692-0453%22&l=list&p=1&s=10&sort=bestmatch">Zenodo Records</a>
-</div>
-
-        <div class="button-row">
-          <a class="btn btn-primary" href="about-author/">View Full Author Profile</a>
-          <a class="btn btn-secondary" href="https://play.google.com/store/search?q=Faramarz_Kowsari&c=books">Explore Books</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="research">
-  <div class="wrap">
-    <div class="callout">
-      <div><h2>Built for readers. Documented for researchers.</h2><p>Explore climate trends, air quality, wildfire smoke, datasets, methods, reproducibility and the open-source research platform behind these tools.</p></div>
-      <div class="button-row"><a class="btn btn-secondary" href="methodology/">Methods</a><a class="btn btn-secondary" href="datasets/">Data Sources</a><a class="btn btn-secondary" href="https://github.com/FaramarzKowsari/heatsafe-climate-air-quality-lab">Source Code</a></div>
-    </div>
-  </div>
-</section>
+<section class="hero"><div class="wrap hero-grid"><div><span class="eyebrow">Free interactive companion to <em>HeatSafe Home</em></span><h1>Make your home cooler, cleaner and easier to understand.</h1><p class="lede">Use private browser tools, manual measurements and optional live weather and air-quality forecasts to examine heat pathways, plan ventilation, estimate costs and build a practical daily response.</p><div class="hero-actions"><a class="btn btn-primary" href="#tools">Open the Free Tools</a><a class="btn btn-secondary" href="live-local-conditions/">Check Live Local Conditions</a></div><div class="trust-strip"><div class="trust">✓ No coding required</div><div class="trust">✓ No account required</div><div class="trust">✓ Manual mode always available</div></div></div><div class="hero-art"><svg viewBox="0 0 620 460" role="img" aria-label="Home cutaway showing sunlight, ventilation and clean-air pathways"><defs><linearGradient id="sky" x1="0" x2="1"><stop offset="0" stop-color="#fff3d6"/><stop offset="1" stop-color="#dff6fb"/></linearGradient></defs><rect width="620" height="460" rx="24" fill="url(#sky)"/><circle cx="96" cy="80" r="42" fill="#ffb14a"/><g stroke="#ef7f4c" stroke-width="8" stroke-linecap="round" opacity=".75"><path d="M126 112L218 192"/><path d="M143 84L260 151"/><path d="M100 132L170 226"/></g><path d="M150 224L310 100L485 224V390H150Z" fill="#fff" stroke="#17323b" stroke-width="6"/><path d="M135 228L310 86L500 228" fill="none" stroke="#17323b" stroke-width="16" stroke-linecap="round"/><rect x="190" y="260" width="96" height="90" rx="8" fill="#ffd8bd" stroke="#17323b" stroke-width="5"/><rect x="355" y="240" width="92" height="150" rx="8" fill="#dff6fb" stroke="#17323b" stroke-width="5"/><path d="M401 240V390" stroke="#17323b" stroke-width="4"/><g fill="none" stroke="#20a8c5" stroke-width="12" stroke-linecap="round"><path d="M65 300C130 270 185 315 250 285"/><path d="M245 285C320 250 365 290 430 266"/><path d="M430 266C490 244 540 258 575 230"/></g><g fill="#60aa8e"><circle cx="235" cy="286" r="7"/><circle cx="275" cy="270" r="5"/><circle cx="320" cy="277" r="6"/><circle cx="456" cy="255" r="5"/></g></svg></div></div></section>
+<section class="section" id="tools"><div class="wrap"><div class="section-head"><span class="kicker">START HERE</span><h2>What would you like to check today?</h2><p>Choose a tool. Live data is optional; household inputs and results remain explainable.</p></div><div class="grid">
+<article class="tool-card"><span class="badge">Live data optional</span><div class="tool-icon">📍</div><h3>Check Live Local Heat and Air Quality</h3><p>Search a city or use device location to load weather, PM2.5 and AQI forecasts and send them to the planner.</p><a href="live-local-conditions/">Open Live Conditions →</a></article>
+<article class="tool-card"><span class="badge">Available now</span><div class="tool-icon">🏠</div><h3>Check My Home Heat Profile</h3><p>Identify likely heat pathways such as afternoon sun, roof exposure, weak airflow and internal heat sources.</p><a href="home-heat-profile/">Open Home Heat Profile →</a></article>
+<article class="tool-card"><span class="badge">Live + manual</span><div class="tool-icon">🪟</div><h3>Plan Better Ventilation Hours</h3><p>Compare indoor heat, outdoor temperature, humidity, PM2.5, smoke context and airflow conditions.</p><a href="home-ventilation-planner/">Open Ventilation Planner →</a></article>
+<article class="tool-card"><span class="badge">Available now</span><div class="tool-icon">⚡</div><h3>Estimate My Cooling Cost</h3><p>Estimate a transparent low, central and high energy-cost range using your own device and electricity price.</p><a href="cooling-cost-estimator/">Open Cost Estimator →</a></article>
+<article class="tool-card"><span class="badge">Available now</span><div class="tool-icon">🌡️</div><h3>Compare Indoor and Outdoor Conditions</h3><p>Record household actions and inspect thermal response patterns without claiming causation.</p><a href="indoor-outdoor-comparator/">Open Comparator →</a></article>
+<article class="tool-card"><span class="badge">Available now</span><div class="tool-icon">🗓️</div><h3>Start a Seven-Day Heat Log</h3><p>Store observations locally in your browser, review patterns and export your records as CSV or JSON.</p><a href="seven-day-heat-log/">Open Heat Log →</a></article>
+<article class="tool-card"><span class="badge">Available now</span><div class="tool-icon">🧭</div><h3>Build My 24-Hour Heat Plan</h3><p>Turn your home conditions into a practical morning, afternoon, evening and night action sequence.</p><a href="24-hour-plan/">Build a Daily Plan →</a></article>
+</div></div></section>
+<section class="section"><div class="wrap two-col"><div class="panel"><span class="kicker">PRIVACY FIRST</span><h2>Your home data can stay on your device.</h2><p>The core tools use calculations in your browser. Location and forecast services are contacted only when you choose live data.</p></div><div class="panel"><span class="kicker">EXPLAINABLE RESULTS</span><h2>See the reasons, timestamps and sources.</h2><p>HeatSafe distinguishes household inputs, model-derived forecasts, missing information and practical limitations.</p></div></div></section>
+<section class="author-section" id="author"><div class="wrap"><div class="author-card"><div class="author-photo-wrap"><img class="author-photo" src="https://github.com/FaramarzKowsari.png?size=480" alt="Faramarz Kowsari, author, Software Engineer and AI researcher"><div class="author-badge">Faramarz Kowsari<br><span class="small">Author · Software Engineer · AI Researcher</span></div></div><div class="author-copy"><span class="kicker">ABOUT THE AUTHOR</span><h2>Faramarz Kowsari</h2><p>Faramarz Kowsari is an author, Software Engineer and AI researcher based in Istanbul. Focusing on the intersection of technology, education, and personal growth, he has published over 80 digital titles on international platforms. His areas of expertise span Artificial Intelligence, prompt engineering, modern trading strategies (Smart Money Concepts &amp; algorithmic trading), as well as classical literature and mindfulness. In addition to writing, he develops web-based educational tools and creates specialized instructional video content.</p><h3>Official Profiles &amp; Repositories</h3><div class="profile-list" aria-label="Official profiles and repositories"><a rel="me noopener" target="_blank" href="https://orcid.org/0000-0003-1692-0453">ORCID</a><a rel="noopener" target="_blank" href="https://scholar.google.com/citations?user=G7tP5WMAAAAJ&hl=en">Google Scholar</a><a rel="me noopener" target="_blank" href="https://github.com/FaramarzKowsari">GitHub</a><a rel="me noopener" target="_blank" href="https://www.linkedin.com/in/faramarzkowsari">LinkedIn</a><a rel="noopener" target="_blank" href="https://play.google.com/store/search?q=Faramarz_Kowsari&c=books">Google Books</a><a rel="me noopener" target="_blank" href="https://faramarzkowsari.github.io/">Official Website</a><a rel="noopener" target="_blank" href="https://zenodo.org/search?q=creators.orcid%3A%220000-0003-1692-0453%22&l=list&p=1&s=10&sort=bestmatch">Zenodo Records</a></div><div class="button-row"><a class="btn btn-primary" href="about-author/">View Full Author Profile</a><a class="btn btn-secondary" href="https://play.google.com/store/search?q=Faramarz_Kowsari&c=books">Explore Books</a></div></div></div></div></section>
+<section class="section" id="research"><div class="wrap"><div class="callout"><div><h2>Built for readers. Documented for researchers.</h2><p>Explore climate trends, air quality, wildfire smoke, datasets, methods, reproducibility and the open-source research platform behind these tools.</p></div><div class="button-row"><a class="btn btn-secondary" href="methodology/">Methods</a><a class="btn btn-secondary" href="datasets/">Data Sources</a><a class="btn btn-secondary" href="https://github.com/FaramarzKowsari/heatsafe-climate-air-quality-lab">Source Code</a></div></div></div></section>
 </main>
-
-<footer class="site-footer">
-  <div class="wrap footer-grid">
-    <div>
-      <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">HS</span><span>HeatSafe Home Lab</span></a>
-      <p class="small">Free educational decision-support tools for home heat, ventilation, air quality and cooling choices.</p>
-      <p class="small">Created by <a href="about-author/"><strong>Faramarz Kowsari</strong></a>.</p>
-    </div>
-    <div>
-      <strong>For Readers</strong>
-      <a href="heatsafe-home-book/">Book Companion</a>
-      <a href="about-author/">About the Author</a>
-      <a href="methodology/">Methods and Limits</a>
-    </div>
-    <div>
-      <strong>Official Profiles</strong>
-      <a href="https://orcid.org/0000-0003-1692-0453">ORCID</a>
-      <a href="https://github.com/FaramarzKowsari">GitHub</a>
-      <a href="https://play.google.com/store/search?q=Faramarz_Kowsari&c=books">Google Books</a>
-    </div>
-  </div>
-  <div class="wrap small" style="margin-top:28px">© 2026 Faramarz Kowsari. Educational and research use only. Not an official warning service, medical device, building certification tool or emergency-response system.</div>
-</footer>
-
+<footer class="site-footer"><div class="wrap footer-grid"><div><a class="brand" href="./"><span class="brand-mark" aria-hidden="true">HS</span><span>HeatSafe Home Lab</span></a><p class="small">Free educational decision-support tools for home heat, ventilation, air quality and cooling choices.</p><p class="small">Created by <a href="about-author/"><strong>Faramarz Kowsari</strong></a>.</p></div><div><strong>For Readers</strong><a href="heatsafe-home-book/">Book Companion</a><a href="about-author/">About the Author</a><a href="methodology/">Methods and Limits</a></div><div><strong>Official Profiles</strong><a href="https://orcid.org/0000-0003-1692-0453">ORCID</a><a href="https://github.com/FaramarzKowsari">GitHub</a><a href="https://play.google.com/store/search?q=Faramarz_Kowsari&c=books">Google Books</a></div></div><div class="wrap small" style="margin-top:28px">© 2026 Faramarz Kowsari. Educational and research use only. Not an official warning service, medical device, building certification tool or emergency-response system.</div></footer>
 </body>
 </html>

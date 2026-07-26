@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hourly Ventilation Planner | Free HeatSafe Home Tool</title>
-<meta name="description" content="Build an explainable 24–72 hour ventilation plan using indoor temperature, outdoor temperature, humidity, PM2.5, smoke, wind and cross-ventilation. Manual and private browser tool.">
+<title>Live and Manual Ventilation Planner | HeatSafe Home Lab</title>
+<meta name="description" content="Load free model-derived weather and air-quality data or enter hourly values manually. Get explainable ventilation classifications based on temperature, PM2.5, smoke, humidity, wind and airflow.">
 <link rel="canonical" href="https://faramarzkowsari.github.io/heatsafe-climate-air-quality-lab/home-ventilation-planner/">
-<meta property="og:title" content="Hourly Ventilation Planner | HeatSafe Home Lab">
-<meta property="og:description" content="Classify hours as more favorable, conditional, less favorable or insufficient using transparent heat and air-quality rules.">
+<meta property="og:title" content="Live and Manual Ventilation Planner | HeatSafe Home Lab">
+<meta property="og:description" content="An explainable hourly ventilation planner with optional live weather and air-quality data and a complete manual fallback.">
 <meta property="og:type" content="website">
 <link rel="stylesheet" href="../assets/styles.css"><link rel="stylesheet" href="../assets/tool-apps.css">
 <script defer src="app.js"></script>
@@ -28,22 +28,29 @@
 <main>
 <section class="page-hero">
 <div class="wrap">
-  <div class="breadcrumb"><a href="../">HeatSafe Home Lab</a> / Hourly Ventilation Planner</div>
-  <span class="eyebrow">Explainable rule engine · No AI required</span>
+  <div class="breadcrumb"><a href="../">HeatSafe Home Lab</a> / Ventilation Planner</div>
+  <span class="eyebrow">Optional live data · Full manual fallback</span>
   <h1>Hourly Ventilation Planner</h1>
-  <p class="lede">Enter indoor conditions and hourly outdoor observations or forecast values. Each hour is classified as More Favorable, Conditional, Less Favorable or Insufficient, with the reasons shown.</p>
-  <div class="tool-nav"><a href="../indoor-outdoor-comparator/">Indoor–Outdoor Comparator</a><a href="../24-hour-plan/">24-Hour Plan</a><a href="../home-heat-profile/">Home Heat Profile</a></div>
+  <p class="lede">Load weather and air-quality forecasts from the Live Local Conditions page or enter values manually. Each hour is classified with transparent reasons, confidence and limitations.</p>
+  <div class="tool-nav"><a href="../live-local-conditions/">Load Live Local Conditions</a><a href="../indoor-outdoor-comparator/">Indoor–Outdoor Comparator</a><a href="../24-hour-plan/">24-Hour Plan</a></div>
 </div>
 </section>
 
 <section class="tool-shell">
+<div class="wrap">
+  <div class="live-banner">
+    <div><span class="kicker">FASTEST PATH</span><h2>Load a city or device location automatically</h2><p>Weather, wind, humidity, solar radiation, PM2.5 and AQI can be imported without an API key. The manual rows below remain available.</p></div>
+    <a class="btn btn-primary" href="../live-local-conditions/">Open Live Local Conditions</a>
+  </div>
+</div>
+
 <div class="wrap tool-layout">
 <form class="tool-form" id="vent-form">
   <div class="form-section">
     <span class="kicker">HOME INPUTS</span><h2>Indoor and ventilation conditions</h2>
     <div class="field-grid three">
       <div class="field"><label for="indoorTemp">Indoor temperature <span class="required-mark">*</span></label><div class="input-row"><input id="indoorTemp" name="indoorTemp" type="number" min="-20" max="70" step="0.1" value="29" required><span class="unit">°C</span></div></div>
-      <div class="field"><label for="indoorHumidity">Indoor humidity</label><div class="input-row"><input id="indoorHumidity" name="indoorHumidity" type="number" min="0" max="100" step="1" value="50"><span class="unit">%</span></div></div>
+      <div class="field"><label for="indoorHumidity">Indoor humidity</label><div class="input-row"><input id="indoorHumidity" name="indoorHumidity" type="number" min="0" max="100" step="1"><span class="unit">%</span></div></div>
       <div class="field"><label for="crossVentilation">Cross-ventilation</label><select id="crossVentilation" name="crossVentilation"><option value="yes">Available</option><option value="no">Limited / single-sided</option></select></div>
       <div class="field"><label for="purifier">Air purifier</label><select id="purifier" name="purifier"><option value="yes">Available</option><option value="no">Not available</option></select></div>
       <div class="field"><label for="orientation">Main window orientation</label><select id="orientation" name="orientation"><option value="north">North</option><option value="east">East</option><option value="south">South</option><option value="west">West</option><option value="mixed">Mixed / unknown</option></select></div>
@@ -52,7 +59,7 @@
   </div>
 
   <div class="form-section">
-    <span class="kicker">ADD AN HOUR</span><h2>Outdoor values</h2>
+    <span class="kicker">MANUAL HOUR</span><h2>Add or correct an hourly row</h2>
     <div class="field-grid four">
       <div class="field"><label for="timestamp">Date and time <span class="required-mark">*</span></label><input id="timestamp" name="timestamp" type="datetime-local" required></div>
       <div class="field"><label for="outdoorTemp">Outdoor temperature <span class="required-mark">*</span></label><div class="input-row"><input id="outdoorTemp" name="outdoorTemp" type="number" min="-60" max="70" step="0.1" required><span class="unit">°C</span></div></div>
@@ -61,17 +68,17 @@
       <div class="field"><label for="wind">Wind speed</label><div class="input-row"><input id="wind" name="wind" type="number" min="0" max="300" step="0.1"><span class="unit">km/h</span></div></div>
       <div class="field"><label for="smoke">Smoke context</label><select id="smoke" name="smoke"><option value="none">None known</option><option value="possible">Possible / uncertain</option><option value="likely">Likely smoke</option></select></div>
       <div class="field"><label for="solar">Solar exposure</label><select id="solar" name="solar"><option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option></select></div>
-      <div class="field"><label for="source">Data source label</label><input id="source" name="source" maxlength="70" placeholder="Manual / local forecast"></div>
+      <div class="field"><label for="source">Data source label</label><input id="source" name="source" maxlength="100" placeholder="Manual / local forecast"></div>
     </div>
   </div>
 
   <div class="tool-actions">
     <button class="primary" type="submit">Add hour</button>
     <button class="secondary" type="button" id="reset-hour">Reset hour</button>
-    <button class="ghost" type="button" id="load-demo">Load 24-hour demo</button>
+    <button class="ghost" type="button" id="load-demo">Load demo</button>
     <button class="ghost" type="button" id="build-plan">Build plan</button>
   </div>
-  <p class="save-status">Home inputs and hourly rows are stored only in this browser.</p>
+  <p class="save-status" id="planner-status">Home inputs and hourly rows are stored only in this browser.</p>
 </form>
 
 <aside class="tool-sidebar">
@@ -84,8 +91,8 @@
     <li>High daytime solar gain can continue adding heat.</li>
   </ul>
   <div class="assumption-box"><strong>Educational defaults:</strong> PM2.5 thresholds of 12, 35 and 55 µg/m³; useful temperature advantage 1.5°C; strong advantage 3°C.</div>
-  <div class="privacy-box"><strong>Privacy:</strong> no forecast or household data is uploaded by this page.</div>
-  <div class="safety-box"><strong>Important:</strong> thresholds may differ from official local guidance. Check trusted local heat, smoke and air-quality information.</div>
+  <div class="source-box"><strong>Live-data attribution:</strong> weather and geocoding through Open-Meteo; air-quality forecasts through Open-Meteo using CAMS ENSEMBLE/global data. Imported rows remain editable.</div>
+  <div class="safety-box"><strong>Important:</strong> this is not an official warning service. Check trusted local heat, smoke and air-quality guidance.</div>
   
 <div class="author-mini">
   <img src="https://github.com/FaramarzKowsari.png?size=180" alt="Faramarz Kowsari">
@@ -102,8 +109,8 @@
 <div class="wrap" style="margin-top:26px">
 <section class="data-panel">
   <div class="result-pathway-head">
-    <div><span class="kicker">HOURLY INPUTS</span><h2 style="margin-bottom:6px">Forecast or observations</h2><p class="small">Add up to 72 hours manually or load the demonstration dataset.</p></div>
-    <div class="pill-row"><span class="pill" id="hour-count">0 hours</span></div>
+    <div><span class="kicker">HOURLY INPUTS</span><h2 style="margin-bottom:6px">Forecast or observations</h2><p class="small" id="source-summary">Add up to 72 hours manually or import live values.</p></div>
+    <div class="pill-row"><span class="pill" id="hour-count">0 hours</span><span class="pill" id="location-pill" hidden></span></div>
   </div>
   <div class="tool-actions no-print">
     <button class="ghost" type="button" id="export-json">Export JSON</button>
@@ -112,7 +119,7 @@
     <button class="danger" type="button" id="clear-hours">Clear hours</button>
   </div>
   <div class="table-wrap"><table class="data-table">
-    <thead><tr><th>Date & time</th><th>Outdoor</th><th>Humidity</th><th>PM2.5</th><th>Wind</th><th>Smoke</th><th>Solar</th><th>Source</th><th></th></tr></thead>
+    <thead><tr><th>Date & time</th><th>Outdoor</th><th>Humidity</th><th>PM2.5</th><th>Wind</th><th>Smoke</th><th>Solar</th><th>US AQI</th><th>Source</th><th></th></tr></thead>
     <tbody id="hour-table"></tbody>
   </table></div>
 </section>
