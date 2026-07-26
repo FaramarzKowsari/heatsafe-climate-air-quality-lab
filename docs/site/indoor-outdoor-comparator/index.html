@@ -1,1 +1,148 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Indoor–Outdoor Comparator | HeatSafe</title><meta name="description" content="HeatSafe scientific documentation for indoor–outdoor comparator, climate resilience, open environmental data, and explainable AI."><link rel="canonical" href="https://faramarzkowsari.github.io/heatsafe-climate-air-quality-lab/indoor-outdoor-comparator/"><meta property="og:title" content="Indoor–Outdoor Comparator | HeatSafe"><meta property="og:description" content="HeatSafe scientific documentation for indoor–outdoor comparator, climate resilience, open environmental data, and explainable AI."><meta property="og:type" content="website"><style>body{font-family:system-ui,sans-serif;max-width:900px;margin:auto;padding:2rem;line-height:1.6;color:#18313a;background:#f8fbfb}a{color:#075f75}.card{background:white;border:1px solid #d8e5e7;border-radius:14px;padding:1.2rem;margin:1rem 0}nav a{margin-right:1rem}</style></head><body><nav><a href="../">HeatSafe</a><a href="../methodology/">Methodology</a><a href="../datasets/">Datasets</a><a href="../heatsafe-home-book/">Book companion</a></nav><main><h1>Indoor–Outdoor Comparator</h1><div class="card"><p>HeatSafe scientific documentation for indoor–outdoor comparator, climate resilience, open environmental data, and explainable AI.</p><p>This research-preview page distinguishes observed, satellite-derived, reanalysis, modeled, forecast, user-entered, estimated, and synthetic data. It makes no official-warning, medical, or guaranteed-outcome claim.</p></div><p><a href="https://github.com/FaramarzKowsari/heatsafe-climate-air-quality-lab">Source repository</a></p></main></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Indoor–Outdoor Comparator | Free HeatSafe Home Tool</title>
+<meta name="description" content="Compare indoor and outdoor temperature, humidity, PM2.5 and household actions over time. Estimate thermal lag and observational responses without claiming causation.">
+<link rel="canonical" href="https://faramarzkowsari.github.io/heatsafe-climate-air-quality-lab/indoor-outdoor-comparator/">
+<meta property="og:title" content="Indoor–Outdoor Comparator | HeatSafe Home Lab">
+<meta property="og:description" content="Record indoor and outdoor conditions, annotate household actions, and inspect thermal response patterns privately in your browser.">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="../assets/styles.css"><link rel="stylesheet" href="../assets/tool-apps.css">
+<script defer src="app.js"></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="../"><span class="brand-mark" aria-hidden="true">HS</span><span>HeatSafe Home Lab</span></a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="../#tools">Free Tools</a>
+      <a href="../heatsafe-home-book/">Book Companion</a>
+      <a href="../about-author/">About the Author</a>
+      <a href="../methodology/">Methods</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="page-hero">
+<div class="wrap">
+  <div class="breadcrumb"><a href="../">HeatSafe Home Lab</a> / Indoor–Outdoor Comparator</div>
+  <span class="eyebrow">Private observational laboratory · No account required</span>
+  <h1>Indoor–Outdoor Comparator</h1>
+  <p class="lede">Track how indoor conditions move relative to outdoor conditions and annotate actions such as opening windows, closing shade, starting a fan, cooling or purification. The analysis describes observed patterns; it does not prove causation.</p>
+  <div class="tool-nav"><a href="../seven-day-heat-log/">Seven-Day Heat Log</a><a href="../home-ventilation-planner/">Ventilation Planner</a><a href="../24-hour-plan/">24-Hour Plan</a></div>
+</div>
+</section>
+
+<section class="tool-shell">
+<div class="wrap tool-layout">
+<form class="tool-form" id="compare-form">
+  <div class="form-section">
+    <span class="kicker">NEW OBSERVATION</span><h2>Time and conditions</h2>
+    <div class="field-grid three">
+      <div class="field"><label for="timestamp">Date and time <span class="required-mark">*</span></label><input id="timestamp" name="timestamp" type="datetime-local" required></div>
+      <div class="field"><label for="room">Room or zone</label><input id="room" name="room" maxlength="60" placeholder="Living room"></div>
+      <div class="field"><label for="event">Action or event</label><select id="event" name="event"><option value="none">No new action</option><option value="windows-opened">Windows opened</option><option value="windows-closed">Windows closed</option><option value="shade-closed">Shade closed</option><option value="shade-opened">Shade opened</option><option value="fan-started">Fan started</option><option value="fan-stopped">Fan stopped</option><option value="cooling-started">Cooling started</option><option value="cooling-stopped">Cooling stopped</option><option value="purifier-started">Purifier started</option><option value="cooking-started">Cooking started</option><option value="occupancy-changed">Occupancy changed</option><option value="other">Other</option></select></div>
+      <div class="field"><label for="indoorTemp">Indoor temperature <span class="required-mark">*</span></label><div class="input-row"><input id="indoorTemp" name="indoorTemp" type="number" min="-30" max="70" step="0.1" required><span class="unit">°C</span></div></div>
+      <div class="field"><label for="outdoorTemp">Outdoor temperature <span class="required-mark">*</span></label><div class="input-row"><input id="outdoorTemp" name="outdoorTemp" type="number" min="-60" max="70" step="0.1" required><span class="unit">°C</span></div></div>
+      <div class="field"><label for="humidity">Indoor humidity</label><div class="input-row"><input id="humidity" name="humidity" type="number" min="0" max="100" step="1"><span class="unit">%</span></div></div>
+      <div class="field"><label for="outdoorHumidity">Outdoor humidity</label><div class="input-row"><input id="outdoorHumidity" name="outdoorHumidity" type="number" min="0" max="100" step="1"><span class="unit">%</span></div></div>
+      <div class="field"><label for="pm25">Outdoor PM2.5</label><div class="input-row"><input id="pm25" name="pm25" type="number" min="0" max="2000" step="0.1"><span class="unit">µg/m³</span></div></div>
+      <div class="field"><label for="windows">Window state</label><select id="windows" name="windows"><option value="closed">Closed</option><option value="partial">Partly open</option><option value="open">Open</option></select></div>
+      <div class="field"><label for="shade">Shade state</label><select id="shade" name="shade"><option value="open">Open / not shading</option><option value="partial">Partial shade</option><option value="closed">Closed / shading</option><option value="external">External shade active</option></select></div>
+      <div class="field"><label for="fan">Fan state</label><select id="fan" name="fan"><option value="off">Off</option><option value="on">On</option></select></div>
+      <div class="field"><label for="cooling">Cooling state</label><select id="cooling" name="cooling"><option value="off">Off</option><option value="on">On</option></select></div>
+      <div class="field"><label for="purifier">Purifier state</label><select id="purifier" name="purifier"><option value="off">Off</option><option value="on">On</option></select></div>
+      <div class="field full"><label for="notes">Notes</label><textarea id="notes" name="notes" maxlength="500" placeholder="West sun stopped; window opened 15 minutes earlier; cooking ended."></textarea></div>
+    </div>
+  </div>
+  <div class="tool-actions">
+    <button class="primary" type="submit">Add observation</button>
+    <button class="secondary" type="button" id="reset-form">Reset form</button>
+    <button class="ghost" type="button" id="load-demo">Load demo data</button>
+    <button class="ghost" type="button" id="print-compare">Print analysis</button>
+  </div>
+  <p class="save-status">Observations are stored only in this browser.</p>
+</form>
+
+<aside class="tool-sidebar">
+  <span class="kicker">HOW TO USE IT</span><h2>Measure before and after actions.</h2>
+  <ul class="sidebar-list">
+    <li>Record a baseline before changing windows, shade, fan or cooling.</li>
+    <li>Record again after 30–60 minutes.</li>
+    <li>Repeat under similar conditions on several days.</li>
+    <li>Use the same sensor location where possible.</li>
+    <li>Interpret action responses as observational, not controlled experiments.</li>
+  </ul>
+  <div class="privacy-box"><strong>Privacy:</strong> entries stay in your browser unless you export them.</div>
+  <div class="assumption-box"><strong>Thermal lag:</strong> the tool estimates delay by testing time shifts between outdoor and indoor temperature series. Sparse or irregular data reduces confidence.</div>
+  <div class="safety-box"><strong>Important:</strong> sensor error, sunlight on sensors, cooking, occupancy and changing weather can distort apparent effects.</div>
+  
+<div class="author-mini">
+  <img src="https://github.com/FaramarzKowsari.png?size=180" alt="Faramarz Kowsari">
+  <div>
+    <strong>Created by Faramarz Kowsari</strong>
+    <p>Author, Software Engineer and AI researcher based in Istanbul.</p>
+    <a href="../about-author/">About the author and official profiles →</a>
+  </div>
+</div>
+
+</aside>
+</div>
+
+<div class="wrap" style="margin-top:26px">
+<section class="data-panel">
+  <div class="result-pathway-head">
+    <div><span class="kicker">OBSERVATIONAL ANALYSIS</span><h2 style="margin-bottom:6px">How is the home responding?</h2><p class="small">Analysis uses your stored observations. It avoids causal claims.</p></div>
+    <div class="pill-row"><span class="pill" id="count-pill">0 entries</span><span class="pill" id="range-pill">No range</span></div>
+  </div>
+  <div id="empty-state" class="empty-state">Add at least two observations to compare indoor and outdoor response.</div>
+  <div id="analysis" hidden>
+    <div class="metric-grid" id="metrics"></div>
+    <div class="chart-card"><h3>Temperature response timeline</h3><div id="chart"></div><div class="chart-legend"><span class="legend-key">Indoor</span><span class="legend-key outdoor">Outdoor</span></div></div>
+    <div class="insight-list" id="insights"></div>
+    <h3 style="margin-top:26px">Observed action responses</h3>
+    <div id="event-analysis"></div>
+  </div>
+  <div class="tool-actions no-print">
+    <button class="ghost" type="button" id="export-csv">Export CSV</button>
+    <button class="ghost" type="button" id="export-json">Export JSON</button>
+    <label class="file-label">Import JSON<input type="file" id="import-json" accept="application/json,.json"></label>
+    <button class="danger" type="button" id="clear-all">Clear all</button>
+  </div>
+  <div class="table-wrap"><table class="data-table">
+    <thead><tr><th>Date & time</th><th>Room</th><th>Indoor</th><th>Outdoor</th><th>Gap</th><th>Humidity</th><th>PM2.5</th><th>Event</th><th>Windows</th><th>Shade</th><th>Fan</th><th>Cooling</th><th>Notes</th><th></th></tr></thead>
+    <tbody id="table-body"></tbody>
+  </table></div>
+</section>
+</div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="../"><span class="brand-mark" aria-hidden="true">HS</span><span>HeatSafe Home Lab</span></a>
+      <p class="small">Free educational decision-support tools for home heat, ventilation, air quality and cooling choices.</p>
+      <p class="small">Created by <a href="../about-author/"><strong>Faramarz Kowsari</strong></a>.</p>
+    </div>
+    <div>
+      <strong>For Readers</strong>
+      <a href="../heatsafe-home-book/">Book Companion</a>
+      <a href="../about-author/">About the Author</a>
+      <a href="../methodology/">Methods and Limits</a>
+    </div>
+    <div>
+      <strong>Official Profiles</strong>
+      <a href="https://orcid.org/0000-0003-1692-0453">ORCID</a>
+      <a href="https://github.com/FaramarzKowsari">GitHub</a>
+      <a href="https://play.google.com/store/search?q=Faramarz_Kowsari&c=books">Google Books</a>
+    </div>
+  </div>
+  <div class="wrap small" style="margin-top:28px">© 2026 Faramarz Kowsari. Educational and research use only. Not an official warning service, medical device, building certification tool or emergency-response system.</div>
+</footer>
+
+</body>
+</html>

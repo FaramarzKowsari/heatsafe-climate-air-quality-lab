@@ -1,1 +1,149 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Home Ventilation Planner | HeatSafe</title><meta name="description" content="HeatSafe scientific documentation for home ventilation planner, climate resilience, open environmental data, and explainable AI."><link rel="canonical" href="https://faramarzkowsari.github.io/heatsafe-climate-air-quality-lab/home-ventilation-planner/"><meta property="og:title" content="Home Ventilation Planner | HeatSafe"><meta property="og:description" content="HeatSafe scientific documentation for home ventilation planner, climate resilience, open environmental data, and explainable AI."><meta property="og:type" content="website"><style>body{font-family:system-ui,sans-serif;max-width:900px;margin:auto;padding:2rem;line-height:1.6;color:#18313a;background:#f8fbfb}a{color:#075f75}.card{background:white;border:1px solid #d8e5e7;border-radius:14px;padding:1.2rem;margin:1rem 0}nav a{margin-right:1rem}</style></head><body><nav><a href="../">HeatSafe</a><a href="../methodology/">Methodology</a><a href="../datasets/">Datasets</a><a href="../heatsafe-home-book/">Book companion</a></nav><main><h1>Home Ventilation Planner</h1><div class="card"><p>HeatSafe scientific documentation for home ventilation planner, climate resilience, open environmental data, and explainable AI.</p><p>This research-preview page distinguishes observed, satellite-derived, reanalysis, modeled, forecast, user-entered, estimated, and synthetic data. It makes no official-warning, medical, or guaranteed-outcome claim.</p></div><p><a href="https://github.com/FaramarzKowsari/heatsafe-climate-air-quality-lab">Source repository</a></p></main></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hourly Ventilation Planner | Free HeatSafe Home Tool</title>
+<meta name="description" content="Build an explainable 24–72 hour ventilation plan using indoor temperature, outdoor temperature, humidity, PM2.5, smoke, wind and cross-ventilation. Manual and private browser tool.">
+<link rel="canonical" href="https://faramarzkowsari.github.io/heatsafe-climate-air-quality-lab/home-ventilation-planner/">
+<meta property="og:title" content="Hourly Ventilation Planner | HeatSafe Home Lab">
+<meta property="og:description" content="Classify hours as more favorable, conditional, less favorable or insufficient using transparent heat and air-quality rules.">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="../assets/styles.css"><link rel="stylesheet" href="../assets/tool-apps.css">
+<script defer src="app.js"></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="../"><span class="brand-mark" aria-hidden="true">HS</span><span>HeatSafe Home Lab</span></a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="../#tools">Free Tools</a>
+      <a href="../heatsafe-home-book/">Book Companion</a>
+      <a href="../about-author/">About the Author</a>
+      <a href="../methodology/">Methods</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="page-hero">
+<div class="wrap">
+  <div class="breadcrumb"><a href="../">HeatSafe Home Lab</a> / Hourly Ventilation Planner</div>
+  <span class="eyebrow">Explainable rule engine · No AI required</span>
+  <h1>Hourly Ventilation Planner</h1>
+  <p class="lede">Enter indoor conditions and hourly outdoor observations or forecast values. Each hour is classified as More Favorable, Conditional, Less Favorable or Insufficient, with the reasons shown.</p>
+  <div class="tool-nav"><a href="../indoor-outdoor-comparator/">Indoor–Outdoor Comparator</a><a href="../24-hour-plan/">24-Hour Plan</a><a href="../home-heat-profile/">Home Heat Profile</a></div>
+</div>
+</section>
+
+<section class="tool-shell">
+<div class="wrap tool-layout">
+<form class="tool-form" id="vent-form">
+  <div class="form-section">
+    <span class="kicker">HOME INPUTS</span><h2>Indoor and ventilation conditions</h2>
+    <div class="field-grid three">
+      <div class="field"><label for="indoorTemp">Indoor temperature <span class="required-mark">*</span></label><div class="input-row"><input id="indoorTemp" name="indoorTemp" type="number" min="-20" max="70" step="0.1" value="29" required><span class="unit">°C</span></div></div>
+      <div class="field"><label for="indoorHumidity">Indoor humidity</label><div class="input-row"><input id="indoorHumidity" name="indoorHumidity" type="number" min="0" max="100" step="1" value="50"><span class="unit">%</span></div></div>
+      <div class="field"><label for="crossVentilation">Cross-ventilation</label><select id="crossVentilation" name="crossVentilation"><option value="yes">Available</option><option value="no">Limited / single-sided</option></select></div>
+      <div class="field"><label for="purifier">Air purifier</label><select id="purifier" name="purifier"><option value="yes">Available</option><option value="no">Not available</option></select></div>
+      <div class="field"><label for="orientation">Main window orientation</label><select id="orientation" name="orientation"><option value="north">North</option><option value="east">East</option><option value="south">South</option><option value="west">West</option><option value="mixed">Mixed / unknown</option></select></div>
+      <div class="field"><label for="constraints">User constraint</label><input id="constraints" name="constraints" maxlength="100" placeholder="Noise, security, allergy, child safety"></div>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <span class="kicker">ADD AN HOUR</span><h2>Outdoor values</h2>
+    <div class="field-grid four">
+      <div class="field"><label for="timestamp">Date and time <span class="required-mark">*</span></label><input id="timestamp" name="timestamp" type="datetime-local" required></div>
+      <div class="field"><label for="outdoorTemp">Outdoor temperature <span class="required-mark">*</span></label><div class="input-row"><input id="outdoorTemp" name="outdoorTemp" type="number" min="-60" max="70" step="0.1" required><span class="unit">°C</span></div></div>
+      <div class="field"><label for="outdoorHumidity">Outdoor humidity</label><div class="input-row"><input id="outdoorHumidity" name="outdoorHumidity" type="number" min="0" max="100" step="1"><span class="unit">%</span></div></div>
+      <div class="field"><label for="pm25">PM2.5</label><div class="input-row"><input id="pm25" name="pm25" type="number" min="0" max="2000" step="0.1"><span class="unit">µg/m³</span></div></div>
+      <div class="field"><label for="wind">Wind speed</label><div class="input-row"><input id="wind" name="wind" type="number" min="0" max="300" step="0.1"><span class="unit">km/h</span></div></div>
+      <div class="field"><label for="smoke">Smoke context</label><select id="smoke" name="smoke"><option value="none">None known</option><option value="possible">Possible / uncertain</option><option value="likely">Likely smoke</option></select></div>
+      <div class="field"><label for="solar">Solar exposure</label><select id="solar" name="solar"><option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option></select></div>
+      <div class="field"><label for="source">Data source label</label><input id="source" name="source" maxlength="70" placeholder="Manual / local forecast"></div>
+    </div>
+  </div>
+
+  <div class="tool-actions">
+    <button class="primary" type="submit">Add hour</button>
+    <button class="secondary" type="button" id="reset-hour">Reset hour</button>
+    <button class="ghost" type="button" id="load-demo">Load 24-hour demo</button>
+    <button class="ghost" type="button" id="build-plan">Build plan</button>
+  </div>
+  <p class="save-status">Home inputs and hourly rows are stored only in this browser.</p>
+</form>
+
+<aside class="tool-sidebar">
+  <span class="kicker">DECISION LOGIC</span><h2>Heat benefit must be balanced with outdoor air.</h2>
+  <ul class="sidebar-list">
+    <li>Outdoor air must be cooler than indoor air to remove heat.</li>
+    <li>PM2.5 and likely smoke can override cooling potential.</li>
+    <li>High outdoor humidity can reduce comfort benefit.</li>
+    <li>Very weak wind and single-sided ventilation may slow exchange.</li>
+    <li>High daytime solar gain can continue adding heat.</li>
+  </ul>
+  <div class="assumption-box"><strong>Educational defaults:</strong> PM2.5 thresholds of 12, 35 and 55 µg/m³; useful temperature advantage 1.5°C; strong advantage 3°C.</div>
+  <div class="privacy-box"><strong>Privacy:</strong> no forecast or household data is uploaded by this page.</div>
+  <div class="safety-box"><strong>Important:</strong> thresholds may differ from official local guidance. Check trusted local heat, smoke and air-quality information.</div>
+  
+<div class="author-mini">
+  <img src="https://github.com/FaramarzKowsari.png?size=180" alt="Faramarz Kowsari">
+  <div>
+    <strong>Created by Faramarz Kowsari</strong>
+    <p>Author, Software Engineer and AI researcher based in Istanbul.</p>
+    <a href="../about-author/">About the author and official profiles →</a>
+  </div>
+</div>
+
+</aside>
+</div>
+
+<div class="wrap" style="margin-top:26px">
+<section class="data-panel">
+  <div class="result-pathway-head">
+    <div><span class="kicker">HOURLY INPUTS</span><h2 style="margin-bottom:6px">Forecast or observations</h2><p class="small">Add up to 72 hours manually or load the demonstration dataset.</p></div>
+    <div class="pill-row"><span class="pill" id="hour-count">0 hours</span></div>
+  </div>
+  <div class="tool-actions no-print">
+    <button class="ghost" type="button" id="export-json">Export JSON</button>
+    <button class="ghost" type="button" id="export-csv">Export CSV</button>
+    <label class="file-label">Import JSON<input type="file" id="import-json" accept="application/json,.json"></label>
+    <button class="danger" type="button" id="clear-hours">Clear hours</button>
+  </div>
+  <div class="table-wrap"><table class="data-table">
+    <thead><tr><th>Date & time</th><th>Outdoor</th><th>Humidity</th><th>PM2.5</th><th>Wind</th><th>Smoke</th><th>Solar</th><th>Source</th><th></th></tr></thead>
+    <tbody id="hour-table"></tbody>
+  </table></div>
+</section>
+
+<section class="tool-result" id="plan-result" hidden></section>
+</div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="../"><span class="brand-mark" aria-hidden="true">HS</span><span>HeatSafe Home Lab</span></a>
+      <p class="small">Free educational decision-support tools for home heat, ventilation, air quality and cooling choices.</p>
+      <p class="small">Created by <a href="../about-author/"><strong>Faramarz Kowsari</strong></a>.</p>
+    </div>
+    <div>
+      <strong>For Readers</strong>
+      <a href="../heatsafe-home-book/">Book Companion</a>
+      <a href="../about-author/">About the Author</a>
+      <a href="../methodology/">Methods and Limits</a>
+    </div>
+    <div>
+      <strong>Official Profiles</strong>
+      <a href="https://orcid.org/0000-0003-1692-0453">ORCID</a>
+      <a href="https://github.com/FaramarzKowsari">GitHub</a>
+      <a href="https://play.google.com/store/search?q=Faramarz_Kowsari&c=books">Google Books</a>
+    </div>
+  </div>
+  <div class="wrap small" style="margin-top:28px">© 2026 Faramarz Kowsari. Educational and research use only. Not an official warning service, medical device, building certification tool or emergency-response system.</div>
+</footer>
+
+</body>
+</html>
