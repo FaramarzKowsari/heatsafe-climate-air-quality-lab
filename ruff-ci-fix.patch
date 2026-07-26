@@ -1,0 +1,829 @@
+Binary files /mnt/data/heatsafe-climate-air-quality-lab/scripts/__pycache__/check_links.cpython-313.pyc and /tmp/heatsafe-fix/scripts/__pycache__/check_links.cpython-313.pyc differ
+Binary files /mnt/data/heatsafe-climate-air-quality-lab/scripts/__pycache__/check_secrets.cpython-313.pyc and /tmp/heatsafe-fix/scripts/__pycache__/check_secrets.cpython-313.pyc differ
+Binary files /mnt/data/heatsafe-climate-air-quality-lab/scripts/__pycache__/generate_demo_data.cpython-313.pyc and /tmp/heatsafe-fix/scripts/__pycache__/generate_demo_data.cpython-313.pyc differ
+Binary files /mnt/data/heatsafe-climate-air-quality-lab/scripts/__pycache__/package_release.cpython-313.pyc and /tmp/heatsafe-fix/scripts/__pycache__/package_release.cpython-313.pyc differ
+diff -ruN '--exclude=.git' '--exclude=.pytest_cache' '--exclude=.coverage' /mnt/data/heatsafe-climate-air-quality-lab/scripts/check_links.py /tmp/heatsafe-fix/scripts/check_links.py
+--- /mnt/data/heatsafe-climate-air-quality-lab/scripts/check_links.py	2026-07-26 02:11:02.910223980 +0000
++++ /tmp/heatsafe-fix/scripts/check_links.py	2026-07-26 03:04:42.866286779 +0000
+@@ -1,14 +1,21 @@
++import re
++import sys
+ from pathlib import Path
+-import re, sys
+-root=Path(__file__).resolve().parents[1]
+-missing=[]
+-pat=re.compile(r"\[[^\]]+\]\((?!https?://|mailto:|#)([^)]+)\)")
++
++root = Path(__file__).resolve().parents[1]
++missing = []
++pat = re.compile(r"\[[^\]]+\]\((?!https?://|mailto:|#)([^)]+)\)")
++
+ for file in root.rglob("*.md"):
+-    text=file.read_text(encoding="utf-8")
++    text = file.read_text(encoding="utf-8")
+     for link in pat.findall(text):
+-        target=(file.parent/link.split("#",1)[0]).resolve()
+-        if link and not target.exists(): missing.append((file.relative_to(root),link))
++        target = (file.parent / link.split("#", 1)[0]).resolve()
++        if link and not target.exists():
++            missing.append((file.relative_to(root), link))
++
+ if missing:
+-    for item in missing: print("MISSING",*item)
++    for item in missing:
++        print("MISSING", *item)
+     sys.exit(1)
++
+ print("All relative Markdown links resolve.")
+diff -ruN '--exclude=.git' '--exclude=.pytest_cache' '--exclude=.coverage' /mnt/data/heatsafe-climate-air-quality-lab/scripts/check_secrets.py /tmp/heatsafe-fix/scripts/check_secrets.py
+--- /mnt/data/heatsafe-climate-air-quality-lab/scripts/check_secrets.py	2026-07-26 02:11:02.910223980 +0000
++++ /tmp/heatsafe-fix/scripts/check_secrets.py	2026-07-26 03:04:42.866286779 +0000
+@@ -1,14 +1,28 @@
++import re
++import sys
+ from pathlib import Path
+-import re, sys
+-root=Path(__file__).resolve().parents[1]
+-patterns=[re.compile(r"ghp_[A-Za-z0-9]{20,}"),re.compile(r"sk-[A-Za-z0-9]{20,}"),re.compile(r"AIza[0-9A-Za-z_-]{20,}")]
+-hits=[]
++
++root = Path(__file__).resolve().parents[1]
++patterns = [
++    re.compile(r"ghp_[A-Za-z0-9]{20,}"),
++    re.compile(r"sk-[A-Za-z0-9]{20,}"),
++    re.compile(r"AIza[0-9A-Za-z_-]{20,}"),
++]
++hits = []
++
+ for file in root.rglob("*"):
+-    if not file.is_file() or ".git" in file.parts or file.suffix in {".zip",".png",".jpg",".pyc"}: continue
+-    try: text=file.read_text(encoding="utf-8")
+-    except UnicodeDecodeError: continue
++    if not file.is_file() or ".git" in file.parts or file.suffix in {".zip", ".png", ".jpg", ".pyc"}:
++        continue
++    try:
++        text = file.read_text(encoding="utf-8")
++    except UnicodeDecodeError:
++        continue
+     for pattern in patterns:
+-        if pattern.search(text): hits.append(str(file.relative_to(root)))
++        if pattern.search(text):
++            hits.append(str(file.relative_to(root)))
++
+ if hits:
+-    print("Potential secrets:",*hits,sep="\n");sys.exit(1)
++    print("Potential secrets:", *hits, sep="\n")
++    sys.exit(1)
++
+ print("No common high-confidence secret patterns found.")
+diff -ruN '--exclude=.git' '--exclude=.pytest_cache' '--exclude=.coverage' /mnt/data/heatsafe-climate-air-quality-lab/scripts/generate_demo_data.py /tmp/heatsafe-fix/scripts/generate_demo_data.py
+--- /mnt/data/heatsafe-climate-air-quality-lab/scripts/generate_demo_data.py	2026-07-26 02:11:02.910223980 +0000
++++ /tmp/heatsafe-fix/scripts/generate_demo_data.py	2026-07-26 03:05:23.698287575 +0000
+@@ -1,7 +1,10 @@
+ from __future__ import annotations
+-from pathlib import Path
++
++import csv
++import math
++import random
+ from datetime import datetime, timedelta, timezone
+-import csv, math, random
++from pathlib import Path
+ 
+ ROOT = Path(__file__).resolve().parents[1]
+ OUT = ROOT / "data" / "synthetic"
+@@ -19,54 +22,167 @@
+     ("Los Angeles", "United States", 25.0, 14.0),
+ ]
+ start = datetime(2025, 6, 1, tzinfo=timezone.utc)
+-with (OUT / "hourly_environment.csv").open("w", newline="", encoding="utf-8") as f:
+-    fields = ["timestamp_utc", "city", "country", "temperature_c", "relative_humidity_pct", "pm25_ug_m3", "wind_speed_kmh", "measurement_type", "source_name"]
+-    w = csv.DictWriter(f, fieldnames=fields); w.writeheader()
+-    for city, country, base_t, base_pm in cities:
+-        for h in range(24 * 90):
+-            t = start + timedelta(hours=h)
+-            daily = 5.2 * math.sin(2 * math.pi * (t.hour - 8) / 24)
+-            seasonal = 3.0 * math.sin(2 * math.pi * h / (24 * 90))
+-            heat_event = 6 if 700 <= h < 790 else 0
+-            temp = base_t + daily + seasonal + heat_event + rng.gauss(0, 0.8)
++
++with (OUT / "hourly_environment.csv").open("w", newline="", encoding="utf-8") as file:
++    fields = [
++        "timestamp_utc",
++        "city",
++        "country",
++        "temperature_c",
++        "relative_humidity_pct",
++        "pm25_ug_m3",
++        "wind_speed_kmh",
++        "measurement_type",
++        "source_name",
++    ]
++    writer = csv.DictWriter(file, fieldnames=fields)
++    writer.writeheader()
++    for city, country, base_temperature, base_pm25 in cities:
++        for hour in range(24 * 90):
++            timestamp = start + timedelta(hours=hour)
++            daily = 5.2 * math.sin(2 * math.pi * (timestamp.hour - 8) / 24)
++            seasonal = 3.0 * math.sin(2 * math.pi * hour / (24 * 90))
++            heat_event = 6 if 700 <= hour < 790 else 0
++            temperature = base_temperature + daily + seasonal + heat_event + rng.gauss(0, 0.8)
+             humidity = max(20, min(95, 66 - 1.2 * daily + rng.gauss(0, 5)))
+-            smoke = 35 if 1200 <= h < 1260 and city in {"Toronto", "Los Angeles"} else 0
+-            pm = max(1, base_pm + 0.25 * humidity + smoke + 6 * math.sin(2 * math.pi * h / 168) + rng.gauss(0, 4))
+-            wind = max(0, 10 + 4 * math.sin(2 * math.pi * h / 24) + rng.gauss(0, 2))
+-            w.writerow({"timestamp_utc": t.isoformat(), "city": city, "country": country, "temperature_c": round(temp,2), "relative_humidity_pct": round(humidity,2), "pm25_ug_m3": round(pm,2), "wind_speed_kmh": round(wind,2), "measurement_type": "synthetic", "source_name": "HeatSafe synthetic generator"})
+-
+-with (OUT / "climate_daily.csv").open("w", newline="", encoding="utf-8") as f:
+-    fields = ["timestamp", "temperature_c", "minimum_temperature_c", "maximum_temperature_c", "relative_humidity_pct", "city", "source", "measurement_type"]
+-    w=csv.DictWriter(f, fieldnames=fields); w.writeheader()
+-    start_d=datetime(1985,1,1,tzinfo=timezone.utc)
+-    for i in range(365*41):
+-        t=start_d+timedelta(days=i)
+-        trend=0.035*(t.year-1985)
+-        seasonal=10*math.sin(2*math.pi*(t.timetuple().tm_yday-90)/365.25)
+-        mean=16+seasonal+trend+rng.gauss(0,1.5)
+-        w.writerow({"timestamp":t.isoformat(),"temperature_c":round(mean,2),"minimum_temperature_c":round(mean-5-rng.random()*2,2),"maximum_temperature_c":round(mean+5+rng.random()*3,2),"relative_humidity_pct":round(max(20,min(95,62-seasonal+rng.gauss(0,8))),2),"city":"Illustrative City","source":"HeatSafe synthetic generator","measurement_type":"synthetic"})
+-
+-with (OUT / "urban_heat_grid.csv").open("w", newline="", encoding="utf-8") as f:
+-    fields=["cell_id","latitude","longitude","zone","land_surface_temperature_c","ndvi","impervious_fraction","water_distance_km"]
+-    w=csv.DictWriter(f,fieldnames=fields); w.writeheader()
+-    for i in range(240):
+-        urban=i<160; ndvi=max(0.05,min(0.9,(0.25 if urban else 0.62)+rng.gauss(0,0.12)))
+-        lst=34+(4 if urban else 0)-5*ndvi+rng.gauss(0,1.2)
+-        w.writerow({"cell_id":f"cell-{i:03d}","latitude":round(41+(i%20)*0.003,5),"longitude":round(29+(i//20)*0.003,5),"zone":"urban" if urban else "peripheral","land_surface_temperature_c":round(lst,2),"ndvi":round(ndvi,3),"impervious_fraction":round(max(0,min(1,(0.75 if urban else 0.2)+rng.gauss(0,0.1))),3),"water_distance_km":round(rng.uniform(0.2,20),2)})
+-
+-with (OUT / "fire_events.csv").open("w", newline="", encoding="utf-8") as f:
+-    fields=["latitude","longitude","acquired_at","confidence","frp_mw","source"]
+-    w=csv.DictWriter(f,fieldnames=fields); w.writeheader()
+-    for i in range(20):
+-        w.writerow({"latitude":round(40.5+rng.random(),5),"longitude":round(28.3+rng.random()*1.5,5),"acquired_at":(start+timedelta(hours=i*3)).isoformat(),"confidence":round(rng.uniform(50,99),1),"frp_mw":round(rng.uniform(2,90),1),"source":"synthetic"})
+-
+-with (SAMPLE / "home_log.csv").open("w", newline="", encoding="utf-8") as f:
+-    fields=["timestamp","indoor_temperature_c","outdoor_temperature_c","indoor_humidity_pct","outdoor_humidity_pct","indoor_pm25_ug_m3","outdoor_pm25_ug_m3","event"]
+-    w=csv.DictWriter(f,fieldnames=fields); w.writeheader()
+-    for h in range(24*7):
+-        t=start+timedelta(hours=h); outside=25+6*math.sin(2*math.pi*(t.hour-8)/24); event=None
+-        if t.hour==21: event="Windows Opened"
+-        elif t.hour==6: event="Windows Closed"
+-        indoor=27+2.2*math.sin(2*math.pi*(t.hour-12)/24)+rng.gauss(0,.2)
+-        w.writerow({"timestamp":t.isoformat(),"indoor_temperature_c":round(indoor,2),"outdoor_temperature_c":round(outside,2),"indoor_humidity_pct":55,"outdoor_humidity_pct":60,"indoor_pm25_ug_m3":10,"outdoor_pm25_ug_m3":14,"event":event or ""})
++            smoke = 35 if 1200 <= hour < 1260 and city in {"Toronto", "Los Angeles"} else 0
++            pm25 = max(
++                1,
++                base_pm25
++                + 0.25 * humidity
++                + smoke
++                + 6 * math.sin(2 * math.pi * hour / 168)
++                + rng.gauss(0, 4),
++            )
++            wind = max(0, 10 + 4 * math.sin(2 * math.pi * hour / 24) + rng.gauss(0, 2))
++            writer.writerow(
++                {
++                    "timestamp_utc": timestamp.isoformat(),
++                    "city": city,
++                    "country": country,
++                    "temperature_c": round(temperature, 2),
++                    "relative_humidity_pct": round(humidity, 2),
++                    "pm25_ug_m3": round(pm25, 2),
++                    "wind_speed_kmh": round(wind, 2),
++                    "measurement_type": "synthetic",
++                    "source_name": "HeatSafe synthetic generator",
++                }
++            )
++
++with (OUT / "climate_daily.csv").open("w", newline="", encoding="utf-8") as file:
++    fields = [
++        "timestamp",
++        "temperature_c",
++        "minimum_temperature_c",
++        "maximum_temperature_c",
++        "relative_humidity_pct",
++        "city",
++        "source",
++        "measurement_type",
++    ]
++    writer = csv.DictWriter(file, fieldnames=fields)
++    writer.writeheader()
++    start_date = datetime(1985, 1, 1, tzinfo=timezone.utc)
++    for day in range(365 * 41):
++        timestamp = start_date + timedelta(days=day)
++        trend = 0.035 * (timestamp.year - 1985)
++        seasonal = 10 * math.sin(2 * math.pi * (timestamp.timetuple().tm_yday - 90) / 365.25)
++        mean = 16 + seasonal + trend + rng.gauss(0, 1.5)
++        writer.writerow(
++            {
++                "timestamp": timestamp.isoformat(),
++                "temperature_c": round(mean, 2),
++                "minimum_temperature_c": round(mean - 5 - rng.random() * 2, 2),
++                "maximum_temperature_c": round(mean + 5 + rng.random() * 3, 2),
++                "relative_humidity_pct": round(max(20, min(95, 62 - seasonal + rng.gauss(0, 8))), 2),
++                "city": "Illustrative City",
++                "source": "HeatSafe synthetic generator",
++                "measurement_type": "synthetic",
++            }
++        )
++
++with (OUT / "urban_heat_grid.csv").open("w", newline="", encoding="utf-8") as file:
++    fields = [
++        "cell_id",
++        "latitude",
++        "longitude",
++        "zone",
++        "land_surface_temperature_c",
++        "ndvi",
++        "impervious_fraction",
++        "water_distance_km",
++    ]
++    writer = csv.DictWriter(file, fieldnames=fields)
++    writer.writeheader()
++    for index in range(240):
++        urban = index < 160
++        ndvi = max(0.05, min(0.9, (0.25 if urban else 0.62) + rng.gauss(0, 0.12)))
++        land_surface_temperature = 34 + (4 if urban else 0) - 5 * ndvi + rng.gauss(0, 1.2)
++        writer.writerow(
++            {
++                "cell_id": f"cell-{index:03d}",
++                "latitude": round(41 + (index % 20) * 0.003, 5),
++                "longitude": round(29 + (index // 20) * 0.003, 5),
++                "zone": "urban" if urban else "peripheral",
++                "land_surface_temperature_c": round(land_surface_temperature, 2),
++                "ndvi": round(ndvi, 3),
++                "impervious_fraction": round(
++                    max(0, min(1, (0.75 if urban else 0.2) + rng.gauss(0, 0.1))),
++                    3,
++                ),
++                "water_distance_km": round(rng.uniform(0.2, 20), 2),
++            }
++        )
++
++with (OUT / "fire_events.csv").open("w", newline="", encoding="utf-8") as file:
++    fields = ["latitude", "longitude", "acquired_at", "confidence", "frp_mw", "source"]
++    writer = csv.DictWriter(file, fieldnames=fields)
++    writer.writeheader()
++    for index in range(20):
++        writer.writerow(
++            {
++                "latitude": round(40.5 + rng.random(), 5),
++                "longitude": round(28.3 + rng.random() * 1.5, 5),
++                "acquired_at": (start + timedelta(hours=index * 3)).isoformat(),
++                "confidence": round(rng.uniform(50, 99), 1),
++                "frp_mw": round(rng.uniform(2, 90), 1),
++                "source": "synthetic",
++            }
++        )
++
++with (SAMPLE / "home_log.csv").open("w", newline="", encoding="utf-8") as file:
++    fields = [
++        "timestamp",
++        "indoor_temperature_c",
++        "outdoor_temperature_c",
++        "indoor_humidity_pct",
++        "outdoor_humidity_pct",
++        "indoor_pm25_ug_m3",
++        "outdoor_pm25_ug_m3",
++        "event",
++    ]
++    writer = csv.DictWriter(file, fieldnames=fields)
++    writer.writeheader()
++    for hour in range(24 * 7):
++        timestamp = start + timedelta(hours=hour)
++        outside = 25 + 6 * math.sin(2 * math.pi * (timestamp.hour - 8) / 24)
++        event = None
++        if timestamp.hour == 21:
++            event = "Windows Opened"
++        elif timestamp.hour == 6:
++            event = "Windows Closed"
++        indoor = 27 + 2.2 * math.sin(2 * math.pi * (timestamp.hour - 12) / 24) + rng.gauss(0, 0.2)
++        writer.writerow(
++            {
++                "timestamp": timestamp.isoformat(),
++                "indoor_temperature_c": round(indoor, 2),
++                "outdoor_temperature_c": round(outside, 2),
++                "indoor_humidity_pct": 55,
++                "outdoor_humidity_pct": 60,
++                "indoor_pm25_ug_m3": 10,
++                "outdoor_pm25_ug_m3": 14,
++                "event": event or "",
++            }
++        )
++
+ print("Generated deterministic synthetic and sample data.")
+diff -ruN '--exclude=.git' '--exclude=.pytest_cache' '--exclude=.coverage' /mnt/data/heatsafe-climate-air-quality-lab/scripts/package_release.py /tmp/heatsafe-fix/scripts/package_release.py
+--- /mnt/data/heatsafe-climate-air-quality-lab/scripts/package_release.py	2026-07-26 02:11:02.910223980 +0000
++++ /tmp/heatsafe-fix/scripts/package_release.py	2026-07-26 03:04:42.866286779 +0000
+@@ -1,12 +1,26 @@
++import hashlib
++import zipfile
+ from pathlib import Path
+-import hashlib, zipfile
+-root=Path(__file__).resolve().parents[1]
+-out=root.parent/f"{root.name}-v0.1.0.zip"
+-exclude={".git",".venv","__pycache__",".pytest_cache",".mypy_cache",".ruff_cache","node_modules"}
+-with zipfile.ZipFile(out,"w",zipfile.ZIP_DEFLATED) as z:
++
++root = Path(__file__).resolve().parents[1]
++out = root.parent / f"{root.name}-v0.1.0.zip"
++exclude = {
++    ".git",
++    ".venv",
++    "__pycache__",
++    ".pytest_cache",
++    ".mypy_cache",
++    ".ruff_cache",
++    "node_modules",
++}
++
++with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as archive:
+     for file in sorted(root.rglob("*")):
+-        if not file.is_file() or any(part in exclude for part in file.parts): continue
+-        z.write(file,file.relative_to(root.parent))
+-digest=hashlib.sha256(out.read_bytes()).hexdigest()
+-(out.with_suffix(out.suffix+".sha256")).write_text(f"{digest}  {out.name}\n",encoding="utf-8")
+-print(out);print(digest)
++        if not file.is_file() or any(part in exclude for part in file.parts):
++            continue
++        archive.write(file, file.relative_to(root.parent))
++
++digest = hashlib.sha256(out.read_bytes()).hexdigest()
++(out.with_suffix(out.suffix + ".sha256")).write_text(f"{digest}  {out.name}\n", encoding="utf-8")
++print(out)
++print(digest)
+Binary files /mnt/data/heatsafe-climate-air-quality-lab/src/heatsafe/__pycache__/__main__.cpython-313.pyc and /tmp/heatsafe-fix/src/heatsafe/__pycache__/__main__.cpython-313.pyc differ
+Binary files /mnt/data/heatsafe-climate-air-quality-lab/src/heatsafe/__pycache__/cli.cpython-313.pyc and /tmp/heatsafe-fix/src/heatsafe/__pycache__/cli.cpython-313.pyc differ
+Binary files /mnt/data/heatsafe-climate-air-quality-lab/src/heatsafe/connectors/__pycache__/optional.cpython-313.pyc and /tmp/heatsafe-fix/src/heatsafe/connectors/__pycache__/optional.cpython-313.pyc differ
+Binary files /mnt/data/heatsafe-climate-air-quality-lab/tests/__pycache__/conftest.cpython-313.pyc and /tmp/heatsafe-fix/tests/__pycache__/conftest.cpython-313.pyc differ
+Binary files /mnt/data/heatsafe-climate-air-quality-lab/tests/__pycache__/test_api.cpython-313.pyc and /tmp/heatsafe-fix/tests/__pycache__/test_api.cpython-313.pyc differ
+Binary files /mnt/data/heatsafe-climate-air-quality-lab/tests/__pycache__/test_core.cpython-313-pytest-9.0.2.pyc and /tmp/heatsafe-fix/tests/__pycache__/test_core.cpython-313-pytest-9.0.2.pyc differ
+Binary files /mnt/data/heatsafe-climate-air-quality-lab/tests/__pycache__/test_core.cpython-313.pyc and /tmp/heatsafe-fix/tests/__pycache__/test_core.cpython-313.pyc differ
+Binary files /mnt/data/heatsafe-climate-air-quality-lab/tests/__pycache__/test_data_and_connectors.cpython-313-pytest-9.0.2.pyc and /tmp/heatsafe-fix/tests/__pycache__/test_data_and_connectors.cpython-313-pytest-9.0.2.pyc differ
+Binary files /mnt/data/heatsafe-climate-air-quality-lab/tests/__pycache__/test_data_and_connectors.cpython-313.pyc and /tmp/heatsafe-fix/tests/__pycache__/test_data_and_connectors.cpython-313.pyc differ
+Binary files /mnt/data/heatsafe-climate-air-quality-lab/tests/__pycache__/test_research.cpython-313-pytest-9.0.2.pyc and /tmp/heatsafe-fix/tests/__pycache__/test_research.cpython-313-pytest-9.0.2.pyc differ
+Binary files /mnt/data/heatsafe-climate-air-quality-lab/tests/__pycache__/test_research.cpython-313.pyc and /tmp/heatsafe-fix/tests/__pycache__/test_research.cpython-313.pyc differ
+Binary files /mnt/data/heatsafe-climate-air-quality-lab/tests/__pycache__/test_security_edges.cpython-313.pyc and /tmp/heatsafe-fix/tests/__pycache__/test_security_edges.cpython-313.pyc differ
+diff -ruN '--exclude=.git' '--exclude=.pytest_cache' '--exclude=.coverage' /mnt/data/heatsafe-climate-air-quality-lab/tests/test_core.py /tmp/heatsafe-fix/tests/test_core.py
+--- /mnt/data/heatsafe-climate-air-quality-lab/tests/test_core.py	2026-07-26 02:21:56.818236733 +0000
++++ /tmp/heatsafe-fix/tests/test_core.py	2026-07-26 03:06:16.794288611 +0000
+@@ -1,87 +1,213 @@
+ from datetime import datetime, timedelta, timezone
++
+ import pandas as pd
+ import pytest
+ from pydantic import ValidationError
++
+ from heatsafe.core.air_quality import summarize_air_quality, us_epa_aqi
+ from heatsafe.core.climate import analyze_climate_trend
+ from heatsafe.core.comparator import compare_indoor_outdoor
+ from heatsafe.core.cooling import estimate_cooling_cost
+ from heatsafe.core.heatwaves import detect_heatwaves
+ from heatsafe.core.home_profile import build_home_profile
+-from heatsafe.core.models import ComparatorInput, ComparatorRecord, CoolingCostInput, HeatwaveConfig, HomeProfileInput, VentilationInput
++from heatsafe.core.indoor_air import assess_indoor_air_clues
++from heatsafe.core.models import (
++    ClimateRecord,
++    ComparatorInput,
++    ComparatorRecord,
++    CoolingCostInput,
++    HeatwaveConfig,
++    HomeProfileInput,
++    VentilationInput,
++)
+ from heatsafe.core.urban_heat import analyze_urban_heat
+ from heatsafe.core.ventilation import decide_ventilation
+ from heatsafe.core.wildfire import FireDetection, analyze_wildfire_context
+ 
+-NOW=datetime(2026,7,26,tzinfo=timezone.utc)
++NOW = datetime(2026, 7, 26, tzinfo=timezone.utc)
++
+ 
+ def test_ventilation_favorable():
+-    r=decide_ventilation(VentilationInput(indoor_temperature_c=30,outdoor_temperature_c=23,pm25_ug_m3=8,outdoor_humidity_pct=50,wind_speed_kmh=10,smoke_context="none",cross_ventilation=True))
+-    assert r.decision.value=="Favorable Ventilation" and r.confidence=="High"
++    result = decide_ventilation(
++        VentilationInput(
++            indoor_temperature_c=30,
++            outdoor_temperature_c=23,
++            pm25_ug_m3=8,
++            outdoor_humidity_pct=50,
++            wind_speed_kmh=10,
++            smoke_context="none",
++            cross_ventilation=True,
++        )
++    )
++    assert result.decision.value == "Favorable Ventilation"
++    assert result.confidence == "High"
++
+ 
+ def test_ventilation_keep_closed_for_smoke():
+-    r=decide_ventilation(VentilationInput(indoor_temperature_c=30,outdoor_temperature_c=22,pm25_ug_m3=90,smoke_context="likely"))
+-    assert r.decision.value=="Keep Closed"
++    result = decide_ventilation(
++        VentilationInput(
++            indoor_temperature_c=30,
++            outdoor_temperature_c=22,
++            pm25_ug_m3=90,
++            smoke_context="likely",
++        )
++    )
++    assert result.decision.value == "Keep Closed"
++
+ 
+ def test_ventilation_missing():
+-    r=decide_ventilation(VentilationInput())
+-    assert r.decision.value=="Insufficient Data" and r.missing_inputs
++    result = decide_ventilation(VentilationInput())
++    assert result.decision.value == "Insufficient Data"
++    assert result.missing_inputs
++
+ 
+ def test_home_profile_explainable():
+-    p=HomeProfileInput(building_type="apartment",floor_level="top",roof_exposure="direct",window_orientation="west",window_area="large",external_shading="none",internal_shading="light",insulation_context="unknown",thermal_mass_context="heavy",cross_ventilation=False,single_sided_ventilation=True,internal_heat_sources=["oven"],occupancy=2,cooling_equipment=["fan"],outdoor_air_quality_concerns=True)
+-    r=build_home_profile(p)
+-    assert "roof" in r.likely_dominant_heat_pathway.lower() or "solar" in r.likely_dominant_heat_pathway.lower()
+-    assert r.data_gaps
++    profile = HomeProfileInput(
++        building_type="apartment",
++        floor_level="top",
++        roof_exposure="direct",
++        window_orientation="west",
++        window_area="large",
++        external_shading="none",
++        internal_shading="light",
++        insulation_context="unknown",
++        thermal_mass_context="heavy",
++        cross_ventilation=False,
++        single_sided_ventilation=True,
++        internal_heat_sources=["oven"],
++        occupancy=2,
++        cooling_equipment=["fan"],
++        outdoor_air_quality_concerns=True,
++    )
++    result = build_home_profile(profile)
++    dominant_pathway = result.likely_dominant_heat_pathway.lower()
++    assert "roof" in dominant_pathway or "solar" in dominant_pathway
++    assert result.data_gaps
++
+ 
+ def test_cooling_cost_math():
+-    r=estimate_cooling_cost(CoolingCostInput(device_power_w=1000,estimated_duty_cycle=.5,daily_runtime_hours=10,number_of_days=20,electricity_price_per_kwh=.2,currency="USD"))
+-    assert r.central.energy_kwh==100 and r.central.estimated_cost==20
+-    assert r.low.energy_kwh<r.central.energy_kwh<r.high.energy_kwh
++    result = estimate_cooling_cost(
++        CoolingCostInput(
++            device_power_w=1000,
++            estimated_duty_cycle=0.5,
++            daily_runtime_hours=10,
++            number_of_days=20,
++            electricity_price_per_kwh=0.2,
++            currency="USD",
++        )
++    )
++    assert result.central.energy_kwh == 100
++    assert result.central.estimated_cost == 20
++    assert result.low.energy_kwh < result.central.energy_kwh < result.high.energy_kwh
++
+ 
+ def test_climate_trend_positive(climate_records):
+-    r=analyze_climate_trend(climate_records)
+-    assert r.ols_slope_c_per_decade>0
+-    assert len(r.annual_means)==25
++    result = analyze_climate_trend(climate_records)
++    assert result.ols_slope_c_per_decade > 0
++    assert len(result.annual_means) == 25
++
+ 
+ def test_heatwave_absolute():
+-    records=[]
+-    from heatsafe.core.models import ClimateRecord
+-    for i,t in enumerate([31,36,38,37,30]):
+-        records.append(ClimateRecord(timestamp=NOW+timedelta(days=i),temperature_c=t,minimum_temperature_c=t-10,maximum_temperature_c=t))
+-    events=detect_heatwaves(records,HeatwaveConfig(absolute_threshold_c=35,minimum_duration_days=3))
+-    assert len(events)==1 and events[0].duration_days==3
++    records = []
++    for index, temperature in enumerate([31, 36, 38, 37, 30]):
++        records.append(
++            ClimateRecord(
++                timestamp=NOW + timedelta(days=index),
++                temperature_c=temperature,
++                minimum_temperature_c=temperature - 10,
++                maximum_temperature_c=temperature,
++            )
++        )
++    events = detect_heatwaves(records, HeatwaveConfig(absolute_threshold_c=35, minimum_duration_days=3))
++    assert len(events) == 1
++    assert events[0].duration_days == 3
++
+ 
+ def test_air_quality_and_labeled_aqi():
+-    s=summarize_air_quality([NOW,NOW+timedelta(hours=1)],[8,12],aqi_standard="US EPA AQI")
+-    assert s.latest_aqi==us_epa_aqi("PM2.5",12)
+-    assert s.standard=="US EPA AQI"
++    summary = summarize_air_quality(
++        [NOW, NOW + timedelta(hours=1)],
++        [8, 12],
++        aqi_standard="US EPA AQI",
++    )
++    assert summary.latest_aqi == us_epa_aqi("PM2.5", 12)
++    assert summary.standard == "US EPA AQI"
++
+ 
+ def test_air_quality_no_valid_data():
+-    with pytest.raises(ValueError): summarize_air_quality(["bad"],[None])
++    with pytest.raises(ValueError):
++        summarize_air_quality(["bad"], [None])
++
+ 
+ def test_comparator_and_duplicate_guard():
+-    records=[]
+-    for i in range(8):
+-        records.append(ComparatorRecord(timestamp=NOW+timedelta(hours=i),indoor_temperature_c=29-i*.2,outdoor_temperature_c=25-i*.1,indoor_pm25_ug_m3=10,outdoor_pm25_ug_m3=12,event="Windows Opened" if i==2 else None))
+-    r=compare_indoor_outdoor(ComparatorInput(records=records))
+-    assert r.record_count==8
+-    with pytest.raises(ValidationError): ComparatorInput(records=[records[0],records[0],records[1]])
++    records = []
++    for index in range(8):
++        records.append(
++            ComparatorRecord(
++                timestamp=NOW + timedelta(hours=index),
++                indoor_temperature_c=29 - index * 0.2,
++                outdoor_temperature_c=25 - index * 0.1,
++                indoor_pm25_ug_m3=10,
++                outdoor_pm25_ug_m3=12,
++                event="Windows Opened" if index == 2 else None,
++            )
++        )
++    result = compare_indoor_outdoor(ComparatorInput(records=records))
++    assert result.record_count == 8
++    with pytest.raises(ValidationError):
++        ComparatorInput(records=[records[0], records[0], records[1]])
++
+ 
+ def test_urban_heat_labeled_lst():
+-    df=pd.DataFrame({"latitude":[41,41.01,41.1,41.11],"longitude":[29,29.01,29.1,29.11],"zone":["urban","urban","peripheral","peripheral"],"land_surface_temperature_c":[39,38,31,32],"ndvi":[.1,.2,.7,.6]})
+-    r=analyze_urban_heat(df,source="synthetic",acquisition_date="2026-07-20",product="demo LST")
+-    assert r.surface_heat_difference_c>0
+-    assert any("not" in x.lower() and "air" in x.lower() for x in r.warnings)
++    frame = pd.DataFrame(
++        {
++            "latitude": [41, 41.01, 41.1, 41.11],
++            "longitude": [29, 29.01, 29.1, 29.11],
++            "zone": ["urban", "urban", "peripheral", "peripheral"],
++            "land_surface_temperature_c": [39, 38, 31, 32],
++            "ndvi": [0.1, 0.2, 0.7, 0.6],
++        }
++    )
++    result = analyze_urban_heat(
++        frame,
++        source="synthetic",
++        acquisition_date="2026-07-20",
++        product="demo LST",
++    )
++    assert result.surface_heat_difference_c > 0
++    assert any("not" in warning.lower() and "air" in warning.lower() for warning in result.warnings)
++
+ 
+ def test_wildfire_does_not_claim_causality():
+-    fires=[FireDetection(latitude=41.1,longitude=29.1,timestamp=NOW.isoformat(),confidence=90,frp_mw=20,source="synthetic")]
+-    r=analyze_wildfire_context(target_latitude=41,target_longitude=29,fires=fires,pm25_before=8,pm25_during=45,wind_direction_deg=200,wind_speed_kmh=15)
+-    assert r.fire_count_within_radius==1
+-    assert "unconfirmed" in r.causal_attribution.lower()
++    fires = [
++        FireDetection(
++            latitude=41.1,
++            longitude=29.1,
++            timestamp=NOW.isoformat(),
++            confidence=90,
++            frp_mw=20,
++            source="synthetic",
++        )
++    ]
++    result = analyze_wildfire_context(
++        target_latitude=41,
++        target_longitude=29,
++        fires=fires,
++        pm25_before=8,
++        pm25_during=45,
++        wind_direction_deg=200,
++        wind_speed_kmh=15,
++    )
++    assert result.fire_count_within_radius == 1
++    assert "unconfirmed" in result.causal_attribution.lower()
++
+ 
+ def test_indoor_air_clues_are_non_diagnostic():
+-    from heatsafe.core.indoor_air import assess_indoor_air_clues
+-    result = assess_indoor_air_clues(co2_ppm=1350, indoor_humidity_pct=68, indoor_temperature_c=26, cold_surface_temperature_c=17)
++    result = assess_indoor_air_clues(
++        co2_ppm=1350,
++        indoor_humidity_pct=68,
++        indoor_temperature_c=26,
++        cold_surface_temperature_c=17,
++    )
+     assert "Higher" in result.ventilation_clue
+     assert "Elevated" in result.humidity_context
+     assert any("does not diagnose" in item for item in result.limitations)
+diff -ruN '--exclude=.git' '--exclude=.pytest_cache' '--exclude=.coverage' /mnt/data/heatsafe-climate-air-quality-lab/tests/test_data_and_connectors.py /tmp/heatsafe-fix/tests/test_data_and_connectors.py
+--- /mnt/data/heatsafe-climate-air-quality-lab/tests/test_data_and_connectors.py	2026-07-26 02:20:21.230234869 +0000
++++ /tmp/heatsafe-fix/tests/test_data_and_connectors.py	2026-07-26 03:06:16.794288611 +0000
+@@ -1,52 +1,144 @@
+ from pathlib import Path
+-import httpx, pytest, yaml
++
++import httpx
++import pytest
++import yaml
++
++from heatsafe.connectors.nasa_power import NasaPowerConnector
++from heatsafe.connectors.open_meteo import OpenMeteoConnector
++from heatsafe.connectors.openaq import OpenAQConnector
+ from heatsafe.core.data_contract import normalize_observation
+ from heatsafe.core.logs import HeatLog
+ from heatsafe.core.models import MeasurementType
+-from heatsafe.connectors.open_meteo import OpenMeteoConnector
+-from heatsafe.connectors.nasa_power import NasaPowerConnector
+-from heatsafe.connectors.openaq import OpenAQConnector
+ 
+-ROOT=Path(__file__).resolve().parents[1]
++ROOT = Path(__file__).resolve().parents[1]
++
+ 
+ def test_catalog_parses_and_has_sources():
+-    data=yaml.safe_load((ROOT/"data/catalog.yml").read_text())
+-    assert len(data["sources"])>=8
++    data = yaml.safe_load((ROOT / "data/catalog.yml").read_text())
++    assert len(data["sources"]) >= 8
++
+ 
+ def test_normalized_contract():
+-    o=normalize_observation(source_name="x",source_dataset="y",latitude=41,longitude=29,timestamp_utc="2026-01-01T00:00:00Z",variable="temperature",value=25,unit="°C",measurement_type="observed",license="test",source_url="https://example.org")
+-    assert o.measurement_type is MeasurementType.OBSERVED
++    observation = normalize_observation(
++        source_name="x",
++        source_dataset="y",
++        latitude=41,
++        longitude=29,
++        timestamp_utc="2026-01-01T00:00:00Z",
++        variable="temperature",
++        value=25,
++        unit="°C",
++        measurement_type="observed",
++        license="test",
++        source_url="https://example.org",
++    )
++    assert observation.measurement_type is MeasurementType.OBSERVED
++
+ 
+ def test_heat_log_roundtrip(tmp_path):
+-    log=HeatLog()
+-    log.add({"timestamp":"2026-01-01T00:00:00Z","indoor_temperature_c":25})
+-    path=tmp_path/"log.json";log.to_json(path)
+-    assert HeatLog.from_json(path).records[0]["indoor_temperature_c"]==25
++    log = HeatLog()
++    log.add({"timestamp": "2026-01-01T00:00:00Z", "indoor_temperature_c": 25})
++    path = tmp_path / "log.json"
++    log.to_json(path)
++    assert HeatLog.from_json(path).records[0]["indoor_temperature_c"] == 25
++
+ 
+ def test_open_meteo_mock():
+     def handler(request):
+-        return httpx.Response(200,json={"hourly":{"time":["2026-01-01T00:00"],"temperature_2m":[20.0],"relative_humidity_2m":[50],"wind_speed_10m":[7.0],"wind_direction_10m":[180]},"hourly_units":{"temperature_2m":"°C","relative_humidity_2m":"%","wind_speed_10m":"km/h","wind_direction_10m":"°"}})
+-    c=OpenMeteoConnector(transport=httpx.MockTransport(handler))
+-    rows=c.fetch(latitude=41,longitude=29,forecast_days=1)
+-    assert any(r.variable=="temperature_c" for r in rows)
++        return httpx.Response(
++            200,
++            json={
++                "hourly": {
++                    "time": ["2026-01-01T00:00"],
++                    "temperature_2m": [20.0],
++                    "relative_humidity_2m": [50],
++                    "wind_speed_10m": [7.0],
++                    "wind_direction_10m": [180],
++                },
++                "hourly_units": {
++                    "temperature_2m": "°C",
++                    "relative_humidity_2m": "%",
++                    "wind_speed_10m": "km/h",
++                    "wind_direction_10m": "°",
++                },
++            },
++        )
++
++    connector = OpenMeteoConnector(transport=httpx.MockTransport(handler))
++    rows = connector.fetch(latitude=41, longitude=29, forecast_days=1)
++    assert any(row.variable == "temperature_c" for row in rows)
++
+ 
+ def test_nasa_power_mock():
+     def handler(request):
+-        return httpx.Response(200,json={"properties":{"parameter":{"T2M":{"20260101":17.5}}},"header":{}})
+-    c=NasaPowerConnector(transport=httpx.MockTransport(handler))
+-    rows=c.fetch(latitude=41,longitude=29,start="20260101",end="20260101",parameters=["T2M"])
+-    assert rows[0].measurement_type.value=="modeled"
++        return httpx.Response(
++            200,
++            json={"properties": {"parameter": {"T2M": {"20260101": 17.5}}}, "header": {}},
++        )
++
++    connector = NasaPowerConnector(transport=httpx.MockTransport(handler))
++    rows = connector.fetch(
++        latitude=41,
++        longitude=29,
++        start="20260101",
++        end="20260101",
++        parameters=["T2M"],
++    )
++    assert rows[0].measurement_type.value == "modeled"
++
+ 
+ def test_openaq_requires_key():
+-    with pytest.raises(ValueError): OpenAQConnector(api_key="")
++    with pytest.raises(ValueError):
++        OpenAQConnector(api_key="")
++
+ 
+ def test_openaq_v3_sensor_metadata_mapping():
+     def handler(request):
+-        if request.url.path.endswith('/latest'):
+-            return httpx.Response(200, json={"results": [{"datetime": {"utc": "2026-01-01T00:00:00Z", "local": "2026-01-01T03:00:00+03:00"}, "value": 11.2, "coordinates": {"latitude": 41.0, "longitude": 29.0}, "sensorsId": 77, "locationsId": 10}]})
+-        return httpx.Response(200, json={"results": [{"id": 10, "name": "Demo", "locality": "Istanbul", "timezone": "Europe/Istanbul", "country": {"code": "TR"}, "coordinates": {"latitude": 41.0, "longitude": 29.0}, "licenses": [{"name": "Example License"}], "sensors": [{"id": 77, "name": "PM2.5", "parameter": {"id": 2, "name": "pm25", "units": "µg/m³"}}]}]})
+-    c=OpenAQConnector(api_key="test-key", transport=httpx.MockTransport(handler))
+-    rows=c.fetch(location_id=10)
++        if request.url.path.endswith("/latest"):
++            return httpx.Response(
++                200,
++                json={
++                    "results": [
++                        {
++                            "datetime": {
++                                "utc": "2026-01-01T00:00:00Z",
++                                "local": "2026-01-01T03:00:00+03:00",
++                            },
++                            "value": 11.2,
++                            "coordinates": {"latitude": 41.0, "longitude": 29.0},
++                            "sensorsId": 77,
++                            "locationsId": 10,
++                        }
++                    ]
++                },
++            )
++        return httpx.Response(
++            200,
++            json={
++                "results": [
++                    {
++                        "id": 10,
++                        "name": "Demo",
++                        "locality": "Istanbul",
++                        "timezone": "Europe/Istanbul",
++                        "country": {"code": "TR"},
++                        "coordinates": {"latitude": 41.0, "longitude": 29.0},
++                        "licenses": [{"name": "Example License"}],
++                        "sensors": [
++                            {
++                                "id": 77,
++                                "name": "PM2.5",
++                                "parameter": {"id": 2, "name": "pm25", "units": "µg/m³"},
++                            }
++                        ],
++                    }
++                ]
++            },
++        )
++
++    connector = OpenAQConnector(api_key="test-key", transport=httpx.MockTransport(handler))
++    rows = connector.fetch(location_id=10)
+     assert rows[0].variable == "pm25"
+     assert rows[0].unit == "µg/m³"
+     assert rows[0].city == "Istanbul"
+diff -ruN '--exclude=.git' '--exclude=.pytest_cache' '--exclude=.coverage' /mnt/data/heatsafe-climate-air-quality-lab/tests/test_research.py /tmp/heatsafe-fix/tests/test_research.py
+--- /mnt/data/heatsafe-climate-air-quality-lab/tests/test_research.py	2026-07-26 02:11:02.926223981 +0000
++++ /tmp/heatsafe-fix/tests/test_research.py	2026-07-26 03:06:16.794288611 +0000
+@@ -1,13 +1,17 @@
+-import numpy as np, pandas as pd
+-from heatsafe.research.benchmark import run_benchmark, rolling_origin_mae
++import numpy as np
++import pandas as pd
++
++from heatsafe.research.benchmark import rolling_origin_mae, run_benchmark
++
+ 
+ def test_benchmark_models_and_intervals():
+-    rng=np.random.default_rng(42)
+-    values=15+4*np.sin(np.arange(700)*2*np.pi/24)+rng.normal(0,1,700)
+-    r=run_benchmark(pd.Series(values),horizons=(1,6))
+-    assert len(r.metrics)==12
+-    assert all(m.prediction_interval_coverage is not None for m in r.metrics)
+-    assert set(r.best_by_horizon)=={1,6}
++    rng = np.random.default_rng(42)
++    values = 15 + 4 * np.sin(np.arange(700) * 2 * np.pi / 24) + rng.normal(0, 1, 700)
++    result = run_benchmark(pd.Series(values), horizons=(1, 6))
++    assert len(result.metrics) == 12
++    assert all(metric.prediction_interval_coverage is not None for metric in result.metrics)
++    assert set(result.best_by_horizon) == {1, 6}
++
+ 
+ def test_rolling_origin():
+-    assert rolling_origin_mae(pd.Series(range(200)),horizon=1)>0
++    assert rolling_origin_mae(pd.Series(range(200)), horizon=1) > 0
