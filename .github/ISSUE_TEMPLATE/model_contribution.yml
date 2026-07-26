@@ -1,0 +1,12 @@
+name: Model contribution
+description: Propose a forecasting or uncertainty model
+title: "[Model]: "
+body:
+  - type: textarea
+    id: baseline
+    attributes: {label: Baseline comparison and split design}
+    validations: {required: true}
+  - type: textarea
+    id: card
+    attributes: {label: Model-card details and limitations}
+    validations: {required: true}

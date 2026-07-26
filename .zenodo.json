@@ -1,0 +1,20 @@
+{
+  "title": "HeatSafe Climate & Air Quality Intelligence Lab",
+  "upload_type": "software",
+  "description": "Open-data environmental AI and deterministic household heat and air-quality decision support.",
+  "creators": [
+    {
+      "name": "Kowsari, Faramarz",
+      "orcid": "0000-0003-1692-0453"
+    }
+  ],
+  "license": "Apache-2.0",
+  "keywords": [
+    "air quality",
+    "climate change",
+    "heatwave",
+    "PM2.5",
+    "wildfire smoke",
+    "urban heat island"
+  ]
+}

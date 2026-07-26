@@ -1,0 +1,502 @@
+[
+  {
+    "prompt": 1,
+    "title": "THE HEATSAFE HOME PROMISE",
+    "objective": "Introduce a practical system for making homes cooler, indoor air cleaner, and cooling decisions more economical."
+  },
+  {
+    "prompt": 2,
+    "title": "HOW TO USE THIS VISUAL GUIDE",
+    "objective": "Explain how readers move from seeing a principle to checking their home, testing conditions, and acting."
+  },
+  {
+    "prompt": 3,
+    "title": "YOUR HOME IS A HEAT SYSTEM",
+    "objective": "Teach that heat enters, is generated, is stored, moves, and must eventually leave."
+  },
+  {
+    "prompt": 4,
+    "title": "THE THREE DECISIONS THAT CHANGE EVERYTHING",
+    "objective": "Present the three strategic decisions behind efficient household cooling."
+  },
+  {
+    "prompt": 5,
+    "title": "YOUR 60-SECOND HOME HEAT CHECK",
+    "objective": "Give readers a fast non-diagnostic assessment of common overheating factors."
+  },
+  {
+    "prompt": 6,
+    "title": "SAFETY, LIMITS AND RESPONSIBLE USE",
+    "objective": "Set boundaries around medical safety, electrical work, building changes, and model uncertainty."
+  },
+  {
+    "prompt": 7,
+    "title": "THE FIVE PATHS OF HOME HEAT",
+    "objective": "Introduce radiation, conduction, convection, air leakage, and internal heat generation."
+  },
+  {
+    "prompt": 8,
+    "title": "THE DAILY HEAT CYCLE",
+    "objective": "Show that outdoor temperature, solar exposure, and indoor temperature peak at different times."
+  },
+  {
+    "prompt": 9,
+    "title": "THE HEATSAFE DECISION LOOP",
+    "objective": "Explain a repeatable process of observation, comparison, prioritization, testing, and reassessment."
+  },
+  {
+    "prompt": 10,
+    "title": "THE BOOK AT A GLANCE",
+    "objective": "Map the complete learning journey through the book."
+  },
+  {
+    "prompt": 11,
+    "title": "RADIATION: HEAT YOU CAN FEEL WITHOUT TOUCHING",
+    "objective": "Explain radiant heat from the sun and warm surfaces."
+  },
+  {
+    "prompt": 12,
+    "title": "CONDUCTION: HEAT MOVING THROUGH MATERIALS",
+    "objective": "Explain how heat passes through roofs, walls, windows, and floors."
+  },
+  {
+    "prompt": 13,
+    "title": "CONVECTION: HEAT MOVING WITH AIR",
+    "objective": "Explain warm-air movement and distinguish redistribution from true heat removal."
+  },
+  {
+    "prompt": 14,
+    "title": "THERMAL MASS: WHY YOUR HOME STAYS HOT AFTER SUNSET",
+    "objective": "Explain how heavy materials store daytime heat and release it later."
+  },
+  {
+    "prompt": 15,
+    "title": "AIR TEMPERATURE IS NOT THE WHOLE STORY",
+    "objective": "Present the six major factors that influence thermal comfort."
+  },
+  {
+    "prompt": 16,
+    "title": "HUMIDITY CHANGES HOW HEAT FEELS",
+    "objective": "Compare hot-dry and hot-humid conditions."
+  },
+  {
+    "prompt": 17,
+    "title": "AIR MOVEMENT COOLS PEOPLE BEFORE IT COOLS ROOMS",
+    "objective": "Explain the personal cooling effect of moving air and its limits."
+  },
+  {
+    "prompt": 18,
+    "title": "WHY HOT NIGHTS MATTER",
+    "objective": "Explain overnight heat retention and next-day thermal carryover."
+  },
+  {
+    "prompt": 19,
+    "title": "THE URBAN HEAT ISLAND AROUND YOUR HOME",
+    "objective": "Explain why dense built areas often stay warmer than greener surroundings."
+  },
+  {
+    "prompt": 20,
+    "title": "MICROCLIMATES: THE WEATHER AT YOUR WINDOW",
+    "objective": "Show why a balcony, roof, or courtyard can differ from the regional weather station."
+  },
+  {
+    "prompt": 21,
+    "title": "BUILD YOUR HOME HEAT PROFILE",
+    "objective": "Introduce the eight-category diagnostic framework for a home."
+  },
+  {
+    "prompt": 22,
+    "title": "WINDOW ORIENTATION AND SUN PATH",
+    "objective": "Explain how window direction changes the timing of solar exposure."
+  },
+  {
+    "prompt": 23,
+    "title": "WINDOW SIZE, GLASS AND HEAT GAIN",
+    "objective": "Explain how glazing area, layers, frames, seals, and shade interact."
+  },
+  {
+    "prompt": 24,
+    "title": "THE ROOF: YOUR HOME'S SOLAR FRONT LINE",
+    "objective": "Show why roofs can be major heat sources for upper floors."
+  },
+  {
+    "prompt": 25,
+    "title": "WALLS, INSULATION AND THERMAL BRIDGES",
+    "objective": "Explain how heat bypasses insulation through structural connections."
+  },
+  {
+    "prompt": 26,
+    "title": "FLOORS, CEILINGS AND NEIGHBORING SPACES",
+    "objective": "Show how spaces above, below, and beside a home affect its temperature."
+  },
+  {
+    "prompt": 27,
+    "title": "AIR LEAKAGE: UNCONTROLLED VENTILATION",
+    "objective": "Explain how unwanted outdoor air enters through gaps and openings."
+  },
+  {
+    "prompt": 28,
+    "title": "ROOM LAYOUT AND AIRFLOW OBSTACLES",
+    "objective": "Explain how doors, furniture, and partitions alter airflow."
+  },
+  {
+    "prompt": 29,
+    "title": "INTERNAL HEAT SOURCES",
+    "objective": "Identify activities and appliances that add heat indoors."
+  },
+  {
+    "prompt": 30,
+    "title": "PEOPLE, ACTIVITY AND OCCUPANCY",
+    "objective": "Explain how occupants add heat, moisture, and carbon dioxide."
+  },
+  {
+    "prompt": 31,
+    "title": "BALCONIES, AWNINGS AND EXTERNAL FEATURES",
+    "objective": "Show how external features may shade, reflect heat, or restrict airflow."
+  },
+  {
+    "prompt": 32,
+    "title": "THE TOP-FLOOR APARTMENT PROBLEM",
+    "objective": "Explain the combined pathways that often affect top-floor homes."
+  },
+  {
+    "prompt": 33,
+    "title": "ATTICS AND ROOF VOIDS",
+    "objective": "Explain how attic insulation, ventilation, moisture, and safety interact."
+  },
+  {
+    "prompt": 34,
+    "title": "BASEMENTS AND LOWER-LEVEL ROOMS",
+    "objective": "Explain why lower-level rooms can be cooler while presenting moisture or air-quality concerns."
+  },
+  {
+    "prompt": 35,
+    "title": "A LOW-COST HOME HEAT AUDIT",
+    "objective": "Teach a repeatable observation process using simple household tools."
+  },
+  {
+    "prompt": 36,
+    "title": "THE SHADE-FIRST PRINCIPLE",
+    "objective": "Explain why blocking sunlight before it reaches the glass is often effective."
+  },
+  {
+    "prompt": 37,
+    "title": "EXTERNAL SHADING OPTIONS",
+    "objective": "Compare common exterior shading systems and practical constraints."
+  },
+  {
+    "prompt": 38,
+    "title": "INTERIOR BLINDS, CURTAINS AND SHADES",
+    "objective": "Explain the benefits and limits of interior window coverings."
+  },
+  {
+    "prompt": 39,
+    "title": "WINDOW FILMS AND SOLAR CONTROL GLASS",
+    "objective": "Introduce solar-control films and coated glazing with compatibility cautions."
+  },
+  {
+    "prompt": 40,
+    "title": "REFLECTIVE SURFACES: WHERE THEY HELP AND WHERE THEY FAIL",
+    "objective": "Teach how orientation, air gaps, heat escape, glare, and durability determine usefulness."
+  },
+  {
+    "prompt": 41,
+    "title": "TREES, PLANTS AND LIVING SHADE",
+    "objective": "Distinguish effective exterior vegetation from decorative indoor plants."
+  },
+  {
+    "prompt": 42,
+    "title": "COOL ROOFS",
+    "objective": "Explain how solar reflection, absorption, insulation, and climate shape roof performance."
+  },
+  {
+    "prompt": 43,
+    "title": "WALL COLOR AND EXTERIOR FINISH",
+    "objective": "Explain how finish color interacts with texture, construction, orientation, and insulation."
+  },
+  {
+    "prompt": 44,
+    "title": "BLOCKING HEAT IN RENTAL HOMES",
+    "objective": "Offer reversible, portable, low-damage interventions for tenants."
+  },
+  {
+    "prompt": 45,
+    "title": "THE SOLAR GAIN PRIORITY MAP",
+    "objective": "Help readers decide which window or surface to address first."
+  },
+  {
+    "prompt": 46,
+    "title": "WHEN SHOULD YOU OPEN THE WINDOWS?",
+    "objective": "Teach ventilation decisions by comparing indoor and outdoor conditions."
+  },
+  {
+    "prompt": 47,
+    "title": "CROSS-VENTILATION",
+    "objective": "Explain how pressure difference and a continuous route move air between openings."
+  },
+  {
+    "prompt": 48,
+    "title": "SINGLE-SIDED VENTILATION",
+    "objective": "Provide strategies for homes with windows on only one facade."
+  },
+  {
+    "prompt": 49,
+    "title": "THE STACK EFFECT AT HOME",
+    "objective": "Explain airflow driven by vertical temperature differences."
+  },
+  {
+    "prompt": 50,
+    "title": "NIGHT FLUSHING",
+    "objective": "Explain how cooler night air can remove stored heat."
+  },
+  {
+    "prompt": 51,
+    "title": "FAN PLACEMENT THAT ACTUALLY MOVES AIR",
+    "objective": "Distinguish personal cooling, intake, exhaust, cross-flow, and ineffective placement."
+  },
+  {
+    "prompt": 52,
+    "title": "CEILING FANS AND ROOM CIRCULATION",
+    "objective": "Explain that ceiling fans serve occupants and mix air rather than cooling empty rooms."
+  },
+  {
+    "prompt": 53,
+    "title": "EVAPORATIVE COOLING",
+    "objective": "Explain why evaporative cooling fits hot-dry climates better than humid ones."
+  },
+  {
+    "prompt": 54,
+    "title": "DEHUMIDIFICATION AS A COMFORT TOOL",
+    "objective": "Explain how removing moisture can improve humid-climate comfort while using energy and releasing heat."
+  },
+  {
+    "prompt": 55,
+    "title": "ZONE COOLING: COOL THE SPACE YOU USE",
+    "objective": "Explain the value of prioritizing occupied rooms."
+  },
+  {
+    "prompt": 56,
+    "title": "AIR-CONDITIONING SYSTEM TYPES",
+    "objective": "Provide a neutral overview of common residential cooling systems."
+  },
+  {
+    "prompt": 57,
+    "title": "WHY CORRECT SIZING MATTERS",
+    "objective": "Explain common problems associated with undersized and oversized equipment."
+  },
+  {
+    "prompt": 58,
+    "title": "THERMOSTAT STRATEGY",
+    "objective": "Explain how schedules, occupancy, humidity, and building response shape thermostat decisions."
+  },
+  {
+    "prompt": 59,
+    "title": "COMBINE FANS WITH AIR CONDITIONING",
+    "objective": "Show how air movement can support comfort and distribute cooled air."
+  },
+  {
+    "prompt": 60,
+    "title": "PORTABLE AIR CONDITIONERS: EXPECTATIONS AND LIMITS",
+    "objective": "Explain exhaust, window sealing, replacement air, and single-hose versus dual-hose layouts."
+  },
+  {
+    "prompt": 61,
+    "title": "MAINTENANCE THAT PROTECTS PERFORMANCE",
+    "objective": "Show routine actions that help cooling equipment operate as intended."
+  },
+  {
+    "prompt": 62,
+    "title": "SMART CONTROLS WITHOUT A COMPLEXITY TRAP",
+    "objective": "Explain three practical levels of home cooling automation."
+  },
+  {
+    "prompt": 63,
+    "title": "COOLING DURING A POWER OUTAGE",
+    "objective": "Present a safe household plan when electrical cooling is unavailable."
+  },
+  {
+    "prompt": 64,
+    "title": "OUTDOOR AIR DOES NOT STAY OUTDOORS",
+    "objective": "Explain the major routes by which particles and gases enter a building."
+  },
+  {
+    "prompt": 65,
+    "title": "PM2.5: SMALL PARTICLES, LARGE CONSEQUENCES",
+    "objective": "Visually explain the relative scale and behavior of fine particles."
+  },
+  {
+    "prompt": 66,
+    "title": "THE WINDOW DECISION: HEAT VERSUS AIR QUALITY",
+    "objective": "Show the tradeoff between cooling ventilation and polluted outdoor air."
+  },
+  {
+    "prompt": 67,
+    "title": "WILDFIRE SMOKE MODE",
+    "objective": "Provide a temporary household operating mode for smoke events."
+  },
+  {
+    "prompt": 68,
+    "title": "AIR PURIFIERS AND CLEAN AIR DELIVERY",
+    "objective": "Explain how room size, airflow, filter condition, placement, runtime, and noise affect portable air cleaning."
+  },
+  {
+    "prompt": 69,
+    "title": "BUILD A PRIORITY CLEAN ROOM",
+    "objective": "Show how to concentrate filtration and temperature management in one important room."
+  },
+  {
+    "prompt": 70,
+    "title": "CO2 AS A VENTILATION CLUE",
+    "objective": "Explain what indoor carbon dioxide can and cannot reveal."
+  },
+  {
+    "prompt": 71,
+    "title": "COOKING PARTICLES, MOISTURE AND HEAT",
+    "objective": "Show that cooking simultaneously adds heat, moisture, and pollutants."
+  },
+  {
+    "prompt": 72,
+    "title": "HUMIDITY, CONDENSATION AND MOLD RISK",
+    "objective": "Explain how moisture, cool surfaces, drying time, and ventilation interact."
+  },
+  {
+    "prompt": 73,
+    "title": "WHERE COOLING ENERGY GOES",
+    "objective": "Explain the major contributors to household cooling demand."
+  },
+  {
+    "prompt": 74,
+    "title": "UNDERSTAND YOUR ELECTRICITY BILL",
+    "objective": "Teach readers to identify consumption, prices, fixed charges, and time periods."
+  },
+  {
+    "prompt": 75,
+    "title": "THE COOLING COST EQUATION",
+    "objective": "Explain the relationship between power, time, energy use, and estimated cost."
+  },
+  {
+    "prompt": 76,
+    "title": "COST VERSUS IMPACT MATRIX",
+    "objective": "Help readers prioritize home interventions by cost, potential impact, and uncertainty."
+  },
+  {
+    "prompt": 77,
+    "title": "PAYBACK IS NOT THE ONLY VALUE",
+    "objective": "Explain that comfort, resilience, air quality, noise, and property improvement may matter alongside energy savings."
+  },
+  {
+    "prompt": 78,
+    "title": "RENTERS: BUILD A PORTABLE COOLING KIT",
+    "objective": "Create a practical toolkit for renters who need reversible solutions."
+  },
+  {
+    "prompt": 79,
+    "title": "HOMEOWNERS: THINK IN LAYERS",
+    "objective": "Show a staged investment pathway from observation to building and equipment improvements."
+  },
+  {
+    "prompt": 80,
+    "title": "SOLAR POWER AND COOLING DEMAND",
+    "objective": "Explain the overlap and mismatch between solar generation and cooling demand."
+  },
+  {
+    "prompt": 81,
+    "title": "SHIFTING COOLING LOADS",
+    "objective": "Explain how moving flexible activities can reduce peak heat or energy cost."
+  },
+  {
+    "prompt": 82,
+    "title": "THE HEATSAFE SHOPPING CHECKLIST",
+    "objective": "Teach readers how to evaluate cooling and air-quality products before buying."
+  },
+  {
+    "prompt": 83,
+    "title": "CHILDREN AND HOT HOMES",
+    "objective": "Present environment-focused planning for babies and children without medical treatment claims."
+  },
+  {
+    "prompt": 84,
+    "title": "OLDER ADULTS AND HEAT RESILIENCE",
+    "objective": "Show how room setup, routine, communication, and support networks contribute to heat safety."
+  },
+  {
+    "prompt": 85,
+    "title": "PETS IN HOT HOMES",
+    "objective": "Explain indoor heat considerations for household animals."
+  },
+  {
+    "prompt": 86,
+    "title": "SLEEP IN A HOT BEDROOM",
+    "objective": "Create a bedroom-focused plan beginning before bedtime."
+  },
+  {
+    "prompt": 87,
+    "title": "THE REMOTE WORKER'S HEAT PLAN",
+    "objective": "Address work-from-home equipment heat and room selection."
+  },
+  {
+    "prompt": 88,
+    "title": "ILLUSTRATIVE SCENARIO: TOP-FLOOR CENTRAL EUROPEAN FLAT",
+    "objective": "Apply the diagnostic system to a top-floor flat designed primarily for winter conditions."
+  },
+  {
+    "prompt": 89,
+    "title": "ILLUSTRATIVE SCENARIO: MEDITERRANEAN APARTMENT",
+    "objective": "Apply solar control, shutters, night airflow, and targeted cooling to a hot Mediterranean apartment."
+  },
+  {
+    "prompt": 90,
+    "title": "ILLUSTRATIVE SCENARIO: HUMID COASTAL HOME",
+    "objective": "Apply humidity-aware cooling to a warm coastal home."
+  },
+  {
+    "prompt": 91,
+    "title": "ILLUSTRATIVE SCENARIO: WILDFIRE SMOKE AND HEAT",
+    "objective": "Show the difficult tradeoff between closed windows, filtration, and indoor overheating."
+  },
+  {
+    "prompt": 92,
+    "title": "THE HEATSAFE HOME LABORATORY",
+    "objective": "Introduce the free open-source browser application that supports the book."
+  },
+  {
+    "prompt": 93,
+    "title": "TOOL 1: HOME HEAT PROFILE",
+    "objective": "Show how the browser tool turns household inputs into a structured observational profile."
+  },
+  {
+    "prompt": 94,
+    "title": "TOOL 2: HOURLY VENTILATION PLANNER",
+    "objective": "Show how the tool compares indoor and outdoor conditions hour by hour."
+  },
+  {
+    "prompt": 95,
+    "title": "TOOL 3: COOLING COST ESTIMATOR",
+    "objective": "Explain the browser-based cost model and uncertainty range."
+  },
+  {
+    "prompt": 96,
+    "title": "TOOL 4: INDOOR-OUTDOOR COMPARATOR",
+    "objective": "Show how users enter or upload observations and mark household actions."
+  },
+  {
+    "prompt": 97,
+    "title": "TOOL 5: SEVEN-DAY HOME HEAT LOG",
+    "objective": "Explain a consistent weekly observation workflow."
+  },
+  {
+    "prompt": 98,
+    "title": "OPTIONAL LOCAL AI AND BYOK MODE",
+    "objective": "Explain standard calculations, local browser AI, and optional bring-your-own-key modes transparently."
+  },
+  {
+    "prompt": 99,
+    "title": "YOUR 24-HOUR HEATSAFE HOME PLAN",
+    "objective": "Convert the book into a practical daily schedule."
+  },
+  {
+    "prompt": 100,
+    "title": "THE HEATSAFE HOME MASTER CHECKLIST",
+    "objective": "Summarize the complete system as ten verified household capabilities."
+  }
+]

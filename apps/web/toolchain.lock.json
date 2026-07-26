@@ -1,0 +1,6 @@
+{
+  "typescript": "5.8.3",
+  "target": "ES2022",
+  "generated_app_js_sha256": "e14bcb35283264554ac44f514ff584872f873c42ab1e0d57fba77a4dce1627b1",
+  "note": "The browser application has no runtime npm dependency; the compiled JavaScript is committed."
+}

@@ -1,0 +1,7 @@
+{
+  "data/sample/home_log.csv": "3be105b82b835e4f85fa084e5faac1a0dec62f0efd9d72ef5c7b05e2b468e70d",
+  "data/synthetic/climate_daily.csv": "1c7e9ff8dce4669b66176db2dd880bdbcece83cf995a117b21da3abd15e2f4e5",
+  "data/synthetic/fire_events.csv": "f22398b2891d9ada618746f1691ce1060168f240bff601149646325357b8fd03",
+  "data/synthetic/hourly_environment.csv": "5e74bdd3dde08ead30bb152c0bdb3896a2cecd8beb0dd03a6e2325724523deff",
+  "data/synthetic/urban_heat_grid.csv": "efadd125211e406aceb012842755c3b96b61e92e938f1dc2456f59016b161480"
+}

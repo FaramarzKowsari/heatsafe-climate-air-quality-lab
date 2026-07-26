@@ -1,0 +1,82 @@
+schema_version: 1.0
+last_reviewed: 2026-07-26
+sources:
+  - id: open-meteo-forecast
+    name: Open-Meteo Weather Forecast API
+    category: forecast
+    connector: heatsafe.connectors.open_meteo.OpenMeteoConnector
+    authentication: none
+    official_documentation: https://open-meteo.com/en/docs
+    license_or_terms: https://open-meteo.com/en/terms
+    live_status: implemented
+    redistribution: derived responses only; verify deployment terms
+    limitations: Public free endpoint is intended for non-commercial use and has usage limits.
+  - id: open-meteo-air-quality
+    name: Open-Meteo Air Quality API
+    category: forecast
+    connector: heatsafe.connectors.open_meteo.OpenMeteoAirQualityConnector
+    authentication: none
+    official_documentation: https://open-meteo.com/en/docs/air-quality-api
+    license_or_terms: https://open-meteo.com/en/terms
+    live_status: implemented
+    redistribution: derived responses only; verify deployment terms
+  - id: nasa-power
+    name: NASA POWER Daily API
+    category: modeled
+    connector: heatsafe.connectors.nasa_power.NasaPowerConnector
+    authentication: none
+    official_documentation: https://power.larc.nasa.gov/docs/services/api/
+    license_or_terms: https://www.earthdata.nasa.gov/engage/open-data-services-and-software/data-and-information-policy
+    live_status: implemented
+    redistribution: attribution required
+  - id: openaq-v3
+    name: OpenAQ API v3
+    category: observed
+    connector: heatsafe.connectors.openaq.OpenAQConnector
+    authentication: X-API-Key required
+    official_documentation: https://docs.openaq.org/
+    license_or_terms: https://openaq.org/about/terms
+    live_status: implemented_with_key
+    redistribution: source-specific attribution applies
+  - id: noaa-cdo
+    name: NOAA Climate Data Online
+    category: observed
+    connector: specification only
+    authentication: token required
+    official_documentation: https://www.ncei.noaa.gov/cdo-web/webservices/v2
+    live_status: adapter specification
+  - id: epa-aqs
+    name: US EPA Air Quality System API
+    category: observed
+    connector: specification only
+    authentication: API credentials required for most usage
+    official_documentation: https://aqs.epa.gov/aqsweb/documents/data_api.html
+    live_status: adapter specification
+  - id: era5-land
+    name: Copernicus ERA5-Land
+    category: reanalysis
+    connector: specification only
+    authentication: CDS account and terms acceptance
+    official_documentation: https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land
+    live_status: adapter specification
+  - id: nasa-firms
+    name: NASA FIRMS Area API
+    category: satellite-derived
+    connector: specification only
+    authentication: MAP_KEY required
+    official_documentation: https://firms.modaps.eosdis.nasa.gov/api/area/
+    live_status: adapter specification
+  - id: eea-air-quality
+    name: EEA Air Quality Download Service
+    category: observed
+    connector: specification only
+    authentication: varies by endpoint
+    official_documentation: https://eeadmz1-downloads-webapp.azurewebsites.net/
+    live_status: adapter specification
+  - id: eccc-geomet
+    name: Environment and Climate Change Canada GeoMet
+    category: observed_and_forecast
+    connector: specification only
+    authentication: none for public OGC services
+    official_documentation: https://eccc-msc.github.io/open-data/msc-geomet/readme_en/
+    live_status: adapter specification

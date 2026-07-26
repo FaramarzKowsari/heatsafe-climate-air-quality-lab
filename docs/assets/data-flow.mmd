@@ -1,0 +1,12 @@
+flowchart LR
+  A[Official/public source] --> B[Connector]
+  B --> C[Normalized observation contract]
+  C --> D{Measurement type}
+  D -->|Observed| E[Ground monitor analytics]
+  D -->|Forecast/model| F[Planning and forecast]
+  D -->|Satellite-derived| G[Urban surface heat]
+  D -->|Synthetic| H[Offline demo and tests]
+  E --> I[API and browser]
+  F --> I
+  G --> I
+  H --> I

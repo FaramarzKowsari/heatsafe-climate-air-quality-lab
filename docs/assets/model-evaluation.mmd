@@ -1,0 +1,13 @@
+flowchart TD
+  S[Versioned time series] --> Q[Quality and missingness checks]
+  Q --> T[Chronological train]
+  Q --> C[Conformal calibration]
+  Q --> X[Held-out test]
+  T --> B[Persistence and seasonal baselines]
+  T --> M[Linear and tree models]
+  C --> U[Prediction interval calibration]
+  B --> R[Metrics]
+  M --> R
+  U --> R
+  X --> R
+  R --> K[MAE RMSE bias R2 event F1 coverage]

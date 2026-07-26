@@ -1,0 +1,9 @@
+seed: 42
+target: pm25_ug_m3
+horizons_hours: [1, 6, 12, 24, 48]
+event_threshold: 35.0
+split:
+  train: 0.70
+  conformal_calibration: 0.15
+  test: 0.15
+models: [persistence, seasonal_naive_24h, moving_average_6h, linear_regression, random_forest, gradient_boosting]

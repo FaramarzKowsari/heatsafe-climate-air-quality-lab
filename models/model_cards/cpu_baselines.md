@@ -1,0 +1,3 @@
+# Model Card: HeatAQ Nexus CPU Baselines
+
+Models: persistence, 24-hour seasonal naive, six-hour moving average, linear regression, random forest, and gradient boosting. Purpose: reproducible comparison and regression testing, not operational forecasting. Data: user-supplied one-dimensional series or synthetic demo. Split: chronological 70% training, 15% conformal calibration, 15% test. Metrics: MAE, RMSE, bias, R², event precision/recall/F1, interval coverage and width. Known failures: distribution shift, sensor changes, missing long blocks, smoke events absent from training, and spatial transfer. Prohibited use: official warnings or medical decisions.

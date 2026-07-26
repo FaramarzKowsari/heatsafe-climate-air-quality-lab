@@ -1,0 +1,12 @@
+name: Data source request
+description: Propose a new environmental data source
+title: "[Data]: "
+body:
+  - type: input
+    id: official
+    attributes: {label: Official documentation URL}
+    validations: {required: true}
+  - type: textarea
+    id: license
+    attributes: {label: Authentication, rate limits, license and redistribution terms}
+    validations: {required: true}

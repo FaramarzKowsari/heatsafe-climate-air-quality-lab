@@ -1,0 +1,12 @@
+services:
+  heatsafe:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      HEATSAFE_ENV: production
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true

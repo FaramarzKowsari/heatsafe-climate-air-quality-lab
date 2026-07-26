@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Open-data AI tools for heatwaves, PM2.5, wildfire smoke, urban heat islands, home ventilation and climate trends across Europe, North America and Türkiye.">
+  <meta name="theme-color" content="#0b3a4a">
+  <title>HeatSafe Climate & Air Quality Intelligence Lab</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="hero">
+    <div>
+      <p class="eyebrow">HeatSafe Home Companion Laboratory</p>
+      <h1>HeatSafe Climate & Air Quality Intelligence Lab</h1>
+      <p>Deterministic household heat tools, regional environmental data workflows, and reproducible forecasting benchmarks.</p>
+      <div class="badges" aria-label="Project characteristics">
+        <span>Offline demo</span><span>No paid AI required</span><span>Privacy first</span><span>Explainable decisions</span>
+      </div>
+    </div>
+    <div class="system-map" aria-label="Heat and air system diagram">
+      <div class="sun">Solar gain</div><div class="home">Home</div><div class="air">Outdoor air</div><div class="filter">Filtration</div>
+    </div>
+  </header>
+
+  <nav class="tabs" aria-label="Application tools">
+    <button data-tab="ventilation" class="active">Ventilation</button>
+    <button data-tab="planner">72-hour planner</button>
+    <button data-tab="profile">Home profile</button>
+    <button data-tab="cost">Cooling cost</button>
+    <button data-tab="comparator">Comparator</button>
+    <button data-tab="trend">Climate trend</button>
+    <button data-tab="log">Seven-day log</button>
+    <button data-tab="research">Research</button>
+  </nav>
+
+  <main id="main">
+    <section id="ventilation" class="panel active" aria-labelledby="ventilation-title">
+      <div class="panel-intro">
+        <div><p class="section-kicker">Tool 2</p><h2 id="ventilation-title">Hourly ventilation decision</h2></div>
+        <p>Compare cooling potential with PM2.5, humidity, smoke, wind, and airflow constraints. The decision is rule-based; no LLM chooses the result.</p>
+      </div>
+      <form id="ventilation-form" class="form-grid">
+        <label>Indoor temperature (°C)<input name="indoor" type="number" step="0.1" value="29" required></label>
+        <label>Outdoor temperature (°C)<input name="outdoor" type="number" step="0.1" value="24" required></label>
+        <label>Outdoor PM2.5 (µg/m³)<input name="pm25" type="number" step="0.1" value="18"></label>
+        <label>Outdoor humidity (%)<input name="humidity" type="number" step="1" value="55"></label>
+        <label>Wind speed (km/h)<input name="wind" type="number" step="0.1" value="8"></label>
+        <label>Smoke context<select name="smoke"><option>none</option><option>possible</option><option>likely</option><option>unknown</option></select></label>
+        <label class="check"><input name="cross" type="checkbox" checked> Cross-ventilation available</label>
+        <label class="check"><input name="purifier" type="checkbox"> Air purifier available</label>
+        <button type="submit">Evaluate conditions</button>
+      </form>
+      <div id="ventilation-result" class="result" role="status" aria-live="polite"></div>
+    </section>
+
+
+    <section id="planner" class="panel" aria-labelledby="planner-title">
+      <div class="panel-intro"><div><p class="section-kicker">Tool 2</p><h2 id="planner-title">Hourly ventilation planner</h2></div><p>Generate a 24-hour illustrative plan from deterministic hourly outdoor conditions. All points are labeled synthetic.</p></div>
+      <form id="planner-form" class="form-grid">
+        <label>Indoor temperature (°C)<input name="indoor" type="number" step="0.1" value="29" required></label>
+        <label>Indoor humidity (%)<input name="humidity" type="number" value="55"></label>
+        <label>Baseline PM2.5 (µg/m³)<input name="pm25" type="number" value="15"></label>
+        <label class="check"><input name="cross" type="checkbox" checked> Cross-ventilation</label>
+        <label class="check"><input name="purifier" type="checkbox"> Air purifier</label>
+        <button type="submit">Build 24-hour plan</button>
+      </form>
+      <div id="planner-result" class="result" role="status" aria-live="polite"></div>
+    </section>
+
+    <section id="profile" class="panel" aria-labelledby="profile-title">
+      <div class="panel-intro">
+        <div><p class="section-kicker">Tool 1</p><h2 id="profile-title">Home heat profile</h2></div>
+        <p>Identify likely heat pathways without producing a fake certified score.</p>
+      </div>
+      <form id="profile-form" class="form-grid">
+        <label>Building type<select name="building_type"><option value="apartment">Apartment</option><option value="detached">Detached</option><option value="semi-detached">Semi-detached</option><option value="row-house">Row house</option><option value="other">Other</option></select></label>
+        <label>Floor level<select name="floor_level"><option value="top">Top</option><option value="middle">Middle</option><option value="ground">Ground</option><option value="basement">Basement</option></select></label>
+        <label>Roof exposure<select name="roof_exposure"><option value="direct">Direct</option><option value="partial">Partial</option><option value="none">None</option></select></label>
+        <label>Window orientation<select name="window_orientation"><option value="west">West</option><option value="south">South</option><option value="east">East</option><option value="north">North</option><option value="mixed">Mixed</option></select></label>
+        <label>Window area<select name="window_area"><option value="large">Large</option><option value="medium">Medium</option><option value="small">Small</option></select></label>
+        <label>External shading<select name="external_shading"><option value="none">None</option><option value="partial">Partial</option><option value="strong">Strong</option></select></label>
+        <label>Internal shading<select name="internal_shading"><option value="light">Light</option><option value="none">None</option><option value="effective">Effective</option></select></label>
+        <label>Insulation context<select name="insulation_context"><option value="unknown">Unknown</option><option value="poor">Poor</option><option value="moderate">Moderate</option><option value="good">Good</option></select></label>
+        <label>Thermal mass<select name="thermal_mass_context"><option value="heavy">Heavy</option><option value="medium">Medium</option><option value="light">Light</option><option value="unknown">Unknown</option></select></label>
+        <label>Occupants<input name="occupancy" type="number" value="2" min="0" max="30"></label>
+        <label class="check"><input name="cross_ventilation" type="checkbox"> Cross-ventilation</label>
+        <label class="check"><input name="single_sided_ventilation" type="checkbox" checked> Single-sided ventilation</label>
+        <label class="check"><input name="air_concern" type="checkbox" checked> Outdoor air-quality concerns</label>
+        <button type="submit">Build profile</button>
+      </form>
+      <div id="profile-result" class="result" role="status" aria-live="polite"></div>
+    </section>
+
+    <section id="cost" class="panel" aria-labelledby="cost-title">
+      <div class="panel-intro">
+        <div><p class="section-kicker">Tool 3</p><h2 id="cost-title">Cooling cost estimator</h2></div>
+        <p>Estimate energy and cost ranges while exposing every assumption.</p>
+      </div>
+      <form id="cost-form" class="form-grid">
+        <label>Device power (W)<input name="power" type="number" value="1200" required></label>
+        <label>Duty cycle (0–1)<input name="duty" type="number" step="0.05" min="0.05" max="1" value="0.65" required></label>
+        <label>Runtime (hours/day)<input name="hours" type="number" step="0.5" value="8" required></label>
+        <label>Number of days<input name="days" type="number" value="30" required></label>
+        <label>Electricity price / kWh<input name="price" type="number" step="0.001" value="0.18" required></label>
+        <label>Currency<input name="currency" value="USD" maxlength="8"></label>
+        <label>Rooms<input name="rooms" type="number" value="3" min="1"></label>
+        <label>Cooling strategy<select name="strategy"><option value="single-room">Single room</option><option value="zone">Zone</option><option value="whole-home">Whole home</option></select></label>
+        <label>Fan power (W)<input name="fan_power" type="number" value="45"></label>
+        <label>Fan runtime (hours/day)<input name="fan_hours" type="number" value="8"></label>
+        <label>Estimated duty reduction with fan<input name="fan_reduction" type="number" step="0.05" value="0.1" min="0" max="0.5"></label>
+        <button type="submit">Estimate cost</button>
+      </form>
+      <div id="cost-result" class="result" role="status" aria-live="polite"></div>
+    </section>
+
+
+    <section id="comparator" class="panel" aria-labelledby="comparator-title">
+      <div class="panel-intro"><div><p class="section-kicker">Tool 4</p><h2 id="comparator-title">Indoor–outdoor comparator</h2></div><p>Analyze thermal lag and observational changes around a window event. The demo is synthetic and does not establish causation.</p></div>
+      <button id="run-comparator" type="button">Run synthetic seven-hour comparison</button>
+      <div id="comparator-result" class="result" role="status" aria-live="polite"></div>
+    </section>
+
+    <section id="trend" class="panel" aria-labelledby="trend-title">
+      <div class="panel-intro">
+        <div><p class="section-kicker">Regional atlas</p><h2 id="trend-title">Climate warming trend demo</h2></div>
+        <p>Run OLS, Theil–Sen, Mann–Kendall, bootstrap uncertainty, hot-day counts, and change-point screening on a visibly synthetic series.</p>
+      </div>
+      <button id="run-trend">Run synthetic climate analysis</button>
+      <div id="trend-chart" class="chart" aria-label="Synthetic annual temperature trend chart"></div>
+      <div id="trend-result" class="result" role="status" aria-live="polite"></div>
+    </section>
+
+    <section id="log" class="panel" aria-labelledby="log-title">
+      <div class="panel-intro">
+        <div><p class="section-kicker">Tool 5</p><h2 id="log-title">Seven-day home heat log</h2></div>
+        <p>Records stay in this browser unless you export them. No precise home location is requested.</p>
+      </div>
+      <form id="log-form" class="form-grid">
+        <label>Timestamp<input name="timestamp" type="datetime-local" required></label>
+        <label>Indoor temperature (°C)<input name="indoor_temperature_c" type="number" step="0.1" required></label>
+        <label>Indoor humidity (%)<input name="indoor_humidity_pct" type="number" step="1" required></label>
+        <label>Outdoor temperature (°C)<input name="outdoor_temperature_c" type="number" step="0.1" required></label>
+        <label>PM2.5 (µg/m³)<input name="pm25_ug_m3" type="number" step="0.1" required></label>
+        <label>Window state<select name="window_state"><option>closed</option><option>open</option><option>partly open</option></select></label>
+        <label>Fan state<select name="fan_state"><option>off</option><option>on</option></select></label>
+        <label>Cooling state<select name="cooling_state"><option>off</option><option>on</option></select></label>
+        <label>Shade state<select name="shade_state"><option>open</option><option>closed</option><option>partial</option></select></label>
+        <label class="wide">Notes<input name="notes" maxlength="240"></label>
+        <button type="submit">Save locally</button>
+      </form>
+      <div class="button-row"><button id="export-log" type="button">Export CSV</button><button id="clear-log" type="button" class="secondary">Clear local log</button></div>
+      <div id="log-result" class="result"></div>
+    </section>
+
+    <section id="research" class="panel" aria-labelledby="research-title">
+      <div class="panel-intro">
+        <div><p class="section-kicker">HeatAQ Nexus</p><h2 id="research-title">Reproducible research layer</h2></div>
+        <p>CPU baselines, chronological splits, conformal intervals, domain-shift protocols, data cards, model cards, and provenance contracts.</p>
+      </div>
+      <div class="research-grid">
+        <article><h3>Forecasting baselines</h3><p>Persistence, seasonal naive, moving average, linear regression, random forest, and gradient boosting.</p></article>
+        <article><h3>Uncertainty</h3><p>Calibration residuals produce transparent prediction intervals; coverage is measured, not assumed.</p></article>
+        <article><h3>Domain shift</h3><p>Protocols cover unseen cities, regions, seasons, smoke episodes, and missing-data stress tests.</p></article>
+        <article><h3>Data identity</h3><p>Observed, satellite-derived, reanalysis, modeled, forecast, user-entered, estimated, and synthetic values remain distinct.</p></article>
+      </div>
+      <p><a href="/docs">OpenAPI documentation</a> · <a href="/redoc">ReDoc</a></p>
+    </section>
+
+    <section class="notice" aria-label="Safety notice">
+      <strong>Responsible-use boundary:</strong> This project is an educational and research decision-support system. It is not an official weather-warning service, medical device, building certification tool, or emergency-response system.
+    </section>
+  </main>
+  <footer><p>HeatSafe Climate & Air Quality Intelligence Lab · Faramarz Kowsari · Research Preview v0.1.0</p></footer>
+  <script type="module" src="/static/app.js"></script>
+</body>
+</html>

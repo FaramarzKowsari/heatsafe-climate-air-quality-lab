@@ -1,0 +1,19 @@
+{
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "name": "HeatSafe Climate & Air Quality Intelligence Lab",
+  "version": "0.1.0",
+  "author": {
+    "@type": "Person",
+    "givenName": "Faramarz",
+    "familyName": "Kowsari",
+    "@id": "https://orcid.org/0000-0003-1692-0453"
+  },
+  "codeRepository": "https://github.com/FaramarzKowsari/heatsafe-climate-air-quality-lab",
+  "license": "https://spdx.org/licenses/Apache-2.0",
+  "programmingLanguage": [
+    "Python",
+    "TypeScript"
+  ],
+  "applicationCategory": "Environmental research software"
+}
