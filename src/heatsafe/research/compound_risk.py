@@ -117,7 +117,7 @@ def analyze_compound_risk(
     additive = _weighted_score(clean, normalized)
     pairwise = _coexceedance(clean)
     adjusted = min(1.0, additive + interaction_strength * pairwise)
-    dominant = max(clean, key=clean.get)
+    dominant = max(clean, key=lambda name: clean[name])
 
     leave_one_out: dict[str, float] = {}
     for omitted in clean:
