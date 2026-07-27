@@ -106,3 +106,12 @@
 - geographic robustness leaderboard;
 - validation cards and reproducible manifests;
 - CLI, API, public research page and dedicated CI workflow.
+
+### Pack 05 implementation status
+
+- official-source Dataset Card contracts;
+- immutable artifact checksums and dimensions;
+- deterministic registry index;
+- benchmark protocol and release contracts;
+- release-bundle manifests;
+- CLI, API, documentation, public page and dedicated CI workflow.

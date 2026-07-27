@@ -212,3 +212,9 @@ Diebold–Mariano comparisons, seasonal and event-intensity slices, conformal
 coverage analysis, and a worst-domain robustness leaderboard.
 
 See [EXTERNAL_VALIDATION.md](EXTERNAL_VALIDATION.md).
+
+## Official benchmark registry
+
+HeatSafe includes an immutable official-source snapshot registry with dataset cards,
+SHA-256 verification, deterministic registry indices and DOI-ready benchmark release
+bundles. See [OFFICIAL_BENCHMARK_REGISTRY.md](OFFICIAL_BENCHMARK_REGISTRY.md).

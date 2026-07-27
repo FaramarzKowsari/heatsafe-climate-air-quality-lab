@@ -1,0 +1,55 @@
+name: Benchmark Registry
+on:
+  push:
+    paths:
+      - "src/heatsafe/research/benchmark_registry/**"
+      - "src/heatsafe/api/benchmark_registry.py"
+      - "tests/test_benchmark_registry*.py"
+      - "benchmarks/registry/**"
+      - ".github/workflows/benchmark-registry.yml"
+  pull_request:
+    paths:
+      - "src/heatsafe/research/benchmark_registry/**"
+      - "src/heatsafe/api/benchmark_registry.py"
+      - "tests/test_benchmark_registry*.py"
+      - "benchmarks/registry/**"
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "${{ matrix.python-version }}"
+      - run: python -m pip install --upgrade pip
+      - run: pip install -e ".[dev]"
+      - name: Lint benchmark registry
+        run: >
+          ruff check
+          src/heatsafe/research/benchmark_registry
+          src/heatsafe/api/benchmark_registry.py
+          tests/test_benchmark_registry.py
+          tests/test_benchmark_registry_api.py
+      - name: Type-check benchmark registry
+        env:
+          MYPY_PYTHON_VERSION: ${{ matrix.python-version }}
+        run: >
+          python -m mypy
+          --python-version "$MYPY_PYTHON_VERSION"
+          src/heatsafe/research/benchmark_registry
+          src/heatsafe/api/benchmark_registry.py
+      - name: Run benchmark registry tests
+        run: pytest tests/test_benchmark_registry.py tests/test_benchmark_registry_api.py -q
+      - name: Generate registry templates
+        run: heatsafe-registry templates --output /tmp/registry-templates
+      - uses: actions/upload-artifact@v4
+        if: matrix.python-version == '3.12'
+        with:
+          name: benchmark-registry-templates
+          path: /tmp/registry-templates
