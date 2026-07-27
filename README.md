@@ -202,3 +202,13 @@ split-conformal uncertainty, event metrics, model cards, a deterministic
 leaderboard and experiment manifests.
 
 See [HEATAQ_NEXUS.md](HEATAQ_NEXUS.md).
+
+## Multi-city external validation
+
+HeatSafe includes a no-paid-AI geographic robustness laboratory with
+leave-one-city-out and leave-one-region-out evaluation, domain-shift
+diagnostics, moving-block bootstrap confidence intervals, horizon-aware
+Diebold–Mariano comparisons, seasonal and event-intensity slices, conformal
+coverage analysis, and a worst-domain robustness leaderboard.
+
+See [EXTERNAL_VALIDATION.md](EXTERNAL_VALIDATION.md).

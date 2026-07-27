@@ -1,0 +1,27 @@
+study_name: HeatSafe Multi-City External Validation
+target_column: pm25
+timestamp_column: timestamp
+city_column: city
+region_column: region
+feature_columns:
+  - temperature_c
+  - relative_humidity_pct
+  - wind_speed_kmh
+  - smoke_proxy
+horizons: [1, 6, 24]
+event_threshold: 35.0
+alpha: 0.10
+source_train_fraction: 0.80
+minimum_rows_per_city: 300
+bootstrap_repetitions: 300
+block_length: 24
+random_state: 42
+models:
+  - persistence
+  - seasonal_naive_24h
+  - ridge
+  - random_forest
+  - gradient_boosting
+validation_modes:
+  - leave-one-city-out
+  - leave-one-region-out

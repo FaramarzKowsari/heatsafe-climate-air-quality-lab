@@ -94,3 +94,15 @@
 - rolling-origin evaluation;
 - model cards, leaderboard and experiment manifests;
 - CLI, API, public research page and dedicated CI workflow.
+
+### Pack 04 implementation status
+
+- leave-one-city-out external validation;
+- leave-one-region-out external validation;
+- target, feature and event-rate shift diagnostics;
+- moving-block bootstrap confidence intervals;
+- horizon-aware Diebold–Mariano comparisons;
+- seasonal and event-intensity slices;
+- geographic robustness leaderboard;
+- validation cards and reproducible manifests;
+- CLI, API, public research page and dedicated CI workflow.
