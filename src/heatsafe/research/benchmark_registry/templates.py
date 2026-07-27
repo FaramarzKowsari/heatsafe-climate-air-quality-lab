@@ -3,11 +3,14 @@ from __future__ import annotations
 from datetime import UTC, datetime
 from pathlib import Path
 
+from pydantic import HttpUrl
+
 from heatsafe.research.benchmark_registry.contracts import (
     BenchmarkProtocol,
     BenchmarkRelease,
     DatasetCard,
     SourceCitation,
+    SnapshotArtifact,
     SpatialCoverage,
     TemporalCoverage,
 )
@@ -41,13 +44,23 @@ def dataset_card_template() -> DatasetCard:
         citation=SourceCitation(
             authority="Replace with official authority",
             dataset_name="Replace with dataset name",
-            homepage="https://example.org/",
-            documentation_url="https://example.org/docs",
+            homepage=HttpUrl("https://example.org/"),
+            documentation_url=HttpUrl("https://example.org/docs"),
             citation_text="Replace with the provider citation.",
             license_summary="Replace with verified provider terms.",
             access_date_utc=now,
         ),
-        artifacts=(),
+        artifacts=(
+            SnapshotArtifact(
+                relative_path="replace-me.csv",
+                kind="raw",
+                media_type="text/csv",
+                size_bytes=0,
+                sha256="0000000000000000000000000000000000000000000000000000000000000000",
+                rows=0,
+                columns=0,
+            ),
+        ),
         created_at_utc=now,
         status="draft",
         tags=("template",),
@@ -82,7 +95,15 @@ def benchmark_release_template() -> BenchmarkRelease:
         title="HeatSafe Official Benchmark Candidate",
         dataset_cards=("datasets/replace-me-dataset-0.1.0.json",),
         protocol=protocol,
-        result_artifacts=(),
+        result_artifacts=(
+            SnapshotArtifact(
+                relative_path="replace-me-result.json",
+                kind="benchmark-result",
+                media_type="application/json",
+                size_bytes=0,
+                sha256="0000000000000000000000000000000000000000000000000000000000000000",
+            ),
+        ),
         release_notes=("Replace with release notes.",),
         created_at_utc=now,
         status="candidate",
