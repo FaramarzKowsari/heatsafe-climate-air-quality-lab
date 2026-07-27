@@ -3,7 +3,6 @@ from __future__ import annotations
 import csv
 import json
 from pathlib import Path
-from typing import Any
 
 from heatsafe.research.nexus.contracts import NexusConfig, NexusReport
 from heatsafe.research.provenance import build_experiment_manifest, write_experiment_manifest
