@@ -1,0 +1,46 @@
+name: HeatAQ Nexus
+on:
+  push:
+    paths:
+      - "src/heatsafe/research/nexus/**"
+      - "src/heatsafe/api/heataq_nexus.py"
+      - "tests/test_nexus_*.py"
+      - "benchmarks/heataq-nexus/**"
+      - ".github/workflows/heataq-nexus.yml"
+  pull_request:
+    paths:
+      - "src/heatsafe/research/nexus/**"
+      - "src/heatsafe/api/heataq_nexus.py"
+      - "tests/test_nexus_*.py"
+      - "benchmarks/heataq-nexus/**"
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "${{ matrix.python-version }}"}
+      - run: python -m pip install --upgrade pip
+      - run: pip install -e ".[dev]"
+      - run: ruff check src/heatsafe/research/nexus src/heatsafe/api/heataq_nexus.py tests/test_nexus_features.py tests/test_nexus_benchmark.py tests/test_nexus_dataset.py tests/test_nexus_artifacts.py tests/test_nexus_api.py
+      - run: mypy src/heatsafe/research/nexus src/heatsafe/api/heataq_nexus.py
+      - run: pytest tests/test_nexus_features.py tests/test_nexus_benchmark.py tests/test_nexus_dataset.py tests/test_nexus_artifacts.py tests/test_nexus_api.py -q
+      - name: Generate deterministic benchmark artifact
+        run: |
+          heatsafe-nexus synthetic --rows 700 --output /tmp/heataq.csv
+          heatsafe-nexus run /tmp/heataq.csv \
+            --target-column pm25 \
+            --features temperature_c,relative_humidity_pct,wind_speed_kmh,smoke_proxy \
+            --horizons 1,6 \
+            --output /tmp/heataq-artifacts
+      - uses: actions/upload-artifact@v4
+        if: matrix.python-version == '3.12'
+        with:
+          name: heataq-nexus-validation-artifacts
+          path: /tmp/heataq-artifacts

@@ -192,3 +192,13 @@ sources remain registry-only until machine access and redistribution conditions
 are verified.
 
 See [DATA_FOUNDATION.md](DATA_FOUNDATION.md).
+
+## HeatAQ Nexus benchmark
+
+HeatAQ Nexus is a CPU-first, no-paid-AI environmental forecasting benchmark with
+historical feature engineering, chronological train/calibration/test splits,
+rolling-origin evaluation, competitive statistical and tree baselines,
+split-conformal uncertainty, event metrics, model cards, a deterministic
+leaderboard and experiment manifests.
+
+See [HEATAQ_NEXUS.md](HEATAQ_NEXUS.md).

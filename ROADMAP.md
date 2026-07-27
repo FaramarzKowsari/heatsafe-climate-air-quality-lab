@@ -83,3 +83,14 @@
 - EEA local-Parquet normalization;
 - ERA5-Land request specification;
 - registry-only Türkiye sources pending verified machine interfaces.
+
+### Pack 03 implementation status
+
+- Pack 02 snapshot-to-hourly dataset builder;
+- leakage-controlled temporal and exogenous features;
+- persistence, seasonal-naive, moving-average, linear, ridge and tree baselines;
+- chronological train/calibration/test evaluation;
+- split-conformal intervals;
+- rolling-origin evaluation;
+- model cards, leaderboard and experiment manifests;
+- CLI, API, public research page and dedicated CI workflow.

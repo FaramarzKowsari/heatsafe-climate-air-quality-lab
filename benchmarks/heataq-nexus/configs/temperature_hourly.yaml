@@ -1,0 +1,19 @@
+benchmark_name: HeatAQ Nexus
+task: hourly_temperature_forecasting
+timestamp_column: timestamp
+target_column: temperature_c
+feature_columns:
+  - relative_humidity_pct
+  - wind_speed_kmh
+  - smoke_proxy
+horizons: [1, 6, 12, 24, 48]
+event_threshold: 35.0
+alpha: 0.10
+train_fraction: 0.70
+calibration_fraction: 0.15
+lags: [1, 2, 3, 6, 12, 24, 48]
+rolling_windows: [6, 12, 24, 48]
+random_state: 42
+evaluation:
+  - chronological_holdout
+  - rolling_origin

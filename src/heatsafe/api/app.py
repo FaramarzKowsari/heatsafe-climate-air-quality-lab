@@ -12,6 +12,7 @@ from pydantic import BaseModel, Field
 
 from heatsafe import __version__
 from heatsafe.api.data_foundation import router as data_foundation_router
+from heatsafe.api.heataq_nexus import router as heataq_nexus_router
 from heatsafe.ai import capabilities, deterministic_explanation
 from heatsafe.core.air_quality import summarize_air_quality
 from heatsafe.core.climate import analyze_climate_trend
@@ -274,3 +275,6 @@ def index() -> FileResponse:
 
 # Register the HeatSafe Data Foundation router.
 app.include_router(data_foundation_router)
+
+# Register the HeatAQ Nexus research router.
+app.include_router(heataq_nexus_router)
