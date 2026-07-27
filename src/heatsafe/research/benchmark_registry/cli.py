@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import argparse
 import json
-from pathlib import Path
 
 from heatsafe.research.benchmark_registry.registry import write_registry_index
 from heatsafe.research.benchmark_registry.release import create_release_bundle
