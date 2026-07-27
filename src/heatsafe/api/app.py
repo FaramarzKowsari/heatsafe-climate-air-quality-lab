@@ -15,6 +15,7 @@ from heatsafe.api.data_foundation import router as data_foundation_router
 from heatsafe.api.heataq_nexus import router as heataq_nexus_router
 from heatsafe.api.external_validation import router as external_validation_router
 from heatsafe.api.benchmark_registry import router as benchmark_registry_router
+from heatsafe.api.official_snapshots import router as official_snapshots_router
 from heatsafe.ai import capabilities, deterministic_explanation
 from heatsafe.core.air_quality import summarize_air_quality
 from heatsafe.core.climate import analyze_climate_trend
@@ -286,3 +287,6 @@ app.include_router(external_validation_router)
 
 # Register the official benchmark registry API.
 app.include_router(benchmark_registry_router)
+
+# Register the official snapshot pipeline API.
+app.include_router(official_snapshots_router)

@@ -33,6 +33,7 @@ heatsafe-data = "heatsafe.data_foundation.cli:main"
 heatsafe-nexus = "heatsafe.research.nexus.cli:main"
 heatsafe-transfer = "heatsafe.research.transfer.cli:main"
 heatsafe-registry = "heatsafe.research.benchmark_registry.cli:main"
+heatsafe-official = "heatsafe.data_foundation.official_snapshots.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/FaramarzKowsari/heatsafe-climate-air-quality-lab"

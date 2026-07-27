@@ -1,0 +1,64 @@
+name: Official Snapshots
+on:
+  push:
+    paths:
+      - "src/heatsafe/data_foundation/official_snapshots/**"
+      - "src/heatsafe/api/official_snapshots.py"
+      - "tests/test_official_snapshot_*.py"
+      - "examples/official-snapshots/**"
+      - ".github/workflows/official-snapshots.yml"
+  pull_request:
+    paths:
+      - "src/heatsafe/data_foundation/official_snapshots/**"
+      - "src/heatsafe/api/official_snapshots.py"
+      - "tests/test_official_snapshot_*.py"
+      - "examples/official-snapshots/**"
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "${{ matrix.python-version }}"
+      - run: python -m pip install --upgrade pip
+      - run: pip install -e ".[dev]"
+      - name: Lint official snapshot pipeline
+        run: >
+          ruff check
+          src/heatsafe/data_foundation/official_snapshots
+          src/heatsafe/api/official_snapshots.py
+          tests/test_official_snapshot_recipes.py
+          tests/test_official_snapshot_pipeline.py
+          tests/test_official_snapshot_api.py
+      - name: Type-check official snapshot pipeline
+        env:
+          MYPY_PYTHON_VERSION: ${{ matrix.python-version }}
+        run: >
+          python -m mypy
+          --python-version "$MYPY_PYTHON_VERSION"
+          src/heatsafe/data_foundation/official_snapshots
+          src/heatsafe/api/official_snapshots.py
+      - name: Run official snapshot tests
+        run: >
+          pytest
+          tests/test_official_snapshot_recipes.py
+          tests/test_official_snapshot_pipeline.py
+          tests/test_official_snapshot_api.py
+          -q
+      - name: Generate secret-free EPA acquisition plan
+        run: |
+          heatsafe-official plan \
+            --config examples/official-snapshots/epa-aqs-alameda-plan.json \
+            --output /tmp/official-snapshot-plan.json
+      - uses: actions/upload-artifact@v4
+        if: matrix.python-version == '3.12'
+        with:
+          name: official-snapshot-plan
+          path: /tmp/official-snapshot-plan.json

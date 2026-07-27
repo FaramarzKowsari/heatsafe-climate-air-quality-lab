@@ -218,3 +218,11 @@ See [EXTERNAL_VALIDATION.md](EXTERNAL_VALIDATION.md).
 HeatSafe includes an immutable official-source snapshot registry with dataset cards,
 SHA-256 verification, deterministic registry indices and DOI-ready benchmark release
 bundles. See [OFFICIAL_BENCHMARK_REGISTRY.md](OFFICIAL_BENCHMARK_REGISTRY.md).
+
+## Official snapshot pipeline
+
+HeatSafe includes a no-paid-AI pipeline for secret-free official-source
+acquisition plans, deterministic quality gates, immutable snapshots,
+benchmark-ready tables, automated Dataset Cards and registry releases.
+
+See [OFFICIAL_SNAPSHOT_PIPELINE.md](OFFICIAL_SNAPSHOT_PIPELINE.md).

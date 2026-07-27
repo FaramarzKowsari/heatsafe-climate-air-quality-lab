@@ -1,0 +1,118 @@
+{
+  "source_id": "era5-land",
+  "dataset_id": "era5-land-western-europe-2025",
+  "version": "0.1.0",
+  "title": "ERA5-Land Western Europe 2025 request specification",
+  "description": "An explicit Copernicus request specification for a future immutable regional reanalysis snapshot.",
+  "role": "reference",
+  "target_variables": [
+    "temperature_c"
+  ],
+  "feature_variables": [
+    "relative_humidity_pct",
+    "wind_speed_m_s"
+  ],
+  "station_selection_protocol": "Use the declared fixed geographic bounding box for every release.",
+  "quality_control_protocol": "Validate dimensions, units, timestamps and derived-variable transformations after download.",
+  "missing_data_policy": "Preserve source missingness and document any excluded grid cells.",
+  "known_limitations": [
+    "Reanalysis is model-assisted and is not equivalent to station observation.",
+    "This configuration is a request specification until an authorized file is downloaded."
+  ],
+  "tags": [
+    "era5-land",
+    "reanalysis",
+    "europe",
+    "request-specification"
+  ],
+  "region": "Western Europe",
+  "request_parameters": {
+    "variables": [
+      "2m_temperature",
+      "2m_dewpoint_temperature",
+      "surface_solar_radiation_downwards",
+      "10m_u_component_of_wind",
+      "10m_v_component_of_wind"
+    ],
+    "years": [
+      2025
+    ],
+    "months": [
+      6,
+      7,
+      8
+    ],
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31
+    ],
+    "hours": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ],
+    "area": [
+      60,
+      -12,
+      35,
+      30
+    ]
+  },
+  "quality_gate": {
+    "minimum_observations": 1000,
+    "minimum_unique_fraction": 0.999,
+    "minimum_quality_score": 0.98,
+    "maximum_errors": 0,
+    "minimum_records_per_target": 1000
+  }
+}

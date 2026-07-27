@@ -115,3 +115,14 @@
 - benchmark protocol and release contracts;
 - release-bundle manifests;
 - CLI, API, documentation, public page and dedicated CI workflow.
+
+### Pack 06 implementation status
+
+- secret-free official acquisition plans;
+- NOAA, EPA and NASA FIRMS connector orchestration;
+- EEA local Parquet acquisition;
+- ERA5-Land request specifications;
+- deterministic quality gates;
+- immutable snapshot and benchmark-table export;
+- automated Dataset Cards and registry indexing;
+- CLI, API, public page and dedicated CI workflow.

@@ -1,0 +1,44 @@
+{
+  "source_id": "epa-aqs",
+  "dataset_id": "epa-aqs-alameda-pm25-2025q3",
+  "version": "0.1.0",
+  "title": "EPA AQS Alameda County PM2.5 2025 Q3 snapshot",
+  "description": "A planned immutable official-source PM2.5 snapshot for Alameda County, California.",
+  "role": "external-test",
+  "target_variables": [
+    "pm25"
+  ],
+  "feature_variables": [],
+  "station_selection_protocol": "Include predetermined Alameda County AQS sites and preserve site identifiers.",
+  "quality_control_protocol": "Preserve AQS qualifiers, methods, sample duration and deterministic HeatSafe checks.",
+  "missing_data_policy": "Do not impute the raw normalized snapshot; document completeness separately.",
+  "known_limitations": [
+    "Monitoring-site coverage is not equivalent to population exposure.",
+    "AQS sample records may use multiple instruments and durations."
+  ],
+  "tags": [
+    "epa",
+    "pm25",
+    "usa",
+    "official-source"
+  ],
+  "country": "US",
+  "region": "California",
+  "city": "Oakland",
+  "request_parameters": {
+    "parameter_code": "88101",
+    "begin_date": "2025-07-01",
+    "end_date": "2025-09-30",
+    "state_code": "06",
+    "county_code": "001",
+    "city": "Oakland",
+    "country": "US"
+  },
+  "quality_gate": {
+    "minimum_observations": 100,
+    "minimum_unique_fraction": 0.99,
+    "minimum_quality_score": 0.95,
+    "maximum_errors": 0,
+    "minimum_records_per_target": 100
+  }
+}
