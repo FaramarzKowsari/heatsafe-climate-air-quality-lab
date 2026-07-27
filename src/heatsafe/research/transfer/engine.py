@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 import numpy as np
 import pandas as pd
@@ -254,10 +254,14 @@ def _slice_metrics(
 
     for model_name in config.models:
         y_pred = predictions[model_name]
-        for slice_type, labels in (
+        slice_groups: tuple[
+            tuple[Literal["season", "intensity"], np.ndarray],
+            ...,
+        ] = (
             ("season", seasons),
             ("intensity", intensities),
-        ):
+        )
+        for slice_type, labels in slice_groups:
             for value in sorted(set(labels.tolist())):
                 mask = labels == value
                 count = int(np.sum(mask))
