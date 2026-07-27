@@ -1,1 +1,0 @@
-HeatSafe Author CI Fix Pack 02 installed successfully.\nGoogle Books is allowed only in canonical author-identity files.\n

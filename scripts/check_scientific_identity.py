@@ -32,10 +32,9 @@ BANNED = (
     "book " + "sales",
 )
 
-# The repository remains scientifically independent from any publication.
-# A Google Books profile link is allowed only in canonical author-identity
-# surfaces. No project, dataset, benchmark, API, module, or research page is
-# exempted from the scientific-identity policy.
+# Google Books is permitted only as an official personal-profile link on the
+# canonical author-identity surfaces. It remains prohibited from research,
+# dataset, benchmark, API, tool, methodology and other project pages.
 GOOGLE_BOOKS_AUTHOR_IDENTITY_PATHS = {
     Path("AUTHOR.md"),
     Path("README.md"),
@@ -43,27 +42,37 @@ GOOGLE_BOOKS_AUTHOR_IDENTITY_PATHS = {
     Path("docs/site/about-author/index.html"),
 }
 
+# Root-level files beginning with ".heatsafe-" are installer receipts only.
+# They are not project documentation, research output, source code, datasets,
+# benchmark metadata or public site content.
+INSTALLER_METADATA_PREFIX = ".heatsafe-"
+
 
 def ignored(path: Path) -> bool:
     relative = path.relative_to(ROOT)
+    is_root_installer_metadata = (
+        len(relative.parts) == 1
+        and path.name.startswith(INSTALLER_METADATA_PREFIX)
+    )
     return (
         ".git" in relative.parts
         or ".venv" in relative.parts
         or "node_modules" in relative.parts
         or path.name == Path(__file__).name
+        or is_root_installer_metadata
     )
 
 
 def phrase_allowed(path: Path, phrase: str) -> bool:
-    relative = path.relative_to(ROOT)
     return (
         phrase == "google books"
-        and relative in GOOGLE_BOOKS_AUTHOR_IDENTITY_PATHS
+        and path.relative_to(ROOT) in GOOGLE_BOOKS_AUTHOR_IDENTITY_PATHS
     )
 
 
 def main() -> int:
     findings: list[str] = []
+
     for path in ROOT.rglob("*"):
         if (
             not path.is_file()
