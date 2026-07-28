@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reproducible Experiments | HeatSafe Research Lab</title>
+<meta name="description" content="A paper-ready experiment orchestrator for immutable configurations, chronological evaluation, checksums, reports, figures and self-contained research bundles.">
+<meta name="author" content="Faramarz Kowsari">
+<link rel="canonical" href="https://faramarzkowsari.github.io/heatsafe-climate-air-quality-lab/reproducible-experiments/">
+<link rel="stylesheet" href="../assets/styles.css">
+<link rel="stylesheet" href="../assets/research.css">
+<link rel="stylesheet" href="../assets/compact-author-credit.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="../"><span class="brand-mark">HS</span><span>HeatSafe Research Lab</span></a>
+    <nav class="nav-links">
+      <a href="../public-guide/">Public Guide</a>
+      <a href="../#research">Research</a>
+      <a href="../official-snapshots/">Official Snapshots</a>
+      <a href="../benchmark-registry/">Benchmark Registry</a>
+      <a href="../about-author/">Author &amp; Developer</a>
+    </nav>
+  </div>
+</header>
+<main>
+<section class="page-hero">
+  <div class="wrap">
+    <div class="breadcrumb"><a href="../">HeatSafe</a> / Reproducible Experiments</div>
+    <span class="kicker">SCIENTIFIC PACK 07</span>
+    <h1>From a frozen input identity to paper-ready results.</h1>
+    <p class="lede">The experiment orchestrator runs HeatAQ Nexus from one immutable JSON specification and produces complete model metrics, uncertainty diagnostics, SVG figures, HTML and Markdown reports, provenance manifests, reproduction commands, SHA-256 verification and a candidate release archive.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="https://github.com/FaramarzKowsari/heatsafe-climate-air-quality-lab/blob/main/EXPERIMENT_ORCHESTRATOR.md">Read the protocol</a>
+      <a class="btn btn-secondary" href="../heataq-nexus-benchmark/">Open HeatAQ Nexus</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><span class="kicker">ONE COMMAND</span><h2>Run, report, package and verify</h2></div>
+    <div class="callout"><div>
+      <p><code>heatsafe-experiment run --spec experiment.json --output artifacts/run --repository-root .</code></p>
+      <p class="small">No paid AI API is required. Synthetic, CSV and frozen-snapshot input modes are supported.</p>
+    </div></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><span class="kicker">OUTPUT CONTRACT</span><h2>Every publishable artifact in one directory</h2></div>
+    <div class="research-grid">
+      <article class="research-card"><h3>Immutable specification</h3><p>The original configuration and a self-contained reproduction specification are preserved.</p></article>
+      <article class="research-card"><h3>Canonical input</h3><p>The exact benchmark table is copied into the bundle and protected with SHA-256.</p></article>
+      <article class="research-card"><h3>Complete metrics</h3><p>All evaluated models remain available; weaker or negative results are not hidden.</p></article>
+      <article class="research-card"><h3>Uncertainty figures</h3><p>Coverage, interval width, event F1 and best-model MAE are exported as inspectable SVG.</p></article>
+      <article class="research-card"><h3>Paper-ready reports</h3><p>Markdown and standalone HTML summarize methods, results, limitations and reproduction commands.</p></article>
+      <article class="research-card"><h3>Candidate release</h3><p>Citation and repository metadata are prepared without automatically minting or claiming a DOI.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><span class="kicker">VERIFIABILITY</span><h2>Evidence that can be checked independently</h2></div>
+    <div class="metric-band">
+      <article><strong>SHA-256</strong><p>Every non-release artifact</p></article>
+      <article><strong>3.11–3.13</strong><p>Python workflow matrix</p></article>
+      <article><strong>Chronological</strong><p>Train, calibration and test</p></article>
+      <article><strong>Self-contained</strong><p>Input, specification and commands</p></article>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- HEATSAFE_COMPACT_AUTHOR_CREDIT_V1 -->
+<div class="compact-author-credit" aria-label="Author and developer attribution">
+  <div class="wrap compact-author-credit-inner">
+    <span>Maintained by <a href="../about-author/">Faramarz Kowsari</a></span>
+    <span class="compact-author-credit-separator" aria-hidden="true">·</span>
+    <a href="../about-author/">Author &amp; Developer profile →</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div><a class="brand" href="../"><span class="brand-mark">HS</span><span>HeatSafe Research Lab</span></a><p class="small">Independent open research software for environmental intelligence and reproducible evidence.</p></div>
+    <div><strong>Research</strong><a href="../research/">Scientific program</a><a href="../methodology/">Methodology</a><a href="../datasets/">Data sources</a><a href="../heataq-nexus-benchmark/">HeatAQ Nexus</a></div>
+    <div><strong>Reproducibility</strong><a href="./">Experiment orchestrator</a><a href="../official-snapshots/">Official snapshots</a><a href="../benchmark-registry/">Benchmark registry</a></div>
+  </div>
+  <div class="wrap small" style="margin-top:28px">© 2026 Faramarz Kowsari. Research and educational decision support only.</div>
+</footer>
+</body>
+</html>

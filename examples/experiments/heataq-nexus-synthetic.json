@@ -1,0 +1,90 @@
+{
+  "experiment_id": "heataq-nexus-synthetic-paper-demo",
+  "title": "HeatAQ Nexus synthetic reproducibility demonstration",
+  "description": "A deterministic CPU-first forecasting experiment that exercises chronological train/calibration/test evaluation, transparent baselines, tree models, conformal uncertainty, event metrics and paper-ready outputs.",
+  "dataset": {
+    "kind": "synthetic",
+    "path": null,
+    "rows": 720,
+    "seed": 42,
+    "variables": [
+      "pm25",
+      "temperature_c",
+      "relative_humidity_pct",
+      "wind_speed_kmh",
+      "smoke_proxy"
+    ],
+    "station_id": null,
+    "frequency": "1h"
+  },
+  "nexus": {
+    "timestamp_column": "timestamp",
+    "target_column": "pm25",
+    "feature_columns": [
+      "temperature_c",
+      "relative_humidity_pct",
+      "wind_speed_kmh",
+      "smoke_proxy"
+    ],
+    "horizons": [
+      1,
+      6,
+      12,
+      24
+    ],
+    "event_threshold": 35.0,
+    "alpha": 0.1,
+    "train_fraction": 0.7,
+    "calibration_fraction": 0.15,
+    "lags": [
+      1,
+      2,
+      3,
+      6,
+      12,
+      24,
+      48
+    ],
+    "rolling_windows": [
+      6,
+      12,
+      24,
+      48
+    ],
+    "random_state": 42,
+    "minimum_valid_rows": 180,
+    "rolling_origin_step": 24,
+    "rolling_origin_max_origins": 8,
+    "expected_frequency": "1h"
+  },
+  "report": {
+    "title": "HeatAQ Nexus: Reproducible Synthetic Forecasting Demonstration",
+    "subtitle": "Paper-ready reproducible environmental forecasting results",
+    "author": "Faramarz Kowsari",
+    "organization": "HeatSafe Research Lab",
+    "abstract": "This report records a reproducible HeatAQ Nexus forecasting experiment with chronological evaluation, explicit baselines, uncertainty metrics, checksums and exact reproduction commands.",
+    "keywords": [
+      "environmental intelligence",
+      "air quality",
+      "heat",
+      "forecasting",
+      "reproducibility"
+    ]
+  },
+  "release": {
+    "version": "0.1.0",
+    "status": "candidate",
+    "create_zip": true,
+    "license": "CC-BY-4.0"
+  },
+  "notes": [
+    "No paid AI API is used.",
+    "The example validates research-software reproducibility."
+  ],
+  "limitations": [
+    "Results apply only to the evaluated data identity and split protocol.",
+    "Synthetic demonstration data are a software-validation fixture, not evidence about a real city.",
+    "The system is not an official warning service or medical decision tool."
+  ],
+  "created_by": "Faramarz Kowsari"
+}

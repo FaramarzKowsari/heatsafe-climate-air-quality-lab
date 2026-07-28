@@ -1,4 +1,4 @@
-.PHONY: setup test lint typecheck demo run benchmark docs package clean
+.PHONY: setup test lint typecheck demo run benchmark docs package clean experiment
 PYTHON ?= python
 
 setup:
@@ -33,3 +33,6 @@ package:
 
 clean:
 	rm -rf .pytest_cache .mypy_cache .ruff_cache htmlcov dist build *.egg-info src/*.egg-info
+# HEATSAFE_EXPERIMENT_ORCHESTRATOR_MAKE_TARGET_V1
+experiment:
+	$(PYTHON) -m heatsafe.research.experiment_orchestrator.cli run --spec examples/experiments/heataq-nexus-synthetic.json --output artifacts/experiments/heataq-nexus-synthetic --repository-root . --overwrite

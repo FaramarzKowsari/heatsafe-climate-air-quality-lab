@@ -244,3 +244,24 @@ acquisition plans, deterministic quality gates, immutable snapshots,
 benchmark-ready tables, automated Dataset Cards and registry releases.
 
 See [OFFICIAL_SNAPSHOT_PIPELINE.md](OFFICIAL_SNAPSHOT_PIPELINE.md).
+
+<!-- HEATSAFE_EXPERIMENT_ORCHESTRATOR_README_V1 -->
+## Reproducible experiment orchestrator
+
+HeatSafe includes a CPU-first experiment orchestrator that turns a synthetic,
+CSV or frozen-snapshot input into a self-contained paper-ready result bundle.
+Each run preserves the canonical input, immutable JSON configuration, complete
+model metrics, uncertainty diagnostics, SVG figures, Markdown and HTML reports,
+provenance manifests, reproduction commands, SHA-256 verification and candidate
+release metadata.
+
+```bash
+heatsafe-experiment template --output experiment.json
+
+heatsafe-experiment run   --spec examples/experiments/heataq-nexus-synthetic.json   --output artifacts/experiments/heataq-nexus-synthetic   --repository-root .
+
+heatsafe-experiment verify artifacts/experiments/heataq-nexus-synthetic
+```
+
+No paid AI API is required. Candidate metadata does not mint or claim a DOI.
+See [EXPERIMENT_ORCHESTRATOR.md](EXPERIMENT_ORCHESTRATOR.md).
