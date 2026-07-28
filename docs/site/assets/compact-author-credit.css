@@ -1,0 +1,33 @@
+/* HeatSafe compact author attribution — intentionally small and unobtrusive */
+.compact-author-credit {
+  border-top: 1px solid rgba(18, 70, 82, .10);
+  background: #f8fbfc;
+}
+.compact-author-credit-inner {
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 5px 8px;
+  padding: 8px 16px;
+  color: #667a80;
+  font-size: .78rem;
+  line-height: 1.35;
+  text-align: center;
+}
+.compact-author-credit a {
+  color: #326b78;
+  font-weight: 750;
+  text-decoration: none;
+}
+.compact-author-credit a:hover,
+.compact-author-credit a:focus-visible {
+  text-decoration: underline;
+}
+.compact-author-credit-separator {
+  color: #9aa9ad;
+}
+@media (max-width: 560px) {
+  .compact-author-credit-inner { font-size: .75rem; }
+}
