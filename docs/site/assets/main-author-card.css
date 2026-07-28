@@ -1,0 +1,13 @@
+/* Compact author card shown only on the main index */
+.main-author-card{padding:18px 0 26px;background:#fff}
+.main-author-card-inner{display:grid;grid-template-columns:74px minmax(0,1fr) auto;gap:18px;align-items:center;padding:16px 18px;border:1px solid rgba(18,70,82,.13);border-radius:18px;background:#f8fbfc;box-shadow:0 8px 22px rgba(18,70,82,.045)}
+.main-author-card-photo{display:block;width:68px;height:82px;object-fit:cover;object-position:center top;border-radius:14px;border:1px solid rgba(18,70,82,.12);background:#fff}
+.main-author-card-copy{min-width:0}
+.main-author-card-kicker{display:block;margin-bottom:3px;color:#6f8389;font-size:.68rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+.main-author-card h2{margin:0 0 4px;font-size:1.05rem;line-height:1.25}
+.main-author-card h2 a{color:#17323b;text-decoration:none}
+.main-author-card h2 a:hover,.main-author-card h2 a:focus-visible{text-decoration:underline}
+.main-author-card p{max-width:760px;margin:0;color:#667a80;font-size:.82rem;line-height:1.52}
+.main-author-card-link{white-space:nowrap;color:#176f82;font-size:.79rem;font-weight:850;text-decoration:none}
+.main-author-card-link:hover,.main-author-card-link:focus-visible{text-decoration:underline}
+@media(max-width:760px){.main-author-card-inner{grid-template-columns:58px minmax(0,1fr);gap:13px}.main-author-card-photo{width:54px;height:66px;border-radius:12px}.main-author-card-link{grid-column:2;justify-self:start}}
