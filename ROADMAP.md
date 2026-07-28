@@ -126,3 +126,18 @@
 - immutable snapshot and benchmark-table export;
 - automated Dataset Cards and registry indexing;
 - CLI, API, public page and dedicated CI workflow.
+
+<!-- HEATSAFE_FIRST_REAL_EXPERIMENT_ROADMAP_V1 -->
+### Pack 07.1 implementation status
+
+- secret-free real-experiment execution plans;
+- local credential boundary for EPA AQS acquisition;
+- immutable 2025 Alameda County PM2.5 snapshot recipe;
+- deterministic monitoring-station selection by temporal continuity;
+- strictly contiguous hourly benchmark preparation without target imputation;
+- integration with the paper-ready experiment orchestrator;
+- snapshot, prepared-input and experiment verification;
+- one-click Windows runner that opens the final HTML report;
+- public documentation page and dedicated Python 3.11–3.13 CI workflow;
+- deliberate separation of hourly EPA data from daily NOAA data until a
+  defensible temporal-alignment protocol is implemented.

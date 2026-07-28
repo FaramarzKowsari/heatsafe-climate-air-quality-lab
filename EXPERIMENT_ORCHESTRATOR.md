@@ -131,3 +131,24 @@ The generated `CITATION.cff` and `zenodo-candidate.json` are preparation artifac
 ## CI workflow
 
 The dedicated workflow validates Python 3.11–3.13, runs linting and type checking, executes the orchestrator tests, generates the synthetic paper-ready demonstration, verifies all checksums and uploads the Python 3.12 result bundle as a workflow artifact.
+
+<!-- HEATSAFE_FIRST_REAL_EXPERIMENT_ORCHESTRATOR_V1 -->
+## Official-source execution bridge
+
+The first real-data bridge connects the experiment orchestrator to the existing
+official snapshot pipeline:
+
+```text
+EPA AQS credentialed acquisition
+→ immutable normalized snapshot
+→ quality gate and Dataset Card
+→ deterministic station selection
+→ contiguous hourly PM2.5 table
+→ paper-ready experiment bundle
+→ snapshot and experiment verification
+```
+
+Run `RUN_FIRST_REAL_EPA_EXPERIMENT.cmd` on Windows or use the
+`heatsafe-real-experiment` CLI. NOAA GHCN Daily values are intentionally not
+merged into the hourly EPA run until a separate temporal-alignment protocol is
+defined and validated.

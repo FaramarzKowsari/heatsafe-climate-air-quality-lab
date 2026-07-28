@@ -1,0 +1,49 @@
+{
+  "source_id": "epa-aqs",
+  "dataset_id": "epa-aqs-alameda-pm25-2025",
+  "version": "0.1.0",
+  "title": "EPA AQS Alameda County hourly PM2.5 2025 snapshot",
+  "description": "An immutable official-source snapshot of US EPA Air Quality System PM2.5 sample measurements for Alameda County, California, during 2025.",
+  "role": "external-test",
+  "target_variables": [
+    "pm25"
+  ],
+  "feature_variables": [],
+  "station_selection_protocol": "Acquire all predetermined Alameda County PM2.5 monitoring sites, preserve station identifiers, then select one station only in the downstream experiment using an explicit temporal-continuity rule.",
+  "quality_control_protocol": "Preserve AQS sample duration, method code, qualifier, site identity and source metadata; apply deterministic HeatSafe integrity and quality checks without silently imputing the immutable snapshot.",
+  "missing_data_policy": "Do not impute or interpolate the immutable raw normalized snapshot. The downstream experiment selects the longest strictly contiguous hourly segment at one monitoring station.",
+  "known_limitations": [
+    "Monitoring-site coverage is not equivalent to population exposure.",
+    "Multiple instruments, methods, sample durations and POCs may be present.",
+    "The county request can include monitoring sites outside the city of Oakland.",
+    "The downstream benchmark is station-level and cannot represent the entire county."
+  ],
+  "tags": [
+    "epa",
+    "aqs",
+    "pm25",
+    "alameda-county",
+    "california",
+    "official-source",
+    "real-experiment"
+  ],
+  "country": "US",
+  "region": "California",
+  "city": null,
+  "request_parameters": {
+    "parameter_code": "88101",
+    "begin_date": "2025-01-01",
+    "end_date": "2025-12-31",
+    "state_code": "06",
+    "county_code": "001",
+    "country": "US"
+  },
+  "quality_gate": {
+    "minimum_observations": 1000,
+    "minimum_unique_fraction": 0.98,
+    "minimum_quality_score": 0.9,
+    "maximum_errors": 0,
+    "minimum_records_per_target": 1000
+  },
+  "created_by": "Faramarz Kowsari"
+}

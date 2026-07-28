@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>First Real Official-Data Experiment | HeatSafe Research Lab</title>
+<meta name="description" content="A reproducible US EPA AQS PM2.5 forecasting experiment with immutable snapshots, deterministic station selection, uncertainty metrics and paper-ready reports.">
+<meta name="author" content="Faramarz Kowsari">
+<link rel="canonical" href="https://faramarzkowsari.github.io/heatsafe-climate-air-quality-lab/first-real-experiment/">
+<link rel="stylesheet" href="../assets/styles.css">
+<link rel="stylesheet" href="../assets/research.css">
+<link rel="stylesheet" href="../assets/compact-author-credit.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="../"><span class="brand-mark">HS</span><span>HeatSafe Research Lab</span></a>
+    <nav class="nav-links">
+      <a href="../public-guide/">Public Guide</a>
+      <a href="../#research">Research</a>
+      <a href="../official-snapshots/">Official Snapshots</a>
+      <a href="../reproducible-experiments/">Reproducible Experiments</a>
+      <a href="../about-author/">Author &amp; Developer</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="page-hero">
+  <div class="wrap">
+    <div class="breadcrumb"><a href="../">HeatSafe</a> / First Real Experiment</div>
+    <span class="kicker">SCIENTIFIC PACK 07.1</span>
+    <h1>From an official EPA snapshot to a verified forecasting report.</h1>
+    <p class="lede">This workflow acquires real PM2.5 observations from the US EPA Air Quality System, freezes an immutable snapshot, selects one monitoring station by a declared temporal-continuity rule and runs the paper-ready HeatAQ Nexus benchmark.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="https://github.com/FaramarzKowsari/heatsafe-climate-air-quality-lab/blob/main/FIRST_REAL_OFFICIAL_EXPERIMENT.md">Read the full protocol</a>
+      <a class="btn btn-secondary" href="../reproducible-experiments/">Experiment orchestrator</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><span class="kicker">OFFICIAL DATA IDENTITY</span><h2>US EPA AQS · Alameda County · PM2.5 · 2025</h2></div>
+    <div class="metric-band">
+      <article><strong>88101</strong><p>EPA PM2.5 parameter</p></article>
+      <article><strong>06-001</strong><p>California · Alameda County</p></article>
+      <article><strong>Hourly</strong><p>Strict contiguous segment</p></article>
+      <article><strong>SHA-256</strong><p>Snapshot and experiment integrity</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><span class="kicker">PIPELINE</span><h2>One declared path from acquisition to evidence</h2></div>
+    <div class="research-grid">
+      <article class="research-card"><h3>Secret-free plan</h3><p>The committed plan records required environment-variable names and sanitized request parameters without credential values.</p></article>
+      <article class="research-card"><h3>Immutable snapshot</h3><p>Normalized observations, quality reports, source metadata, Dataset Card and checksums are frozen together.</p></article>
+      <article class="research-card"><h3>Station selection</h3><p>Stations are ranked by longest contiguous hourly run, total observations and deterministic station-ID tie breaking.</p></article>
+      <article class="research-card"><h3>Complete benchmark</h3><p>Persistence, seasonal, moving-average, linear, regularized and tree models remain visible in the complete results.</p></article>
+      <article class="research-card"><h3>Uncertainty reporting</h3><p>Coverage, interval width, event metrics, rolling-origin results and explicit limitations accompany point errors.</p></article>
+      <article class="research-card"><h3>Candidate release</h3><p>The run produces a self-contained archive without automatically minting or claiming a DOI.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="callout">
+      <div>
+        <h2>Why NOAA is not silently merged into this hourly run</h2>
+        <p>NOAA GHCN Daily weather values have a different temporal resolution. A later experiment will define a defensible daily protocol or a separately validated alignment method rather than manufacturing hourly precision.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><span class="kicker">SCIENTIFIC BOUNDARY</span><h2>Station-level forecasting, not exposure or warning authority</h2></div>
+    <p class="lede">A successful run demonstrates reproducible use of an official data identity and a declared evaluation protocol. It does not establish population exposure, countywide representativeness, causal effects, medical risk or official warning authority.</p>
+  </div>
+</section>
+</main>
+
+<!-- HEATSAFE_COMPACT_AUTHOR_CREDIT_V1 -->
+<div class="compact-author-credit" aria-label="Author and developer attribution">
+  <div class="wrap compact-author-credit-inner">
+    <span>Maintained by <a href="../about-author/">Faramarz Kowsari</a></span>
+    <span class="compact-author-credit-separator" aria-hidden="true">·</span>
+    <a href="../about-author/">Author &amp; Developer profile →</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div><a class="brand" href="../"><span class="brand-mark">HS</span><span>HeatSafe Research Lab</span></a><p class="small">Independent open research software for environmental intelligence and reproducible evidence.</p></div>
+    <div><strong>Research</strong><a href="../research/">Scientific program</a><a href="../methodology/">Methodology</a><a href="../datasets/">Data sources</a></div>
+    <div><strong>Reproducibility</strong><a href="../reproducible-experiments/">Experiment orchestrator</a><a href="../official-snapshots/">Official snapshots</a><a href="./">First real experiment</a></div>
+  </div>
+  <div class="wrap small" style="margin-top:28px">© 2026 Faramarz Kowsari. Research and educational decision support only.</div>
+</footer>
+</body>
+</html>

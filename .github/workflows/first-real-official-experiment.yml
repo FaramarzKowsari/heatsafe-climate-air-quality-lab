@@ -1,0 +1,64 @@
+name: First Real Official Experiment
+
+on:
+  push:
+    paths:
+      - "src/heatsafe/research/official_experiment/**"
+      - "tests/test_real_official_experiment.py"
+      - "examples/real-experiments/**"
+      - "examples/official-snapshots/epa-aqs-alameda-pm25-2025.json"
+      - "FIRST_REAL_OFFICIAL_EXPERIMENT.md"
+      - "docs/site/first-real-experiment/**"
+      - ".github/workflows/first-real-official-experiment.yml"
+      - "pyproject.toml"
+  pull_request:
+    paths:
+      - "src/heatsafe/research/official_experiment/**"
+      - "tests/test_real_official_experiment.py"
+      - "examples/real-experiments/**"
+      - "examples/official-snapshots/epa-aqs-alameda-pm25-2025.json"
+      - "FIRST_REAL_OFFICIAL_EXPERIMENT.md"
+      - "docs/site/first-real-experiment/**"
+      - ".github/workflows/first-real-official-experiment.yml"
+      - "pyproject.toml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "${{ matrix.python-version }}"
+      - run: python -m pip install --upgrade pip
+      - run: pip install -e ".[dev]"
+      - name: Lint real official experiment pipeline
+        run: >
+          ruff check
+          src/heatsafe/research/official_experiment
+          tests/test_real_official_experiment.py
+      - name: Type-check real official experiment pipeline
+        env:
+          MYPY_PYTHON_VERSION: ${{ matrix.python-version }}
+        run: >
+          python -m mypy
+          --python-version "$MYPY_PYTHON_VERSION"
+          src/heatsafe/research/official_experiment
+      - name: Run real official experiment tests
+        run: pytest tests/test_real_official_experiment.py -q
+      - name: Generate secret-free EPA experiment plan
+        run: |
+          heatsafe-real-experiment plan             --config examples/real-experiments/epa-aqs-alameda-pm25-2025.json             --output /tmp/epa-aqs-alameda-real-experiment-plan.json
+      - uses: actions/upload-artifact@v4
+        if: matrix.python-version == '3.12'
+        with:
+          name: epa-aqs-real-experiment-plan
+          path: /tmp/epa-aqs-alameda-real-experiment-plan.json

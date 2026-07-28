@@ -1,0 +1,39 @@
+{
+  "experiment_id": "epa-aqs-alameda-pm25-2025-first-real",
+  "title": "US EPA AQS Alameda County PM2.5 Forecasting Benchmark \u2014 2025",
+  "description": "A first real official-source HeatAQ Nexus experiment using an immutable US EPA Air Quality System snapshot. The benchmark selects a monitoring station deterministically by temporal continuity and evaluates transparent baseline and statistical forecasting models.",
+  "snapshot_config_path": "../official-snapshots/epa-aqs-alameda-pm25-2025.json",
+  "station_policy": {
+    "target_variable": "pm25",
+    "allowed_duration_tokens": [
+      "1 HOUR",
+      "1-HR",
+      "HOURLY"
+    ],
+    "minimum_value": 0.0,
+    "minimum_total_hours": 500,
+    "minimum_contiguous_hours": 240
+  },
+  "horizons": [
+    1,
+    6,
+    12,
+    24,
+    48
+  ],
+  "event_threshold": 35.0,
+  "alpha": 0.1,
+  "minimum_valid_rows": 180,
+  "rolling_origin_step": 24,
+  "rolling_origin_max_origins": 20,
+  "random_state": 42,
+  "release_version": "0.1.0",
+  "created_by": "Faramarz Kowsari",
+  "limitations": [
+    "Monitoring-site measurements are not equivalent to population exposure.",
+    "The selected station represents one monitoring location, not an entire county.",
+    "Instrument, method, POC and sampling-duration changes can affect comparability.",
+    "The station is selected for temporal continuity, not for geographic representativeness.",
+    "This experiment is research software output, not an official warning or medical product."
+  ]
+}

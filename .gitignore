@@ -22,3 +22,6 @@ secrets/
 data/private/
 data/raw/
 models/checkpoints/
+# HEATSAFE_LOCAL_REAL_EXPERIMENTS_V1
+artifacts/local-real-experiments/
+artifacts/plans/

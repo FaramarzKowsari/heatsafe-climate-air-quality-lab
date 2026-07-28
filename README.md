@@ -265,3 +265,27 @@ heatsafe-experiment verify artifacts/experiments/heataq-nexus-synthetic
 
 No paid AI API is required. Candidate metadata does not mint or claim a DOI.
 See [EXPERIMENT_ORCHESTRATOR.md](EXPERIMENT_ORCHESTRATOR.md).
+
+<!-- HEATSAFE_FIRST_REAL_EXPERIMENT_README_V1 -->
+## First real official-source experiment
+
+HeatSafe includes a local, credentialed US EPA AQS experiment workflow that
+moves the research pipeline beyond synthetic software validation. It acquires
+2025 Alameda County PM2.5 records, freezes an immutable official snapshot,
+selects one monitoring station using a declared temporal-continuity rule and
+runs the paper-ready HeatAQ Nexus experiment orchestrator.
+
+```text
+RUN_FIRST_REAL_EPA_EXPERIMENT.cmd
+```
+
+The Windows runner prompts for `EPA_AQS_EMAIL` and `EPA_AQS_KEY`, keeps both
+values only in the current PowerShell process, verifies the completed snapshot
+and experiment, and opens the generated HTML report. Local data and reports
+are excluded from Git tracking.
+
+The first experiment is deliberately EPA-only. NOAA GHCN Daily values are not
+silently expanded into hourly features. A later experiment will use an
+explicitly daily or separately validated temporal-alignment protocol.
+
+See [FIRST_REAL_OFFICIAL_EXPERIMENT.md](FIRST_REAL_OFFICIAL_EXPERIMENT.md).

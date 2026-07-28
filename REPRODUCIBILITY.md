@@ -31,3 +31,32 @@ SHA-256 checksums and a deterministic candidate ZIP archive.
 Synthetic data validate software behavior only and are not evidence about a
 real city. Review real data identity, limitations and release metadata before
 creating a tagged scientific release or DOI.
+
+<!-- HEATSAFE_FIRST_REAL_EXPERIMENT_REPRO_V1 -->
+## Reproducing the first official-source experiment
+
+Generate a secret-free plan:
+
+```bash
+heatsafe-real-experiment plan   --config examples/real-experiments/epa-aqs-alameda-pm25-2025.json   --output artifacts/plans/epa-aqs-alameda-pm25-2025.json
+```
+
+For a live local run, set `EPA_AQS_EMAIL` and `EPA_AQS_KEY`, then execute:
+
+```bash
+heatsafe-real-experiment run   --config examples/real-experiments/epa-aqs-alameda-pm25-2025.json   --workspace artifacts/local-real-experiments/epa-aqs-alameda-pm25-2025   --repository-root .
+```
+
+Windows users can run `RUN_FIRST_REAL_EPA_EXPERIMENT.cmd`. Credential values
+remain in the current process only and are not persisted in plans, snapshots,
+reports or repository files.
+
+Verify the completed workspace:
+
+```bash
+heatsafe-real-experiment verify   artifacts/local-real-experiments/epa-aqs-alameda-pm25-2025
+```
+
+The selected station and contiguous segment are recorded in
+`prepared/station-selection-report.json`. The final technical report is
+`experiment/report/report.html`.

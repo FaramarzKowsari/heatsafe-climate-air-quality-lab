@@ -1,4 +1,4 @@
-.PHONY: setup test lint typecheck demo run benchmark docs package clean experiment
+.PHONY: setup test lint typecheck demo run benchmark docs package clean experiment real-experiment-plan real-experiment
 PYTHON ?= python
 
 setup:
@@ -36,3 +36,10 @@ clean:
 # HEATSAFE_EXPERIMENT_ORCHESTRATOR_MAKE_TARGET_V1
 experiment:
 	$(PYTHON) -m heatsafe.research.experiment_orchestrator.cli run --spec examples/experiments/heataq-nexus-synthetic.json --output artifacts/experiments/heataq-nexus-synthetic --repository-root . --overwrite
+
+# HEATSAFE_FIRST_REAL_EXPERIMENT_MAKE_V1
+real-experiment-plan:
+	$(PYTHON) -m heatsafe.research.official_experiment.cli plan --config examples/real-experiments/epa-aqs-alameda-pm25-2025.json --output artifacts/plans/epa-aqs-alameda-pm25-2025.json
+
+real-experiment:
+	$(PYTHON) -m heatsafe.research.official_experiment.cli run --config examples/real-experiments/epa-aqs-alameda-pm25-2025.json --workspace artifacts/local-real-experiments/epa-aqs-alameda-pm25-2025 --repository-root .
