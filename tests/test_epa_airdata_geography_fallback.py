@@ -19,7 +19,6 @@ COLUMNS = [
     "Latitude",
     "Longitude",
     "Parameter Name",
-    "Sample Duration",
     "Date GMT",
     "Time GMT",
     "Sample Measurement",
@@ -50,7 +49,6 @@ def _row(
     *,
     state_code: object = "6.0",
     parameter_code: object = "88101.0",
-    duration: str = "1 HOUR",
 ) -> list[object]:
     date_value, time_value = timestamp.split()
     return [
@@ -62,7 +60,6 @@ def _row(
         "37.8",
         "-122.2",
         "PM2.5 - Local Conditions",
-        duration,
         date_value,
         time_value,
         "12.5",
@@ -84,13 +81,6 @@ def test_numeric_like_codes_match_alameda(tmp_path: Path) -> None:
         [
             _row("1.0", "Alameda", "7.0", "2025-01-01 00:00"),
             _row("1.0", "Alameda", "7.0", "2025-01-01 01:00"),
-            _row(
-                "1.0",
-                "Alameda",
-                "7.0",
-                "2025-01-02 00:00",
-                duration="24 HOUR",
-            ),
         ],
     )
 
@@ -105,6 +95,9 @@ def test_numeric_like_codes_match_alameda(tmp_path: Path) -> None:
     assert report["geography_fallback_used"] is False
     assert report["selected_geography"]["county_code"] == "001"
     assert report["filter"]["sample_duration"] == "1 HOUR"
+    assert report["filter"]["sample_duration_source"] == (
+        "official EPA hourly-file identity"
+    )
 
 
 def test_fallback_chooses_best_hourly_california_county(

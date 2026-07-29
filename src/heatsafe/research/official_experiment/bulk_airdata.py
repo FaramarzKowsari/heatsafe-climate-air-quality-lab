@@ -481,6 +481,9 @@ def load_alameda_pm25_observations(
         "geography_fallback_used": fallback_used,
         "geography_fallback_reason": fallback_reason,
         "matched_selected_county_rows": int(len(raw_selected)),
+        "matched_alameda_rows": (
+            int(len(raw_selected)) if not fallback_used else 0
+        ),
         "normalized_observations": len(observations),
         "invalid_matched_rows_removed": invalid_rows,
         "unique_stations": len(
