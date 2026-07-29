@@ -350,6 +350,32 @@ def run_real_official_experiment(
     }
 
 
+
+# HEATSAFE_MANIFEST_PATH_RESOLUTION_V1
+def _resolve_manifest_artifact(
+    workspace_root: Path,
+    value: object,
+) -> Path:
+    # Resolve old and new manifest path formats without double-prefixing.
+    candidate = Path(str(value))
+
+    if candidate.is_absolute():
+        return candidate
+
+    if candidate.exists():
+        return candidate
+
+    root_parts = workspace_root.parts
+    candidate_parts = candidate.parts
+    if (
+        root_parts
+        and len(candidate_parts) >= len(root_parts)
+        and candidate_parts[: len(root_parts)] == root_parts
+    ):
+        return candidate
+
+    return workspace_root / candidate
+
 def verify_real_official_experiment(
     workspace: str | Path,
 ) -> dict[str, Any]:
@@ -366,9 +392,10 @@ def verify_real_official_experiment(
         }
 
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    snapshot_directory = Path(str(manifest["snapshot_directory"]))
-    if not snapshot_directory.is_absolute():
-        snapshot_directory = root / snapshot_directory
+    snapshot_directory = _resolve_manifest_artifact(
+        root,
+        manifest["snapshot_directory"],
+    )
 
     snapshot_report = verify_snapshot(snapshot_directory)
     if not bool(snapshot_report.get("valid")):
@@ -381,9 +408,10 @@ def verify_real_official_experiment(
             for item in experiment_report.get("failures", [])
         )
 
-    prepared_csv = Path(str(manifest["prepared_csv"]))
-    if not prepared_csv.is_absolute():
-        prepared_csv = root / prepared_csv
+    prepared_csv = _resolve_manifest_artifact(
+        root,
+        manifest["prepared_csv"],
+    )
     if not prepared_csv.is_file():
         failures.append("Prepared station CSV is missing")
     elif sha256_file(prepared_csv) != manifest["prepared_csv_sha256"]:
