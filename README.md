@@ -289,3 +289,21 @@ silently expanded into hourly features. A later experiment will use an
 explicitly daily or separately validated temporal-alignment protocol.
 
 See [FIRST_REAL_OFFICIAL_EXPERIMENT.md](FIRST_REAL_OFFICIAL_EXPERIMENT.md).
+
+<!-- HEATSAFE_REVIEWED_RELEASE_README_V1 -->
+## Reviewed scientific release builder
+
+HeatSafe can convert the verified official EPA PM2.5 experiment into a
+checksum-verified reviewed candidate archive containing canonical input,
+complete model results, uncertainty artifacts, reports, source provenance,
+Citation File Format, Zenodo and DataCite metadata.
+
+```text
+BUILD_REVIEWED_EPA_RELEASE_08.cmd
+```
+
+The builder reuses the completed local experiment. It does not download or
+rescan the EPA national file, rerun model training, upload to Zenodo, publish a
+GitHub release or mint a DOI.
+
+See [SCIENTIFIC_RELEASE_REVIEW.md](SCIENTIFIC_RELEASE_REVIEW.md).

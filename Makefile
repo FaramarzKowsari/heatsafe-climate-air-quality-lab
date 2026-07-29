@@ -1,4 +1,4 @@
-.PHONY: setup test lint typecheck demo run benchmark docs package clean experiment real-experiment-plan real-experiment
+.PHONY: setup test lint typecheck demo run benchmark docs package clean experiment real-experiment-plan real-experiment reviewed-release
 PYTHON ?= python
 
 setup:
@@ -43,3 +43,7 @@ real-experiment-plan:
 
 real-experiment:
 	$(PYTHON) -m heatsafe.research.official_experiment.cli run --config examples/real-experiments/epa-aqs-alameda-pm25-2025.json --workspace artifacts/local-real-experiments/epa-aqs-alameda-pm25-2025 --repository-root .
+
+# HEATSAFE_REVIEWED_RELEASE_MAKE_V1
+reviewed-release:
+	$(PYTHON) -m heatsafe.research.release_review.cli build --workspace artifacts/local-real-experiments/epa-aqs-alameda-pm25-2025-bulk --output artifacts/releases/epa-pm25-2025-first-real-reviewed --overwrite

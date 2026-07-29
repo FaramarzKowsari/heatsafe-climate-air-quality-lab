@@ -1,0 +1,50 @@
+name: Reviewed Release
+
+on:
+  push:
+    paths:
+      - "src/heatsafe/research/release_review/**"
+      - "tests/test_release_review.py"
+      - "SCIENTIFIC_RELEASE_REVIEW.md"
+      - "docs/site/release-review/**"
+      - ".github/workflows/reviewed-release.yml"
+      - "pyproject.toml"
+  pull_request:
+    paths:
+      - "src/heatsafe/research/release_review/**"
+      - "tests/test_release_review.py"
+      - "SCIENTIFIC_RELEASE_REVIEW.md"
+      - "docs/site/release-review/**"
+      - ".github/workflows/reviewed-release.yml"
+      - "pyproject.toml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "${{ matrix.python-version }}"
+      - run: python -m pip install --upgrade pip
+      - run: pip install -e ".[dev]"
+      - name: Lint reviewed release builder
+        run: >
+          ruff check
+          src/heatsafe/research/release_review
+          tests/test_release_review.py
+      - name: Type-check reviewed release builder
+        run: >
+          python -m mypy
+          --python-version "${{ matrix.python-version }}"
+          src/heatsafe/research/release_review
+      - name: Run reviewed release tests
+        run: pytest tests/test_release_review.py -q

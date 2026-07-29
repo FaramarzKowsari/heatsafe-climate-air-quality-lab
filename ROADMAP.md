@@ -141,3 +141,17 @@
 - public documentation page and dedicated Python 3.11–3.13 CI workflow;
 - deliberate separation of hourly EPA data from daily NOAA data until a
   defensible temporal-alignment protocol is implemented.
+
+<!-- HEATSAFE_REVIEWED_RELEASE_ROADMAP_V1 -->
+### Pack 08 implementation status
+
+- verified-source publication gate;
+- curated reviewed candidate release directory;
+- deterministic ZIP with SHA-256 checksums;
+- release summary in JSON and HTML;
+- Citation File Format dataset metadata;
+- reviewed Zenodo deposition metadata and GitHub template;
+- DataCite metadata starting point;
+- scientific limitations and publication checklist;
+- dedicated Python 3.11-3.13 CI workflow;
+- no automatic upload, publication or DOI claim.

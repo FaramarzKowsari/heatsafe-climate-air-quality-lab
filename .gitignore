@@ -25,3 +25,5 @@ models/checkpoints/
 # HEATSAFE_LOCAL_REAL_EXPERIMENTS_V1
 artifacts/local-real-experiments/
 artifacts/plans/
+# HEATSAFE_REVIEWED_RELEASE_OUTPUTS_V1
+artifacts/releases/

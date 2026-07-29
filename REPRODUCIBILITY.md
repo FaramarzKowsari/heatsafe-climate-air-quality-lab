@@ -60,3 +60,24 @@ heatsafe-real-experiment verify   artifacts/local-real-experiments/epa-aqs-alame
 The selected station and contiguous segment are recorded in
 `prepared/station-selection-report.json`. The final technical report is
 `experiment/report/report.html`.
+
+<!-- HEATSAFE_REVIEWED_RELEASE_REPRO_V1 -->
+## Building a reviewed candidate release
+
+```bash
+heatsafe-release-review build \
+  --workspace artifacts/local-real-experiments/epa-aqs-alameda-pm25-2025-bulk \
+  --output artifacts/releases/epa-pm25-2025-first-real-reviewed \
+  --overwrite
+```
+
+Verify the reviewed release:
+
+```bash
+heatsafe-release-review verify \
+  artifacts/releases/epa-pm25-2025-first-real-reviewed
+```
+
+Windows users can run `BUILD_REVIEWED_EPA_RELEASE_08.cmd`. The output remains
+local and excluded from Git tracking until the publication checklist is
+completed and an explicit release decision is made.

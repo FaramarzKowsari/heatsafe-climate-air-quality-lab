@@ -36,6 +36,7 @@ heatsafe-registry = "heatsafe.research.benchmark_registry.cli:main"
 heatsafe-official = "heatsafe.data_foundation.official_snapshots.cli:main"
 heatsafe-experiment = "heatsafe.research.experiment_orchestrator.cli:main"
 heatsafe-real-experiment = "heatsafe.research.official_experiment.cli:main"
+heatsafe-release-review = "heatsafe.research.release_review.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/FaramarzKowsari/heatsafe-climate-air-quality-lab"
