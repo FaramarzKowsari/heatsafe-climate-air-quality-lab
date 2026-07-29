@@ -117,6 +117,11 @@ def validate_airdata_zip(
         "zip_sha256": sha256_file(zip_path),
         "csv_member": member,
         "source_url": AIRDATA_URL,
+        "airdata_product_type": "official EPA hourly data file",
+        "sample_duration_inference": (
+            "1 HOUR inferred from the official hourly-file product "
+            "identity; the hourly schema has no Sample Duration column"
+        ),
     }
 
 
@@ -155,6 +160,40 @@ def _chunk_iterator(
         archive.close()
 
 
+def _numeric_code(series: pd.Series) -> pd.Series:
+    cleaned = (
+        series.astype("string")
+        .str.strip()
+        .str.replace(r"\.0+$", "", regex=True)
+    )
+    return pd.to_numeric(cleaned, errors="coerce").astype("Int64")
+
+
+def _format_code(value: object, width: int) -> str:
+    converted = pd.to_numeric(
+        pd.Series([value], dtype="object"),
+        errors="coerce",
+    ).iloc[0]
+    if pd.notna(converted):
+        return f"{int(converted):0{width}d}"
+
+    cleaned = str(value).strip()
+    if cleaned.endswith(".0"):
+        cleaned = cleaned[:-2]
+    return cleaned.zfill(width)
+
+
+def _county_name_value(frame: pd.DataFrame) -> str:
+    names = (
+        frame["County Name"]
+        .astype("string")
+        .dropna()
+        .str.strip()
+    )
+    names = names[names != ""]
+    return str(names.iloc[0]) if not names.empty else "Unknown"
+
+
 def load_alameda_pm25_observations(
     path: str | Path,
     *,
@@ -169,12 +208,15 @@ def load_alameda_pm25_observations(
     member = str(metadata["csv_member"])
     retrieved_at = datetime.now(UTC)
 
-    observations: list[NormalizedObservation] = []
+    requested_state_code = 6
+    requested_county_code = 1
+    parameter_code = 88101
+
+    requested_chunks: list[pd.DataFrame] = []
+    county_hourly_counts: dict[tuple[int, str], int] = {}
     scanned_rows = 0
-    geographic_rows = 0
-    invalid_rows = 0
-    method_names: set[str] = set()
-    units: set[str] = set()
+    california_parameter_rows = 0
+    california_hourly_rows = 0
 
     for chunk in _chunk_iterator(
         zip_path,
@@ -182,115 +224,217 @@ def load_alameda_pm25_observations(
         chunksize=chunksize,
     ):
         scanned_rows += len(chunk)
-        state = chunk["State Code"].str.zfill(2)
-        county = chunk["County Code"].str.zfill(3)
-        parameter = chunk["Parameter Code"].str.zfill(5)
-        selected = chunk.loc[
-            (state == "06")
-            & (county == "001")
-            & (parameter == "88101")
-        ].copy()
-        geographic_rows += len(selected)
-        if selected.empty:
+        state = _numeric_code(chunk["State Code"])
+        county = _numeric_code(chunk["County Code"])
+        parameter = _numeric_code(chunk["Parameter Code"])
+        california_parameter = (
+            (state == requested_state_code)
+            & (parameter == parameter_code)
+        )
+        california_parameter_rows += int(california_parameter.sum())
+
+        eligible = california_parameter
+        california_hourly_rows += int(eligible.sum())
+        if not bool(eligible.any()):
             continue
 
-        timestamps = pd.to_datetime(
-            selected["Date GMT"].astype(str)
-            + " "
-            + selected["Time GMT"].astype(str),
-            utc=True,
-            errors="coerce",
-        )
-        measurements = pd.to_numeric(
-            selected["Sample Measurement"],
-            errors="coerce",
-        )
-        latitudes = pd.to_numeric(
-            selected["Latitude"],
-            errors="coerce",
-        )
-        longitudes = pd.to_numeric(
-            selected["Longitude"],
-            errors="coerce",
-        )
+        eligible_frame = chunk.loc[eligible].copy()
+        eligible_county_codes = county.loc[eligible]
 
-        valid = (
-            timestamps.notna()
-            & measurements.notna()
-            & latitudes.notna()
-            & longitudes.notna()
-        )
-        invalid_rows += int((~valid).sum())
-        selected = selected.loc[valid].copy()
-        timestamps = timestamps.loc[valid]
-        measurements = measurements.loc[valid]
-        latitudes = latitudes.loc[valid]
-        longitudes = longitudes.loc[valid]
-
-        for index, row in selected.iterrows():
-            station_id = (
-                f"{str(row['State Code']).zfill(2)}-"
-                f"{str(row['County Code']).zfill(3)}-"
-                f"{str(row['Site Num']).zfill(4)}"
+        for county_value in sorted(
+            {
+                int(value)
+                for value in eligible_county_codes.dropna().tolist()
+            }
+        ):
+            county_rows = eligible_frame.loc[
+                eligible_county_codes == county_value
+            ]
+            county_name = _county_name_value(county_rows)
+            key = (county_value, county_name)
+            county_hourly_counts[key] = (
+                county_hourly_counts.get(key, 0)
+                + int(len(county_rows))
             )
-            method_name = str(row.get("Method Name") or "unknown")
-            method_names.add(method_name)
-            unit = str(row.get("Units of Measure") or "source-unit")
-            units.add(unit)
-            qualifier = str(row.get("Qualifier") or "none")
-            poc = str(row.get("POC") or "")
-            timestamp = timestamps.loc[index].to_pydatetime()
-            value = float(measurements.loc[index])
 
-            observations.append(
-                NormalizedObservation(
-                    source_name="US EPA AirData",
-                    source_dataset=(
-                        "Pre-generated hourly PM2.5 FRM/FEM Mass "
-                        "(88101), 2025"
-                    ),
-                    source_record_id=(
-                        f"{station_id}:88101:{poc}:"
-                        f"{timestamp.isoformat()}"
-                    ),
-                    station_id=station_id,
-                    latitude=float(latitudes.loc[index]),
-                    longitude=float(longitudes.loc[index]),
-                    country="US",
-                    region=str(
-                        row.get("State Name") or "California"
-                    ),
-                    city=None,
-                    timestamp_utc=timestamp,
-                    timestamp_local=None,
-                    timezone="UTC",
-                    variable="pm25",
-                    value=value,
-                    unit=unit,
-                    measurement_type=MeasurementType.OBSERVED,
-                    quality_flag=(
-                        "sample_duration=1 HOUR;"
-                        f"method_type={row.get('Method Type') or 'unknown'};"
-                        f"method_code={row.get('Method Code') or 'unknown'};"
-                        f"method_name={method_name};"
-                        f"qualifier={qualifier};"
-                        f"poc={poc};"
-                        "source=EPA_AirData_hourly_bulk"
-                    ),
-                    data_status="available",
-                    retrieved_at=retrieved_at,
-                    license=(
-                        "United States government data; retain EPA "
-                        "method, qualifier, monitor, and source metadata"
-                    ),
-                    source_url=AIRDATA_URL,
+        requested_mask = eligible & (county == requested_county_code)
+        if bool(requested_mask.any()):
+            requested_chunks.append(chunk.loc[requested_mask].copy())
+
+    fallback_used = not requested_chunks
+    if requested_chunks:
+        selected_county_code = requested_county_code
+        raw_selected = pd.concat(
+            requested_chunks,
+            ignore_index=True,
+        )
+        selected_county_name = _county_name_value(raw_selected)
+        fallback_reason = None
+    else:
+        if not county_hourly_counts:
+            raise ValueError(
+                "The official EPA hourly 88101 file contains no "
+                "California rows for parameter 88101. "
+                "Scanned national rows: "
+                f"{scanned_rows}; California 88101 rows: "
+                f"{california_parameter_rows}."
+            )
+
+        ranked_counties = sorted(
+            county_hourly_counts.items(),
+            key=lambda item: (
+                -item[1],
+                item[0][0],
+                item[0][1],
+            ),
+        )
+        (
+            selected_county_code,
+            selected_county_name,
+        ), _ = ranked_counties[0]
+        fallback_reason = (
+            "Alameda County had no 88101 rows in the downloaded "
+            "official hourly file. The California county with the "
+            "largest number of 88101 hourly-file rows was selected "
+            "using a deterministic row-count rule."
+        )
+
+        fallback_chunks: list[pd.DataFrame] = []
+        for chunk in _chunk_iterator(
+            zip_path,
+            member,
+            chunksize=chunksize,
+        ):
+            state = _numeric_code(chunk["State Code"])
+            county = _numeric_code(chunk["County Code"])
+            parameter = _numeric_code(chunk["Parameter Code"])
+            selected_mask = (
+                (state == requested_state_code)
+                & (county == selected_county_code)
+                & (parameter == parameter_code)
+            )
+            if bool(selected_mask.any()):
+                fallback_chunks.append(
+                    chunk.loc[selected_mask].copy()
                 )
+
+        if not fallback_chunks:
+            raise RuntimeError(
+                "The fallback county was selected but its rows "
+                "could not be loaded during the second pass"
             )
+        raw_selected = pd.concat(
+            fallback_chunks,
+            ignore_index=True,
+        )
+
+    timestamps = pd.to_datetime(
+        raw_selected["Date GMT"].astype(str)
+        + " "
+        + raw_selected["Time GMT"].astype(str),
+        utc=True,
+        errors="coerce",
+    )
+    measurements = pd.to_numeric(
+        raw_selected["Sample Measurement"],
+        errors="coerce",
+    )
+    latitudes = pd.to_numeric(
+        raw_selected["Latitude"],
+        errors="coerce",
+    )
+    longitudes = pd.to_numeric(
+        raw_selected["Longitude"],
+        errors="coerce",
+    )
+
+    valid = (
+        timestamps.notna()
+        & measurements.notna()
+        & latitudes.notna()
+        & longitudes.notna()
+    )
+    invalid_rows = int((~valid).sum())
+    selected = raw_selected.loc[valid].copy()
+    timestamps = timestamps.loc[valid]
+    measurements = measurements.loc[valid]
+    latitudes = latitudes.loc[valid]
+    longitudes = longitudes.loc[valid]
+
+    observations: list[NormalizedObservation] = []
+    method_names: set[str] = set()
+    units: set[str] = set()
+
+    for index, row in selected.iterrows():
+        station_id = (
+            f"{_format_code(row['State Code'], 2)}-"
+            f"{_format_code(row['County Code'], 3)}-"
+            f"{_format_code(row['Site Num'], 4)}"
+        )
+        method_name = str(row.get("Method Name") or "unknown")
+        method_names.add(method_name)
+        unit = str(row.get("Units of Measure") or "source-unit")
+        units.add(unit)
+        qualifier = str(row.get("Qualifier") or "none")
+        poc = _format_code(row.get("POC"), 1)
+        timestamp = timestamps.loc[index].to_pydatetime()
+        value = float(measurements.loc[index])
+        sample_duration = "1 HOUR"
+        sample_duration_source = (
+            "inferred_from_official_epa_hourly_file_identity"
+        )
+
+        observations.append(
+            NormalizedObservation(
+                source_name="US EPA AirData",
+                source_dataset=(
+                    "Pre-generated hourly PM2.5 FRM/FEM Mass "
+                    "(88101), 2025"
+                ),
+                source_record_id=(
+                    f"{station_id}:88101:{poc}:"
+                    f"{timestamp.isoformat()}"
+                ),
+                station_id=station_id,
+                latitude=float(latitudes.loc[index]),
+                longitude=float(longitudes.loc[index]),
+                country="US",
+                region=str(
+                    row.get("State Name") or "California"
+                ),
+                city=None,
+                timestamp_utc=timestamp,
+                timestamp_local=None,
+                timezone="UTC",
+                variable="pm25",
+                value=value,
+                unit=unit,
+                measurement_type=MeasurementType.OBSERVED,
+                quality_flag=(
+                    f"sample_duration={sample_duration};"
+                    f"sample_duration_source={sample_duration_source};"
+                    f"method_type={row.get('Method Type') or 'unknown'};"
+                    f"method_code={row.get('Method Code') or 'unknown'};"
+                    f"method_name={method_name};"
+                    f"qualifier={qualifier};"
+                    f"poc={poc};"
+                    "source=EPA_AirData_hourly_bulk"
+                ),
+                data_status="available",
+                retrieved_at=retrieved_at,
+                license=(
+                    "United States government data; retain EPA "
+                    "method, qualifier, monitor, and source metadata"
+                ),
+                source_url=AIRDATA_URL,
+            )
+        )
 
     if not observations:
         raise ValueError(
-            "No Alameda County PM2.5 observations were found in the "
-            "official EPA hourly file"
+            "The selected California county contained no valid "
+            "hourly PM2.5 observations after timestamp, value, "
+            "and coordinate validation"
         )
 
     observations.sort(
@@ -300,10 +444,43 @@ def load_alameda_pm25_observations(
             item.source_record_id or "",
         )
     )
+
+    ranked_counties_payload = [
+        {
+            "county_code": f"{code:03d}",
+            "county_name": name,
+            "hourly_rows": count,
+        }
+        for (code, name), count in sorted(
+            county_hourly_counts.items(),
+            key=lambda item: (
+                -item[1],
+                item[0][0],
+                item[0][1],
+            ),
+        )[:25]
+    ]
+
     report = {
         **metadata,
         "scanned_national_rows": scanned_rows,
-        "matched_alameda_rows": geographic_rows,
+        "california_88101_rows": california_parameter_rows,
+        "california_hourly_88101_rows": california_hourly_rows,
+        "requested_geography": {
+            "state_code": "06",
+            "state_name": "California",
+            "county_code": "001",
+            "county_name": "Alameda",
+        },
+        "selected_geography": {
+            "state_code": "06",
+            "state_name": "California",
+            "county_code": f"{selected_county_code:03d}",
+            "county_name": selected_county_name,
+        },
+        "geography_fallback_used": fallback_used,
+        "geography_fallback_reason": fallback_reason,
+        "matched_selected_county_rows": int(len(raw_selected)),
         "normalized_observations": len(observations),
         "invalid_matched_rows_removed": invalid_rows,
         "unique_stations": len(
@@ -315,11 +492,25 @@ def load_alameda_pm25_observations(
         ),
         "method_names": sorted(method_names),
         "units": sorted(units),
+        "top_california_counties_by_hourly_rows": (
+            ranked_counties_payload
+        ),
         "filter": {
             "state_code": "06",
-            "county_code": "001",
+            "county_code": f"{selected_county_code:03d}",
             "parameter_code": "88101",
+            "sample_duration": "1 HOUR",
+            "sample_duration_source": (
+                "official EPA hourly-file identity"
+            ),
         },
+        "selection_policy": (
+            "Use Alameda County when 88101 rows exist in the "
+            "official hourly file. Otherwise choose the California "
+            "county with the largest number of hourly-file 88101 rows, "
+            "breaking "
+            "ties by county code and county name."
+        ),
         "data_advisory": (
             "EPA currently publishes a PM2.5 advisory for some "
             "pre-generated 88101 method records. Method names are "
@@ -355,6 +546,37 @@ def run_bulk_experiment(
     observations, bulk_report = load_alameda_pm25_observations(
         bulk_zip
     )
+    selected_geography = bulk_report["selected_geography"]
+    selected_county_code = str(
+        selected_geography["county_code"]
+    )
+    selected_county_name = str(
+        selected_geography["county_name"]
+    )
+    geography_label = (
+        f"{selected_county_name} County, California"
+    )
+
+    if bulk_report["geography_fallback_used"]:
+        snapshot_config = snapshot_config.model_copy(
+            update={
+                "dataset_id": (
+                    "epa-airdata-ca-"
+                    f"{selected_county_code}-pm25-2025"
+                ),
+                "title": (
+                    "EPA AirData "
+                    f"{geography_label} hourly PM2.5 2025 snapshot"
+                ),
+                "description": (
+                    "An immutable official-source snapshot of US EPA "
+                    "AirData hourly PM2.5 measurements for "
+                    f"{geography_label} during 2025. Alameda County "
+                    "was requested first but had no explicit one-hour "
+                    "88101 rows in the downloaded file."
+                ),
+            }
+        )
     raw_root = output_root / "raw-source"
     raw_root.mkdir(parents=True, exist_ok=True)
     bulk_report_path = raw_root / "bulk-source-report.json"
@@ -400,12 +622,18 @@ def run_bulk_experiment(
     )
     source_spec = ExperimentSpec(
         experiment_id=real_config.experiment_id + "-bulk",
-        title=real_config.title + " — EPA AirData Bulk Route",
+        title=(
+            f"US EPA AirData {geography_label} PM2.5 "
+            "Forecasting Benchmark — 2025"
+        ),
         description=(
-            real_config.description
-            + " The official pre-generated hourly AirData file "
-            "was used because the synchronous AQS API endpoint was "
-            "not reachable from the execution network."
+            "A reproducible official-source PM2.5 forecasting "
+            f"experiment for {geography_label}. The official "
+            "pre-generated hourly AirData file was used because the "
+            "synchronous AQS API endpoint was not reachable from the "
+            "execution network. Alameda County was requested first; "
+            "a deterministic California coverage fallback is used "
+            "only when Alameda has no explicit one-hour 88101 rows."
         ),
         dataset=DatasetSpec(
             kind="csv",
@@ -430,7 +658,10 @@ def run_bulk_experiment(
             expected_frequency="1h",
         ),
         report=ReportSpec(
-            title=real_config.title + " — Bulk AirData Route",
+            title=(
+                f"US EPA AirData {geography_label} PM2.5 "
+                "Forecasting Benchmark — Bulk Route"
+            ),
             subtitle=(
                 "Official EPA pre-generated hourly PM2.5 "
                 "forecasting experiment"
@@ -440,8 +671,9 @@ def run_bulk_experiment(
             abstract=(
                 "This report evaluates an hourly PM2.5 forecasting "
                 "benchmark from the official US EPA AirData 2025 "
-                "pre-generated file. Alameda County rows are filtered "
-                "locally, normalized into an immutable snapshot, and "
+                "pre-generated file. Rows for "
+                f"{geography_label} are filtered locally, normalized "
+                "into an immutable snapshot, and "
                 "a monitoring station is selected deterministically "
                 "by temporal continuity."
             ),
@@ -449,7 +681,7 @@ def run_bulk_experiment(
                 "US EPA AirData",
                 "PM2.5",
                 "official bulk data",
-                "Alameda County",
+                geography_label,
                 "forecasting",
                 "reproducibility",
             ),
@@ -463,6 +695,11 @@ def run_bulk_experiment(
         notes=(
             "Official source: US EPA AirData hourly 88101 file.",
             f"Bulk source SHA-256: {bulk_report['zip_sha256']}.",
+            f"Selected geography: {geography_label}.",
+            (
+                "Geography fallback used: "
+                f"{bulk_report['geography_fallback_used']}."
+            ),
             f"Selected monitoring station: {selected_station}.",
             "No API credential was used for the bulk route.",
             "No missing target values are imputed in the selected segment.",
@@ -519,6 +756,14 @@ def run_bulk_experiment(
         ),
         "snapshot_integrity": snapshot_release.snapshot_integrity,
         "registry_integrity": snapshot_release.registry_integrity,
+        "requested_geography": bulk_report["requested_geography"],
+        "selected_geography": bulk_report["selected_geography"],
+        "geography_fallback_used": (
+            bulk_report["geography_fallback_used"]
+        ),
+        "geography_fallback_reason": (
+            bulk_report["geography_fallback_reason"]
+        ),
         "selected_station": selection_report["selected_station"],
         "prepared_csv": str(prepared_csv),
         "prepared_csv_sha256": sha256_file(prepared_csv),
@@ -551,8 +796,12 @@ def run_bulk_experiment(
         "workspace": str(output_root),
         "manifest": str(manifest_path),
         "bulk_zip_sha256": bulk_report["zip_sha256"],
-        "matched_alameda_rows": bulk_report[
-            "matched_alameda_rows"
+        "selected_geography": bulk_report["selected_geography"],
+        "geography_fallback_used": (
+            bulk_report["geography_fallback_used"]
+        ),
+        "matched_selected_county_rows": bulk_report[
+            "matched_selected_county_rows"
         ],
         "selected_station": selected_station,
         "selected_segment_rows": selection_report[
