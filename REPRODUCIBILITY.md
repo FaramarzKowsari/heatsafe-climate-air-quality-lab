@@ -81,3 +81,22 @@ heatsafe-release-review verify \
 Windows users can run `BUILD_REVIEWED_EPA_RELEASE_08.cmd`. The output remains
 local and excluded from Git tracking until the publication checklist is
 completed and an explicit release decision is made.
+
+<!-- HEATSAFE_FINAL_METADATA_HARMONIZATION_REPRO_V1 -->
+## Final metadata harmonization
+
+After building and verifying Scientific Pack 08, create the final
+metadata-harmonized candidate:
+
+```bash
+heatsafe-release-review harmonize   --source-release artifacts/releases/epa-pm25-2025-first-real-reviewed   --workspace artifacts/local-real-experiments/epa-aqs-alameda-pm25-2025-bulk   --output artifacts/releases/epa-airdata-california-pm25-2025-first-real-reviewed   --release-id epa-airdata-california-pm25-2025-first-real-reviewed   --public-experiment-id epa-airdata-california-pm25-2025-first-real-bulk   --source-collection-year 2025   --local-timezone America/Los_Angeles   --overwrite
+```
+
+Verify the result:
+
+```bash
+heatsafe-release-review verify-harmonized   artifacts/releases/epa-airdata-california-pm25-2025-first-real-reviewed
+```
+
+This operation does not download EPA data, rescan the national file, rerun
+models, publish an archive or mint a DOI.

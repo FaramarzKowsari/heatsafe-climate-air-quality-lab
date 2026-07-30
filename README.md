@@ -307,3 +307,22 @@ rescan the EPA national file, rerun model training, upload to Zenodo, publish a
 GitHub release or mint a DOI.
 
 See [SCIENTIFIC_RELEASE_REVIEW.md](SCIENTIFIC_RELEASE_REVIEW.md).
+
+<!-- HEATSAFE_FINAL_METADATA_HARMONIZATION_V1 -->
+## Final metadata harmonization
+
+Scientific Pack 08.1 creates a final metadata-harmonized reviewed candidate
+from the verified EPA experiment without downloading or rescanning source
+data and without rerunning forecasting models.
+
+The public identifiers are:
+
+- `epa-airdata-california-pm25-2025-first-real-reviewed`
+- `epa-airdata-california-pm25-2025-first-real-bulk`
+
+The historical source execution identifier remains preserved in provenance.
+The generated archive records San Diego County, station `06-073-1201`, and
+both UTC and `America/Los_Angeles` interval endpoints.
+
+Run `BUILD_HARMONIZED_EPA_RELEASE_08_1.cmd` only after the Reviewed Release,
+CI and CodeQL workflows pass.

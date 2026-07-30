@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Final Metadata Harmonization | HeatSafe Research Lab</title>
+  <meta name="description" content="Protocol for harmonizing the final identifiers, geography, UTC/local-time basis, Citation File Format, Zenodo and DataCite metadata of the first verified EPA PM2.5 experiment.">
+  <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container nav-shell">
+    <a class="brand" href="../../"><span class="brand-mark">HS</span><span>HeatSafe Research Lab</span></a>
+    <nav>
+      <a href="../../public-guide/">Public Guide</a>
+      <a href="../../first-real-experiment/">First Real Experiment</a>
+      <a href="../../reproducible-experiments/">Reproducibility</a>
+      <a href="../../about-author/">Author &amp; Developer</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <section class="hero">
+    <div class="container">
+      <p class="eyebrow">Scientific Pack 08.1</p>
+      <h1>Final Metadata Harmonization</h1>
+      <p class="lead">A review-only step that aligns public identifiers, the actual San Diego result, UTC and local-time interpretation, citation metadata and publication boundaries without rerunning the scientific experiment.</p>
+      <div class="actions">
+        <a class="button" href="../">Release Review</a>
+        <a class="button secondary" href="../../first-real-experiment/">Source Experiment</a>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <h2>Canonical public identity</h2>
+      <div class="cards three">
+        <article class="card">
+          <h3>Public release ID</h3>
+          <p><code>epa-airdata-california-pm25-2025-first-real-reviewed</code></p>
+        </article>
+        <article class="card">
+          <h3>Public experiment ID</h3>
+          <p><code>epa-airdata-california-pm25-2025-first-real-bulk</code></p>
+        </article>
+        <article class="card">
+          <h3>Source execution identity</h3>
+          <p>The historical execution ID remains unchanged and is preserved in provenance through an explicit identifier crosswalk.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+  <section class="section alt">
+    <div class="container">
+      <h2>Actual verified result</h2>
+      <div class="cards three">
+        <article class="card"><h3>Geography</h3><p>San Diego County, California</p></article>
+        <article class="card"><h3>Station</h3><p><code>06-073-1201</code></p></article>
+        <article class="card"><h3>Rows</h3><p>3,998 hourly observations</p></article>
+      </div>
+      <p>The UTC interval crosses into January 1, 2026 because the final local hour of December 31, 2025 in California converts to the following UTC date. Both time bases are recorded in the final archive.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <h2>Publication gate</h2>
+      <p>This process prepares Citation File Format, Zenodo and DataCite metadata, but it does not create a public release, upload an archive or mint a DOI. Final human review remains mandatory.</p>
+    </div>
+  </section>
+</main>
+<footer class="site-footer">
+  <div class="container"><p>Maintained by <a href="../../about-author/">Faramarz Kowsari</a>.</p></div>
+</footer>
+</body>
+</html>

@@ -155,3 +155,16 @@
 - scientific limitations and publication checklist;
 - dedicated Python 3.11-3.13 CI workflow;
 - no automatic upload, publication or DOI claim.
+
+<!-- HEATSAFE_SCIENTIFIC_PACK_08_1_ROADMAP_V1 -->
+## Scientific Pack 08.1 — Final metadata harmonization
+
+- [x] Separate public release identity from historical execution identity.
+- [x] Harmonize the actual San Diego geography and station metadata.
+- [x] Record UTC and local-time interval endpoints.
+- [x] Explain the source-year/UTC-year boundary.
+- [x] Regenerate Citation File Format, Zenodo and DataCite metadata.
+- [x] Preserve the pre-harmonization candidate and source provenance.
+- [ ] Complete final human publication checklist.
+- [ ] Create a GitHub Release only after approval.
+- [ ] Publish to Zenodo and add the DOI only after approval.
