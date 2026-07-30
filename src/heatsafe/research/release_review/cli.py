@@ -24,6 +24,13 @@ from heatsafe.research.release_review.publication import (
     prepare_publication_handoff,
     verify_publication_handoff,
 )
+from heatsafe.research.release_review.doi_finalizer import (
+    DEFAULT_RESERVED_DOI,
+    finalize_reserved_doi_handoff,
+    finalize_reserved_doi_release,
+    verify_doi_final_handoff,
+    verify_doi_final_release,
+)
 
 
 def _build(args: argparse.Namespace) -> None:
@@ -83,6 +90,56 @@ def _prepare_publication(args: argparse.Namespace) -> None:
 
 def _verify_publication(args: argparse.Namespace) -> None:
     result = verify_publication_handoff(args.handoff_directory)
+    print(json.dumps(result, indent=2, sort_keys=True))
+    if not result["valid"]:
+        raise SystemExit(1)
+
+
+def _finalize_reserved_doi(args: argparse.Namespace) -> None:
+    release_result = finalize_reserved_doi_release(
+        args.harmonized_release,
+        output_directory=args.release_output,
+        reserved_doi=args.reserved_doi,
+        overwrite=args.overwrite,
+    )
+    handoff_result = finalize_reserved_doi_handoff(
+        args.publication_handoff,
+        doi_final_release=args.release_output,
+        output_directory=args.handoff_output,
+        reserved_doi=args.reserved_doi,
+        overwrite=args.overwrite,
+    )
+    print(
+        json.dumps(
+            {
+                "release": release_result,
+                "handoff": handoff_result,
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
+
+
+def _verify_reserved_doi_release(
+    args: argparse.Namespace,
+) -> None:
+    result = verify_doi_final_release(
+        args.release_directory,
+        reserved_doi=args.reserved_doi,
+    )
+    print(json.dumps(result, indent=2, sort_keys=True))
+    if not result["valid"]:
+        raise SystemExit(1)
+
+
+def _verify_reserved_doi_handoff(
+    args: argparse.Namespace,
+) -> None:
+    result = verify_doi_final_handoff(
+        args.handoff_directory,
+        reserved_doi=args.reserved_doi,
+    )
     print(json.dumps(result, indent=2, sort_keys=True))
     if not result["valid"]:
         raise SystemExit(1)
@@ -199,6 +256,62 @@ def build_parser() -> argparse.ArgumentParser:
     )
     verify_publication.add_argument("handoff_directory")
     verify_publication.set_defaults(func=_verify_publication)
+
+    finalize_doi = commands.add_parser(
+        "finalize-reserved-doi",
+        help=(
+            "Inject a reserved Zenodo DOI, rebuild release checksums and "
+            "create a DOI-aware draft publication handoff"
+        ),
+    )
+    finalize_doi.add_argument(
+        "--harmonized-release",
+        required=True,
+    )
+    finalize_doi.add_argument(
+        "--publication-handoff",
+        required=True,
+    )
+    finalize_doi.add_argument(
+        "--release-output",
+        required=True,
+    )
+    finalize_doi.add_argument(
+        "--handoff-output",
+        required=True,
+    )
+    finalize_doi.add_argument(
+        "--reserved-doi",
+        default=DEFAULT_RESERVED_DOI,
+    )
+    finalize_doi.add_argument("--overwrite", action="store_true")
+    finalize_doi.set_defaults(func=_finalize_reserved_doi)
+
+    verify_doi_release = commands.add_parser(
+        "verify-doi-release",
+        help="Verify a DOI-aware final candidate release",
+    )
+    verify_doi_release.add_argument("release_directory")
+    verify_doi_release.add_argument(
+        "--reserved-doi",
+        default=DEFAULT_RESERVED_DOI,
+    )
+    verify_doi_release.set_defaults(
+        func=_verify_reserved_doi_release
+    )
+
+    verify_doi_handoff = commands.add_parser(
+        "verify-doi-handoff",
+        help="Verify a DOI-aware draft publication handoff",
+    )
+    verify_doi_handoff.add_argument("handoff_directory")
+    verify_doi_handoff.add_argument(
+        "--reserved-doi",
+        default=DEFAULT_RESERVED_DOI,
+    )
+    verify_doi_handoff.set_defaults(
+        func=_verify_reserved_doi_handoff
+    )
     return parser
 
 

@@ -1,0 +1,8 @@
+{
+  "pack": "Scientific Pack 09.1",
+  "installed_at_utc": "2026-07-30T21:20:45.010090+00:00",
+  "reserved_doi": "10.5281/zenodo.21710054",
+  "doi_registered": false,
+  "publishing_enabled": false,
+  "commit_summary": "feat: add reserved DOI finalization pipeline"
+}

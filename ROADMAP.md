@@ -183,3 +183,17 @@
 - [ ] Reserve the Zenodo DOI.
 - [ ] Inject the reserved DOI and rebuild the final archive.
 - [ ] Publish Zenodo, verify DOI resolution, then publish GitHub.
+
+<!-- HEATSAFE_SCIENTIFIC_PACK_09_1_ROADMAP -->
+## Scientific Pack 09.1 — Reserved DOI injection
+
+- [x] Reserve Zenodo DOI `10.5281/zenodo.21710054`.
+- [x] Preserve the existing Zenodo draft.
+- [x] Add DOI-aware release and handoff builders.
+- [x] Regenerate checksums and deterministic archive.
+- [x] Prepare Zenodo and GitHub replacement instructions.
+- [ ] Replace old files in the Zenodo draft.
+- [ ] Complete all required Zenodo Basic information fields.
+- [ ] Save and preview the Zenodo draft.
+- [ ] Replace assets in the GitHub draft.
+- [ ] Publish only after final human approval.

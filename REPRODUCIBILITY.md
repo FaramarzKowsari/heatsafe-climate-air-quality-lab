@@ -124,3 +124,15 @@ heatsafe-release-review verify-publication \
 
 The handoff contains only draft creation helpers. It does not publish either
 platform or mint a DOI.
+
+<!-- HEATSAFE_RESERVED_DOI_REPRO_09_1 -->
+## Reserved DOI finalization
+
+After Scientific Pack 09 has created the draft handoff, run:
+
+```bash
+heatsafe-release-review finalize-reserved-doi   --harmonized-release artifacts/releases/epa-airdata-california-pm25-2025-first-real-reviewed   --publication-handoff artifacts/publication/epa-pm25-2025-v0.1.0-handoff   --release-output artifacts/releases/epa-airdata-california-pm25-2025-first-real-reviewed-doi-final   --handoff-output artifacts/publication/epa-pm25-2025-v0.1.0-doi-final-handoff   --reserved-doi 10.5281/zenodo.21710054   --overwrite
+```
+
+This operation does not publish Zenodo, register the DOI, or publish a GitHub
+release.
