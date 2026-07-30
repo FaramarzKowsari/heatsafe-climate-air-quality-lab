@@ -1,0 +1,9 @@
+{
+  "pack": "Scientific Pack 09",
+  "installed_at_utc": "2026-07-30T18:02:42.955256+00:00",
+  "tag": "epa-pm25-2025-v0.1.0",
+  "github_release_mode": "draft-only",
+  "zenodo_mode": "draft-only",
+  "publishing_enabled": false,
+  "commit_summary": "feat: add publication handoff and draft release workflow"
+}

@@ -168,3 +168,18 @@
 - [ ] Complete final human publication checklist.
 - [ ] Create a GitHub Release only after approval.
 - [ ] Publish to Zenodo and add the DOI only after approval.
+
+<!-- HEATSAFE_SCIENTIFIC_PACK_09_ROADMAP_V1 -->
+## Scientific Pack 09 — publication handoff
+
+- [x] Verify and stage the final harmonized research archive.
+- [x] Generate exact GitHub release notes and Zenodo form guidance.
+- [x] Generate SHA-256 checksums for publication assets.
+- [x] Provide a GitHub draft-only creation command.
+- [x] Preserve repository-root software citation metadata.
+- [x] Block automatic GitHub and Zenodo publication.
+- [ ] Create and review the GitHub draft release.
+- [ ] Create and review the Zenodo draft upload.
+- [ ] Reserve the Zenodo DOI.
+- [ ] Inject the reserved DOI and rebuild the final archive.
+- [ ] Publish Zenodo, verify DOI resolution, then publish GitHub.

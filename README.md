@@ -326,3 +326,22 @@ both UTC and `America/Los_Angeles` interval endpoints.
 
 Run `BUILD_HARMONIZED_EPA_RELEASE_08_1.cmd` only after the Reviewed Release,
 CI and CodeQL workflows pass.
+
+<!-- HEATSAFE_PUBLICATION_HANDOFF_V1 -->
+## Publication handoff and draft creation
+
+Scientific Pack 09 prepares a controlled, draft-only publication handoff from
+the final metadata-harmonized EPA release.
+
+The proposed publication identity is:
+
+- tag: `epa-pm25-2025-v0.1.0`;
+- title: `US EPA AirData San Diego County, California PM2.5 Forecasting Benchmark v0.1.0`.
+
+The handoff verifies and stages the final ZIP, SHA-256 checksums, dataset
+Citation File Format, final publication metadata, identifier crosswalk and
+time-basis record. It can create a GitHub **draft** release and open the
+official Zenodo draft form, but it contains no publication command.
+
+Run `PREPARE_PUBLICATION_HANDOFF_09.cmd` only after the harmonized release has
+passed verification.

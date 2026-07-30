@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Publication Handoff | HeatSafe Research Lab</title>
+  <meta name="description" content="Draft-only GitHub Release and Zenodo publication handoff for the verified San Diego County EPA PM2.5 forecasting benchmark.">
+  <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container nav-shell">
+    <a class="brand" href="../../"><span class="brand-mark">HS</span><span>HeatSafe Research Lab</span></a>
+    <nav>
+      <a href="../../public-guide/">Public Guide</a>
+      <a href="../../first-real-experiment/">First Real Experiment</a>
+      <a href="../../reproducible-experiments/">Reproducibility</a>
+      <a href="../../about-author/">Author &amp; Developer</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <section class="hero">
+    <div class="container">
+      <p class="eyebrow">Scientific Pack 09</p>
+      <h1>Publication handoff and draft creation</h1>
+      <p class="lead">A controlled transition from a verified research archive to GitHub and Zenodo drafts. Publishing remains blocked until a reserved DOI is inserted, checksums are rebuilt and a final human review is completed.</p>
+      <div class="actions">
+        <a class="button" href="../final-metadata/">Final metadata</a>
+        <a class="button secondary" href="../">Release review</a>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <h2>Draft-only controls</h2>
+      <div class="cards three">
+        <article class="card"><h3>GitHub draft</h3><p>The generated GitHub CLI command uses <code>--draft</code> and requires an explicit <code>CREATE-DRAFT</code> confirmation.</p></article>
+        <article class="card"><h3>Zenodo draft</h3><p>The guide opens the official upload form and prepares exact metadata, files, license, keywords, geography and time-basis fields.</p></article>
+        <article class="card"><h3>No publish command</h3><p>No script in this pack can publish Zenodo or convert the GitHub draft into a public release.</p></article>
+      </div>
+    </div>
+  </section>
+  <section class="section alt">
+    <div class="container">
+      <h2>Proposed publication identity</h2>
+      <p><strong>Tag:</strong> <code>epa-pm25-2025-v0.1.0</code></p>
+      <p><strong>Title:</strong> US EPA AirData San Diego County, California PM2.5 Forecasting Benchmark v0.1.0</p>
+      <p><strong>Archive:</strong> final harmonized release ZIP plus SHA-256 checksums and dataset citation metadata.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <h2>Controlled sequence</h2>
+      <ol>
+        <li>Verify and stage the final harmonized archive.</li>
+        <li>Create GitHub and Zenodo drafts only.</li>
+        <li>Reserve the Zenodo DOI.</li>
+        <li>Inject the reserved DOI and rebuild the archive.</li>
+        <li>Publish Zenodo, confirm DOI resolution, then publish GitHub.</li>
+      </ol>
+    </div>
+  </section>
+</main>
+<footer class="site-footer">
+  <div class="container"><p>Maintained by <a href="../../about-author/">Faramarz Kowsari</a>.</p></div>
+</footer>
+</body>
+</html>

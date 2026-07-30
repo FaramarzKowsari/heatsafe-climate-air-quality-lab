@@ -100,3 +100,27 @@ heatsafe-release-review verify-harmonized   artifacts/releases/epa-airdata-calif
 
 This operation does not download EPA data, rescan the national file, rerun
 models, publish an archive or mint a DOI.
+
+<!-- HEATSAFE_PUBLICATION_HANDOFF_REPRO_V1 -->
+## Publication handoff
+
+Prepare the draft-only handoff from the final harmonized release:
+
+```bash
+heatsafe-release-review prepare-publication \
+  --harmonized-release artifacts/releases/epa-airdata-california-pm25-2025-first-real-reviewed \
+  --output artifacts/publication/epa-pm25-2025-v0.1.0-handoff \
+  --repository FaramarzKowsari/heatsafe-climate-air-quality-lab \
+  --tag epa-pm25-2025-v0.1.0 \
+  --overwrite
+```
+
+Verify it:
+
+```bash
+heatsafe-release-review verify-publication \
+  artifacts/publication/epa-pm25-2025-v0.1.0-handoff
+```
+
+The handoff contains only draft creation helpers. It does not publish either
+platform or mint a DOI.

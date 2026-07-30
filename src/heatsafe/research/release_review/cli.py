@@ -18,6 +18,12 @@ from heatsafe.research.release_review.harmonizer import (
     harmonize_reviewed_release,
     verify_harmonized_release,
 )
+from heatsafe.research.release_review.publication import (
+    DEFAULT_REPOSITORY,
+    DEFAULT_TAG,
+    prepare_publication_handoff,
+    verify_publication_handoff,
+)
 
 
 def _build(args: argparse.Namespace) -> None:
@@ -64,12 +70,30 @@ def _verify_harmonized(args: argparse.Namespace) -> None:
         raise SystemExit(1)
 
 
+def _prepare_publication(args: argparse.Namespace) -> None:
+    result = prepare_publication_handoff(
+        args.harmonized_release,
+        output_directory=args.output,
+        repository=args.repository,
+        tag=args.tag,
+        overwrite=args.overwrite,
+    )
+    print(json.dumps(result, indent=2, sort_keys=True))
+
+
+def _verify_publication(args: argparse.Namespace) -> None:
+    result = verify_publication_handoff(args.handoff_directory)
+    print(json.dumps(result, indent=2, sort_keys=True))
+    if not result["valid"]:
+        raise SystemExit(1)
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="heatsafe-release-review",
         description=(
-            "Build, harmonize and verify reviewed scientific releases "
-            "from verified official-source experiment workspaces"
+            "Build, harmonize, prepare and verify reviewed scientific "
+            "release publication handoffs"
         ),
     )
     commands = parser.add_subparsers(dest="command", required=True)
@@ -145,6 +169,36 @@ def build_parser() -> argparse.ArgumentParser:
     )
     verify_harmonized.add_argument("release_directory")
     verify_harmonized.set_defaults(func=_verify_harmonized)
+
+    prepare_publication = commands.add_parser(
+        "prepare-publication",
+        help=(
+            "Create a draft-only GitHub and Zenodo publication handoff "
+            "from a verified harmonized release"
+        ),
+    )
+    prepare_publication.add_argument(
+        "--harmonized-release",
+        required=True,
+    )
+    prepare_publication.add_argument("--output", required=True)
+    prepare_publication.add_argument(
+        "--repository",
+        default=DEFAULT_REPOSITORY,
+    )
+    prepare_publication.add_argument("--tag", default=DEFAULT_TAG)
+    prepare_publication.add_argument("--overwrite", action="store_true")
+    prepare_publication.set_defaults(func=_prepare_publication)
+
+    verify_publication = commands.add_parser(
+        "verify-publication",
+        help=(
+            "Verify the draft-only publication handoff, assets, checksums "
+            "and publication safety state"
+        ),
+    )
+    verify_publication.add_argument("handoff_directory")
+    verify_publication.set_defaults(func=_verify_publication)
     return parser
 
 

@@ -6,8 +6,10 @@ on:
       - "src/heatsafe/research/release_review/**"
       - "tests/test_release_review.py"
       - "tests/test_release_harmonization.py"
+      - "tests/test_publication_handoff.py"
       - "SCIENTIFIC_RELEASE_REVIEW.md"
       - "FINAL_METADATA_HARMONIZATION.md"
+      - "PUBLICATION_HANDOFF.md"
       - "docs/site/release-review/**"
       - ".github/workflows/reviewed-release.yml"
       - "pyproject.toml"
@@ -16,8 +18,10 @@ on:
       - "src/heatsafe/research/release_review/**"
       - "tests/test_release_review.py"
       - "tests/test_release_harmonization.py"
+      - "tests/test_publication_handoff.py"
       - "SCIENTIFIC_RELEASE_REVIEW.md"
       - "FINAL_METADATA_HARMONIZATION.md"
+      - "PUBLICATION_HANDOFF.md"
       - "docs/site/release-review/**"
       - ".github/workflows/reviewed-release.yml"
       - "pyproject.toml"
@@ -46,6 +50,7 @@ jobs:
           src/heatsafe/research/release_review
           tests/test_release_review.py
           tests/test_release_harmonization.py
+          tests/test_publication_handoff.py
       - name: Type-check reviewed release tools
         run: >
           python -m mypy
@@ -56,4 +61,5 @@ jobs:
           pytest
           tests/test_release_review.py
           tests/test_release_harmonization.py
+          tests/test_publication_handoff.py
           -q
