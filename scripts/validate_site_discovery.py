@@ -5,7 +5,6 @@ import json
 import re
 import struct
 from pathlib import Path
-from urllib.parse import urlparse
 from xml.etree import ElementTree
 
 

@@ -1,0 +1,15 @@
+{
+  "fix": "Site Discovery Ruff unused imports",
+  "fixed_at_utc": "2026-07-31T14:40:48.270384+00:00",
+  "removed_imports": {
+    "scripts/apply_site_discovery.py": "sys",
+    "scripts/validate_site_discovery.py": "urllib.parse.urlparse"
+  },
+  "changed_files": [
+    "scripts/apply_site_discovery.py",
+    "scripts/validate_site_discovery.py"
+  ],
+  "python_ast_validation": "passed",
+  "ruff_validation": "passed",
+  "commit_summary": "fix: remove unused imports from site discovery scripts"
+}
