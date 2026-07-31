@@ -27,3 +27,8 @@ artifacts/local-real-experiments/
 artifacts/plans/
 # HEATSAFE_REVIEWED_RELEASE_OUTPUTS_V1
 artifacts/releases/
+
+# HEATSAFE_GENERATED_PUBLICATION_OUTPUTS_V1
+artifacts/publication/
+artifacts/logs/
+artifacts/site-discovery-validation.json
