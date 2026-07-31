@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
+
 Sitemap: https://faramarzkowsari.github.io/heatsafe-climate-air-quality-lab/sitemap.xml

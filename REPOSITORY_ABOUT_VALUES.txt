@@ -1,0 +1,40 @@
+REPOSITORY ABOUT VALUES
+
+Repository:
+FaramarzKowsari/heatsafe-climate-air-quality-lab
+
+Description:
+Open-source environmental intelligence and AI research for extreme heat, PM2.5, air quality, wildfire smoke, urban climate, forecasting, uncertainty, and resilient homes.
+
+Website:
+https://faramarzkowsari.github.io/heatsafe-climate-air-quality-lab/
+
+Topics:
+air-quality
+pm25
+extreme-heat
+heatwave
+wildfire-smoke
+urban-heat
+indoor-air-quality
+climate-change
+environmental-data
+open-data
+climate-risk
+geospatial-analysis
+time-series-forecasting
+machine-learning
+artificial-intelligence
+reproducible-research
+scientific-computing
+python
+github-pages
+zenodo
+
+Manual method:
+1. Open the repository.
+2. In the About box, click the gear icon.
+3. Paste the Description and Website.
+4. Add the topics above.
+5. Keep Releases and Packages enabled if available.
+6. Save changes.

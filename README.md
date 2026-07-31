@@ -357,3 +357,17 @@ assets for the existing Zenodo and GitHub drafts.
 The DOI is reserved but is not registered publicly until the Zenodo draft is
 published. Publication remains blocked until all required metadata errors are
 resolved and the draft is previewed.
+
+<!-- HEATSAFE_DISCOVERY_SEARCH_INDEXING_V1 -->
+## Public discovery and search indexing
+
+- Project website: https://faramarzkowsari.github.io/heatsafe-climate-air-quality-lab/
+- XML sitemap: https://faramarzkowsari.github.io/heatsafe-climate-air-quality-lab/sitemap.xml
+- Public dataset landing page: https://faramarzkowsari.github.io/heatsafe-climate-air-quality-lab/dataset/epa-pm25-san-diego-v0-1-0/
+- Published dataset DOI: https://doi.org/10.5281/zenodo.21710054
+- Search Console setup: [`GOOGLE_SEARCH_CONSOLE_SETUP.md`](GOOGLE_SEARCH_CONSOLE_SETUP.md)
+
+The GitHub Pages site includes canonical URLs, crawl directives, Open Graph
+and Twitter metadata, a stable favicon, WebSite and SoftwareSourceCode
+structured data, Dataset JSON-LD, generated XML and text sitemaps, a public
+robots file, and automated validation in GitHub Actions.

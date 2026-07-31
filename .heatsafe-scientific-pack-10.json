@@ -1,0 +1,10 @@
+{
+  "pack": "Scientific Pack 10",
+  "title": "Repository Discovery and Google Search Indexing",
+  "installed_at_utc": "2026-07-31T12:55:11.929946+00:00",
+  "site_url": "https://faramarzkowsari.github.io/heatsafe-climate-air-quality-lab/",
+  "sitemap_url": "https://faramarzkowsari.github.io/heatsafe-climate-air-quality-lab/sitemap.xml",
+  "dataset_doi": "10.5281/zenodo.21710054",
+  "search_console_verification_required": true,
+  "commit_summary": "feat: add repository discovery and Google Search indexing"
+}

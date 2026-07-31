@@ -1,52 +1,49 @@
-name: Deploy documentation pages
+name: Site Discovery and Search Indexing
 
 on:
   workflow_dispatch:
   push:
-    branches: [main]
     paths:
       - "docs/site/**"
       - "scripts/apply_site_discovery.py"
       - "scripts/generate_sitemap.py"
       - "scripts/validate_site_discovery.py"
-      - ".github/workflows/pages.yml"
+      - ".github/workflows/site-discovery.yml"
+  pull_request:
+    paths:
+      - "docs/site/**"
+      - "scripts/apply_site_discovery.py"
+      - "scripts/generate_sitemap.py"
+      - "scripts/validate_site_discovery.py"
+      - ".github/workflows/site-discovery.yml"
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: true
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: "${{ steps.deployment.outputs.page_url }}"
+  validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-      - name: Apply canonical discovery metadata
+      - name: Verify canonical metadata is current
         run: >
           python scripts/apply_site_discovery.py
           --site-root docs/site
-      - name: Generate sitemap files
+          --check
+      - name: Verify sitemap files are current
         run: >
           python scripts/generate_sitemap.py
           --site-root docs/site
-      - name: Validate discovery and indexing files
+          --check
+      - name: Validate public discovery surface
         run: >
           python scripts/validate_site_discovery.py
           --site-root docs/site
           --report artifacts/site-discovery-validation.json
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
-          path: docs/site
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          name: site-discovery-validation
+          path: artifacts/site-discovery-validation.json

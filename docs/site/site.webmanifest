@@ -1,0 +1,17 @@
+{
+  "name": "HeatSafe Climate & Air Quality Intelligence Lab",
+  "short_name": "HeatSafe Lab",
+  "start_url": "/heatsafe-climate-air-quality-lab/",
+  "scope": "/heatsafe-climate-air-quality-lab/",
+  "display": "standalone",
+  "background_color": "#f3fafb",
+  "theme_color": "#087a95",
+  "description": "Open-source environmental intelligence and AI research for extreme heat, PM2.5, air quality, wildfire smoke, urban climate, forecasting, uncertainty and resilient homes.",
+  "icons": [
+    {
+      "src": "assets/favicon-96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    }
+  ]
+}

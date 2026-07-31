@@ -1,0 +1,28 @@
+# HeatSafe Climate & Air Quality Intelligence Lab
+
+> Open-source environmental intelligence and AI research for extreme heat,
+> PM2.5, air quality, wildfire smoke, urban climate, forecasting,
+> uncertainty and resilient homes.
+
+## Canonical site
+- https://faramarzkowsari.github.io/heatsafe-climate-air-quality-lab/
+
+## Repository
+- https://github.com/FaramarzKowsari/heatsafe-climate-air-quality-lab
+
+## Public guide
+- https://faramarzkowsari.github.io/heatsafe-climate-air-quality-lab/public-guide/
+
+## Research and methods
+- https://faramarzkowsari.github.io/heatsafe-climate-air-quality-lab/research/
+- https://faramarzkowsari.github.io/heatsafe-climate-air-quality-lab/methodology/
+- https://faramarzkowsari.github.io/heatsafe-climate-air-quality-lab/reproducible-experiments/
+
+## Published dataset
+- DOI: https://doi.org/10.5281/zenodo.21710054
+- Landing page: https://faramarzkowsari.github.io/heatsafe-climate-air-quality-lab/dataset/epa-pm25-san-diego-v0-1-0/
+
+## Author and developer
+- Faramarz Kowsari
+- ORCID: https://orcid.org/0000-0003-1692-0453
+- Profile: https://faramarzkowsari.github.io/heatsafe-climate-air-quality-lab/about-author/
