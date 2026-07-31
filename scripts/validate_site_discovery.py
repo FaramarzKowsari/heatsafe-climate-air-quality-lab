@@ -66,6 +66,30 @@ def _types(value: object) -> set[str]:
     return found
 
 
+def _objects_of_type(
+    value: object,
+    target_type: str,
+) -> list[dict[str, object]]:
+    found: list[dict[str, object]] = []
+    if isinstance(value, dict):
+        current = value.get("@type")
+        current_types: set[str] = set()
+        if isinstance(current, str):
+            current_types.add(current)
+        elif isinstance(current, list):
+            current_types.update(
+                item for item in current if isinstance(item, str)
+            )
+        if target_type in current_types:
+            found.append(value)
+        for nested in value.values():
+            found.extend(_objects_of_type(nested, target_type))
+    elif isinstance(value, list):
+        for nested in value:
+            found.extend(_objects_of_type(nested, target_type))
+    return found
+
+
 def _png_dimensions(path: Path) -> tuple[int, int]:
     data = path.read_bytes()
     if data[:8] != b"\x89PNG\r\n\x1a\n":
@@ -159,8 +183,35 @@ def validate(site_root: Path) -> dict[str, object]:
                     )
         if relative == (
             "dataset/epa-pm25-san-diego-v0-1-0/index.html"
-        ) and "Dataset" not in page_types:
-            failures.append("dataset landing page lacks Dataset JSON-LD")
+        ):
+            dataset_items: list[dict[str, object]] = []
+            for payload in payloads:
+                dataset_items.extend(
+                    _objects_of_type(payload, "Dataset")
+                )
+            if len(dataset_items) != 1:
+                failures.append(
+                    "dataset landing page must expose exactly one "
+                    f"Dataset item, found {len(dataset_items)}"
+                )
+            else:
+                dataset = dataset_items[0]
+                for required_property in ("name", "description"):
+                    value = dataset.get(required_property)
+                    if not isinstance(value, str) or not value.strip():
+                        failures.append(
+                            "dataset landing page Dataset lacks "
+                            f"{required_property}"
+                        )
+                if not isinstance(dataset.get("isBasedOn"), str):
+                    failures.append(
+                        "Dataset isBasedOn must be a source URL, not a "
+                        "second nested Dataset item"
+                    )
+                if dataset.get("citation") == dataset.get("@id"):
+                    failures.append(
+                        "Dataset must not cite its own DOI through citation"
+                    )
 
     sitemap_path = site_root / "sitemap.xml"
     if not sitemap_path.is_file():

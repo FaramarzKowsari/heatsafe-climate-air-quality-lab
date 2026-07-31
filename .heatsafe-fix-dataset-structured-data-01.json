@@ -1,0 +1,19 @@
+{
+  "fix": "Google Dataset structured data",
+  "fixed_at_utc": "2026-07-31T15:46:15.602201+00:00",
+  "root_cause": "The isBasedOn source was marked as a second nested Dataset without all standalone required properties.",
+  "changes": [
+    "Represent isBasedOn as the official EPA source URL",
+    "Remove self-referential citation property",
+    "Add isAccessibleForFree",
+    "Add measurementTechnique",
+    "Add variableMeasured",
+    "Add publisher",
+    "Require exactly one Dataset item in local validation"
+  ],
+  "python_ast_validation": "passed",
+  "site_discovery_validation": "passed",
+  "ruff_validation": "passed",
+  "expected_search_console_result": "1 Dataset item detected and valid",
+  "commit_summary": "fix: expose one valid Dataset structured data item"
+}

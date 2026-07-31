@@ -279,15 +279,26 @@ def _dataset_graph() -> dict[str, Any]:
                 "name": "DOI-aware reproducible research archive",
             }
         ],
-        "isBasedOn": {
-            "@type": "Dataset",
-            "name": (
-                "US EPA AirData hourly PM2.5 FRM/FEM Mass, "
-                "parameter 88101"
-            ),
-            "url": "https://aqs.epa.gov/aqsweb/airdata/download_files.html",
+        "isBasedOn": (
+            "https://aqs.epa.gov/aqsweb/airdata/download_files.html"
+        ),
+        "isAccessibleForFree": True,
+        "measurementTechnique": (
+            "Station-level hourly PM2.5 forecasting benchmark with "
+            "deterministic temporal-continuity station selection and "
+            "reproducible model evaluation."
+        ),
+        "variableMeasured": {
+            "@type": "PropertyValue",
+            "name": "PM2.5 mass concentration",
+            "propertyID": "US EPA AQS parameter 88101",
+            "unitText": "micrograms per cubic meter",
         },
-        "citation": DOI_URL,
+        "publisher": {
+            "@type": "Organization",
+            "name": "Zenodo",
+            "url": "https://zenodo.org/",
+        },
     }
 
 
