@@ -347,14 +347,16 @@ Run `PREPARE_PUBLICATION_HANDOFF_09.cmd` only after the harmonized release has
 passed verification.
 
 <!-- HEATSAFE_RESERVED_DOI_FINALIZATION_09_1 -->
-## Published DOI and release finalization
+## Reserved DOI finalization
 
-Scientific Pack 09.1 finalized the reviewed candidate with the Zenodo DOI
-[`10.5281/zenodo.21710054`](https://doi.org/10.5281/zenodo.21710054), rebuilt
-all checksums, and created a deterministic DOI-aware release archive.
+Scientific Pack 09.1 injects the reserved Zenodo DOI
+`10.5281/zenodo.21710054` into the final reviewed candidate, rebuilds all
+checksums, creates a deterministic DOI-aware ZIP, and prepares replacement
+assets for the existing Zenodo and GitHub drafts.
 
-The Zenodo record has been published. The DOI is publicly registered and
-resolvable; the earlier draft-only publication block no longer applies.
+The DOI is reserved but is not registered publicly until the Zenodo draft is
+published. Publication remains blocked until all required metadata errors are
+resolved and the draft is previewed.
 
 <!-- HEATSAFE_DISCOVERY_SEARCH_INDEXING_V1 -->
 ## Public discovery and search indexing

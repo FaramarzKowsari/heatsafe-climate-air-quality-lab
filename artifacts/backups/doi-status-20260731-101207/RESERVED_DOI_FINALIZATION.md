@@ -1,13 +1,5 @@
 # Scientific Pack 09.1 — Reserved DOI Injection
 
-> **Current public status:** This file preserves the pre-publication workflow
-> used by Scientific Pack 09.1. The Zenodo record has since been published and
-> DOI [`10.5281/zenodo.21710054`](https://doi.org/10.5281/zenodo.21710054) is
-> publicly registered and resolvable. Statements below about a reserved or
-> unpublished DOI describe the historical preparation stage, not the current
-> release state.
-
-
 Reserved DOI:
 
 ```text

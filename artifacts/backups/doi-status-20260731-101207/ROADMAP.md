@@ -178,11 +178,11 @@
 - [x] Provide a GitHub draft-only creation command.
 - [x] Preserve repository-root software citation metadata.
 - [x] Block automatic GitHub and Zenodo publication.
-- [x] Create and review the GitHub draft release.
-- [x] Create and review the Zenodo draft upload.
-- [x] Reserve the Zenodo DOI.
-- [x] Inject the reserved DOI and rebuild the final archive.
-- [x] Publish Zenodo, verify DOI resolution, then publish GitHub.
+- [ ] Create and review the GitHub draft release.
+- [ ] Create and review the Zenodo draft upload.
+- [ ] Reserve the Zenodo DOI.
+- [ ] Inject the reserved DOI and rebuild the final archive.
+- [ ] Publish Zenodo, verify DOI resolution, then publish GitHub.
 
 <!-- HEATSAFE_SCIENTIFIC_PACK_09_1_ROADMAP -->
 ## Scientific Pack 09.1 — Reserved DOI injection
@@ -192,8 +192,8 @@
 - [x] Add DOI-aware release and handoff builders.
 - [x] Regenerate checksums and deterministic archive.
 - [x] Prepare Zenodo and GitHub replacement instructions.
-- [x] Replace old files in the Zenodo draft.
-- [x] Complete all required Zenodo Basic information fields.
-- [x] Save and preview the Zenodo draft.
-- [x] Replace assets in the GitHub draft.
-- [x] Publish after final human approval.
+- [ ] Replace old files in the Zenodo draft.
+- [ ] Complete all required Zenodo Basic information fields.
+- [ ] Save and preview the Zenodo draft.
+- [ ] Replace assets in the GitHub draft.
+- [ ] Publish only after final human approval.
